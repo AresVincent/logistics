@@ -1,0 +1,522 @@
+<!--
+ * @Author: liweilong
+ * @Date: 2020-12-22 14:28:56
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- common begin -->
+  <link rel="stylesheet" href="__CSS__/init.min.css">
+  <link rel="stylesheet" href="__CSS__/font.css">
+  <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/layout/header.css">
+  <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <!-- common end -->
+  <link rel="stylesheet" href="__CSS__/onlineorder.css">
+  <title>在線下單</title>
+</head>
+
+<body>
+    <!-- nav beigin -->
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+         
+        </ul>
+        <div class="form-inline my-2 my-lg-0">
+          <div class="language_wrap position-relative ">
+            <div class="top_wrap d-flex justify-content-between">
+              <span class="text langShow">繁體</span>
+              <span class="iconfont icon-iconfontarrows1"></span>
+            </div>
+            <!-- display bottom -->
+            <ul class="lan_ul position-absolute shadow-sm">
+              <li class="lan_li">
+                <a href="javascript:void(0);" class="set-lang lang_en" data-lang="en">英語</a>
+              </li>
+              <li class="lan_li">
+                <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="login_register d-flex justify-content-between">
+            <a href="register.html" class="register">註冊</a>
+            <a href="login.html" class="login">登錄</a>
+          </div>
+  
+          <!-- logined -->
+          <!-- <a class="logined ml-5 text-decoration-none" href="profiledetail.html">
+          <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=236107512,1097719150&fm=26&gp=0.jpg"
+            alt="">
+        </a> -->
+        </div>
+      </div>
+  
+    </nav>
+  <!-- nav end -->
+
+  <!-- display theme image begin -->
+  <div class="theme_image position-relative">
+    <img src="__IMG__/online_order.png" class="img-fluid" alt="theme image">
+  </div>
+  <!-- display theme image end -->
+
+  <!-- form begin -->
+  <div class="form_wrap container shadow-lg mt-4 p-5">
+    <form action=""  onsubmit="return false;">
+
+      <div class="d-flex mb-3 row">
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="place" class="col-form-label mr-3 place">訂單號:</label>
+          <input type="text" name="place" class="form-control ml-2 rounded-sm" disabled value="1234567890">
+        </div>
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="mode" class="col-form-label mr-3 mode">派送方式:<span class="badge  text-danger">*</span></label>
+          <select class="form-control rounded-sm" name="mode">
+            <option value="0">倉庫到自提點</option>
+            <option value="1">倉庫到自提櫃</option>
+            <option value="2">倉庫到上門</option>
+          </select>
+<!--          <input type="text" name="mode" class="form-control ml-2 rounded-sm">-->
+        </div>
+      </div>
+
+      <div class="d-flex mb-3 row mr-0">
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="send_name" class="col-form-label send_name" >寄件人姓名<span class="badge  text-danger">*</span></label>
+          <input type="text" name="send_name" class="form-control ml-2">
+        </div>
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="send_phone" class="col-form-label send_phone">寄件人電話<span class="badge  text-danger">*</span></label>
+          <input type="text" name="send_phone" class="form-control ml-2" placeholder="85226341512">
+        </div>
+      </div>
+      <!-- send address -->
+      <div class="d-flex mb-3 ">
+        <div class="input-group mb-3 row ml-0 mr-0" style="width: 700px;">
+          <label for="send_area_id" class="col-form-label mr-2 send_area_id">寄件人地址<span class="badge  text-danger">*</span></label>
+<!--          <label class="send_province col-form-label gudingdizhi">中國香港</label>-->
+<!--          <select class="form-control rounded-sm ml-3 areaSelect" name="send_area_id">-->
+<!--    -->
+<!--          </select>-->
+          <!-- detail address -->
+<!--          <input type="text" class="form-control ml-2 send_address"  placeholder="詳細地址" name="send_address" style="width: 300px;">-->
+          <select class="form-control rounded-sm ml-3 areaSelect" name="">
+            <option>4PX-觀塘倉(觀塘海濱道167-169號地下)</option>
+            <option>4PX-元朗倉(屏廈路169號流浮山廈村屏廈路DD129 Lot3299RP 海暉重櫃場對面)</option>
+            <option>4PX-葵涌倉(大連排道道144-150號金豐工業大廈一期地下A鋪)</option>
+            <option>4PX-柴灣A倉(柴灣永泰道60號柴灣工業城1期地下6號舖)</option>
+            <option>4PX-柴灣B倉(柴灣嘉業街56號安全貨倉工業4樓B室)</option>
+          </select>
+        </div>
+      </div>
+      <!-- receive people -->
+      <div class="d-flex mb-3 row mr-0">
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="get_name" class="col-form-label get_name">收件人姓名<span class="badge  text-danger">*</span></label>
+          <input type="text" name="get_name" class="form-control ml-2">
+        </div>
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="get_phone" class="col-form-label get_phone">收件人電話<span class="badge  text-danger">*</span></label>
+          <input type="text" name="get_phone" class="form-control ml-2">
+        </div>
+      </div>
+      <!-- receive address -->
+      <div class="d-flex mb-3">
+        <div class="input-group mb-3 row ml-0 mr-0" style="width: 700px;">
+          <label for="get_area_id" class="col-form-label mr-2 get_area_id">收件人地址<span class="badge  text-danger">*</span></label>
+          <label class="send_province col-form-label gudingdizhi">中國香港</label>
+          <select class="form-control rounded-sm ml-3 areaSelect" name="get_area_id">
+
+          </select>
+          <!-- detail address -->
+          <input type="text" class="form-control ml-2 get_address" name="get_address" placeholder="詳細地址" style="width: 300px;">
+        </div>
+      </div>
+
+      <!--  -->
+      <div class="d-flex mb-3 row">
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="goods" class="col-form-label mr-3 goods">寄託物</label>
+          <input type="text" name="goods" class="form-control ml-2 rounded-sm">
+        </div>
+        <div class="input-group mb-3 col-12 col-md-6">
+          <label for="num" class="col-form-label mr-3 num">數量&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="number" name="num" value="1" class="form-control ml-2 rounded-sm">
+        </div>
+      </div>
+
+      <div class="d-flex mb-3 row">
+        <div class="input-group mb-3 colo-12 col-md-6">
+          <label for="weight" class="col-form-label mr-3 weight">重量</label>
+          <input type="text" name="weight" class="form-control ml-2 rounded-sm">
+        </div>
+        <div class="input-group mb-3 colo-12 col-md-6">
+          <label for="volume" class="col-form-label mr-3 volume">體積</label>
+          <input type="text" name="volume" class="form-control ml-2 rounded-sm">
+        </div>
+      </div>
+
+      <div class="d-flex mb-3">
+        <div class="input-group mb-3 mr-5">
+          <label for="price" class="col-form-label mr-3 price">運費 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" name="price" class="form-control ml-2 rounded-sm">
+        </div>
+      </div>
+
+      <!-- btn group -->
+      <div class="button_group row justify-content-between align-items-center">
+        <div class=" col-12 col-sm-4 mt-2 d-flex justify-content-center">
+          <div class="carriage_btn btn_wrap priceCalc">
+            運費試算
+          </div>
+        </div>
+        <button onsubmit="return false;" class="col-12 col-sm-4 mt-2 d-flex justify-content-center submitBtn">
+          <div class="btn_wrap realyBuy">
+            下單
+          </div>
+        </button>
+        <div class="col-12 col-sm-4 mt-2 d-flex justify-content-center">
+          <div class="btn_wrap import_data_btn daoru">
+            批量導入
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- import data -->
+    <input type="file" hidden class="importFile">
+  </div>
+  <!-- form end -->
+
+  <!-- loading begin -->
+  <div class="loading_wrap position-fixed">
+    <div class="spinner-border text-primary loading position-absolute" role="status">
+      <span class="">Loading...</span>
+    </div>
+  </div>
+  <!-- loading end -->
+
+
+ <!-- footer begin -->
+ <footer class="row ml-0 mr-o p-0">
+  <div class="footer_top  d-none d-sm-none d-md-block">
+    <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
+        
+    </div>
+  </div>
+  <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
+    <div class="contact">客服电话：12345678142 电子邮件：1462845qq.com</div>
+    <div class="bottom_text">
+      京公网安备 11011502003298号
+    </div>
+  </div>
+</footer>
+<!-- footer end -->
+
+
+  <script src="__JS__/plugs/jquery/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
+  <script src="__JS__/common.min.js"></script>
+  <script src="__JS__/plugs/layer/layer.js"></script>
+  <script src="__JS__/init.js"></script>
+<script>
+  let url = getBaseUrl();
+  $.get(url + 'area/areaAll',function(res){
+    console.log(res)
+    let str = '';
+    if(is_en()){
+      for(i in res){
+        str += '<option value="'+res[i].id+'">'+res[i].areaen + '</option>';
+      }
+    }else{
+      for(i in res){
+        str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
+      }
+    }
+    console.log(str)
+    $('select[name="get_area_id"]').html(str);
+    $('select[name="send_area_id"]').html(str);
+  })
+
+  // function request(url,data,fun){
+    // $.ajax({
+    //   headers:{
+    //     "Content-Type":"application/json;charset=UTF-8",
+    //     Accept:"*/*","Postman-Token":"c8ea7278-0a03-420f-866b-2c5337ed5c8c"
+    //   },method:"POST",
+    //   url:url+'area/areaAll',
+    //   data:JSON.stringify(data),
+    //   success:function(res){
+    //     // fun(res);
+    //     console.log(res)
+    //   }
+    // });
+//   }
+
+
+</script>
+
+
+  <script>
+    if(is_en()){
+      $('.gudingdizhi').text('Hong Kong, China');
+      $('.priceCalc').text('Freight calculation');
+      $('.realyBuy').text('Order');
+      $('.daoru').text('Batch import');
+      $('.send_name').html('name of sender<span class="badge  text-danger">*</span>');
+      $('.send_phone').html('Sender\'s phone number<span class="badge  text-danger">*</span>');
+      $('.send_area_id').html('return address<span class="badge  text-danger">*</span>');
+      $('.send_address').attr('placeholder', 'Detailed address');
+      $('.get_name').html('Recipient\'s name<span class="badge  text-danger">*</span>');
+      $('.get_phone').html('Recipient\'s phone number<span class="badge  text-danger">*</span>');
+      $('.get_area_id').html('Address<span class="badge  text-danger">*</span>');
+      $('.goods').html('goods');
+      $('.num').html('Quantity');
+      $('.weight').html('weight');
+      $('.volume').html('volume');
+      $('.mode').html('Delivery mode');
+      $('.place').html('Name of pickup point');
+      $('.price').html('Freight');
+      
+    }
+  
+  </script>
+
+
+
+  <script>
+
+    var token = $.cookie('token');
+    // 點擊計算運費
+    $('.carriage_btn').click(function () {
+      $('.loading_wrap').show()
+
+      let weight = $('input[name="weight"]').val();
+      if(weight == ''){
+        layer.msg('重量為空',{icon:2,time:1500});
+        $('.loading_wrap').hide()
+        return false;
+      }
+      let num = $('input[name="num"]').val();
+
+      let urls = getBaseUrl();
+
+      let ds1 = $('select[name="send_area_id"]').val();
+      let ds2 = $('select[name="get_area_id"]').val();
+
+      
+
+      $.post(urls + 'money/likeMoneyIds',{
+        "areaIds1" :  ds1,
+        "areaIds2" : ds2
+      },function(res){
+        $('.loading_wrap').hide()
+        console.log(res)
+        if(res.length > 0){
+          if(res[0].firstWeight >= weight){
+            layer.alert('運費:' + res[0].firstMoney * num)
+          }else{
+            let pri = res[0].firstMoney + (weight - res[0].firstWeight) * res[0].money;
+            layer.alert('運費:' + pri * num)
+          }
+           
+        }else{
+          layer.msg('暫無相應運費計算規則',{icon:2,time:1500});
+        }
+        
+      })
+
+
+
+
+
+
+    })
+
+    // 導入操作
+    $('.import_data_btn').click(function () {
+      $('.importFile').click()
+    })
+
+    $('.importFile').change(function(){
+
+      console.log(this.files[0])
+      var formData = new FormData();
+      formData.append('file',this.files[0]);
+      formData.append('token', token);
+
+      $.ajax({
+　　   url: url + '/export/readExcel',
+              type: 'POST',
+              cache: false,    //上传文件不需要缓存
+              data: formData,
+              processData: false, // 告诉jQuery不要去处理发送的数据
+              contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+              success: function (res) {
+                    console.log(res)
+                    if(res == 1){
+                        layer.msg('导入成功',{icon:1,time:1000},function(){
+                          location.href=location.href
+                        });
+                    }else{
+                      layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
+                    }
+                },
+                error: function (err) {
+                    console.log(err)
+                    layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
+                }
+            })
+
+
+
+    })
+  </script>
+    <script type="text/javascript" charset="utf-8">
+      
+        // request('area/queryAreaList.do', {
+        //     "pageNum" : 1,
+        //     "pageSize" : 10
+        //   },function(res){
+        //     console.log(res)
+        //     let html = '';
+        //     let list = res.data.list;
+        //     for(i in list){
+        //         html += '<option value="'+list[i].code+'">'+list[i].area+'</option>';
+        //     }
+        //     $('.areaSelect').html(html)
+        
+        //   })
+        // request('outlets/getOutletsList.do', {
+        //     "pageNum" : 1,
+        //     "pageSize" : 10
+        //   },function(res){
+        //     console.log(res)
+        //     let html = '';
+        //     let list = res.data.list;
+        //     for(i in list){
+        //         html += '<option value="'+list[i].code+'">【'+list[i].express_name+'】'+list[i].company_address  +'</option>';
+        //     }
+        //     $('.wangdian').html(html)
+        
+        //   })
+  </script>
+  <script type="text/javascript" charset="utf-8">
+
+      function getDate()
+      {
+        let send_name = $('input[name="send_name"]').val();
+        let send_phone = $('input[name="send_phone"]').val();
+        let send_area_id = $('select[name="send_area_id"]').val();
+        let send_address = $('input[name="send_address"]').val();
+        let get_name = $('input[name="get_name"]').val();
+        let get_phone = $('input[name="get_phone"]').val();
+        let get_area_id = $('select[name="get_area_id"]').val();
+        let get_address = $('input[name="get_address"]').val();
+        let goods = $('input[name="goods"]').val();
+        let num = $('input[name="num"]').val();
+        let weight = $('input[name="weight"]').val();
+        let volume = $('input[name="volume"]').val();
+        let mode = $('input[name="mode"]').val();
+        let place = $('input[name="place"]').val();
+        let price = $('input[name="price"]').val();
+
+        let token = $.cookie('token');
+        if(token == ''){
+          location.href = '/login.html';
+        }
+        return data = {
+          sendName : send_name,
+          sendPhone : send_phone,
+          sendAreaId : send_area_id,
+          sendAddress : send_address,
+          getName : get_name,
+          getPhone : get_phone,
+          getAreaId : get_area_id,
+          getAddress : get_address,
+          goods : goods,
+          num : num,
+          weight : weight,
+          volume : volume,
+          mode : mode,
+          place : place,
+          price : price,
+          token : token
+        }
+      }
+      $('.submitBtn').click(function(){
+        let data = getDate();
+        let url = getBaseUrl();
+        $.post(url+'order/saveOrder', data, function(res){
+          console.log(res)
+          if(res == 1){
+            layer.msg('下單成功',{icon:1,time:1000},function(){
+              location.href = location.href
+            })
+          }else{
+            layer.msg('下單失敗',{icon:2,time:1000})
+          }
+        })
+
+
+
+
+          // let consignor_name = $('input[name="consignor_name"]').val();
+          // let consignor_tel = $('input[name="consignor_tel"]').val();
+          // let consignor_area = $('select[name="consignor_area"]').val();
+          // let consignor_address = $('input[name="consignor_address"]').val();
+          
+          // let consignee_name = $('input[name="consignee_name"]').val();
+          // let consignee_tel = $('input[name="consignee_tel"]').val();
+          // let consignee_area = $('select[name="consignee_area"]').val();
+          // let consignee_address = $('input[name="consignee_address"]').val();
+          
+          // let order_weight = $('input[name="order_weight"]').val();
+          // let freight = $('input[name="freight"]').val();
+          // let ziti = $('select[name="ziti"]').val();
+          // $.post('/api/index/addOrder.html', {
+          //     'consignor_name' : consignor_name,
+          //     'consignor_tel' : consignor_tel,
+          //     'consignor_area' : consignor_area,
+          //     'consignor_address' : consignor_address,
+              
+          //     'consignee_name' : consignee_name,
+          //     'consignee_tel' : consignee_tel,
+          //     'consignee_area' : consignee_area,
+          //     'consignee_address' : consignee_address,
+              
+          //     'order_weight' : order_weight,
+          //     'freight' : freight,
+          //     'ziti' : ziti
+              
+          // }, function(res){
+          //     console.log(res)
+          //     if(res.data == 1){
+          //         alert('下单成功');
+          //     }
+          // })
+      })
+
+
+
+      // let token = $.cookie('token');
+        if(token == ''){
+          location.href = '/login.html';
+        }
+        //渲染菜单
+      showMenu(1);
+  </script>
+</body>
+
+</html>

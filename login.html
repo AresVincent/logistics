@@ -1,0 +1,144 @@
+<!--
+ * @Author: liweilong
+ * @Date: 2020-12-21 12:28:48
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- common begin -->
+  <link rel="stylesheet" href="__CSS__/init.min.css">
+  <link rel="stylesheet" href="__CSS__/font.css">
+  <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
+  <!-- common end -->
+
+
+  <link rel="stylesheet" href="__CSS__/login.css">
+  <script src="__JS__/plugs/jquery/jquery.min.js"></script>
+  <title>登录</title>
+</head>
+
+<body>
+  <div class="login-wrap" style="background-image: url(__IMG__/login.png);">
+    <div class="login d-flex align-items-center">
+      <!-- login begin -->
+      <div class="container p-0 login_content d-flex justify-content-between shadow-lg">
+        <div class="left_wrap position-relative h-100">
+          <img class="login_people position-absolute" src="__IMG__/login_people.png" alt="图片">
+          <img class="login_cargo position-absolute" src="__IMG__/login_cargo.png" alt="图片">
+        </div>
+        <div class="right_wrap  h-100 ">
+          <div class="title w-100 d-flex justify-content-center">Ares 物流系統</div>
+          <form class="login_form" onsubmit="return false;">
+            <div class="input-wrap p-2 w-100 d-flex justify-content-between">
+              <span class="iconfont icon-iconzh1"></span>
+              <input type="text" class="input ml-2 mr-2 border-0" id="name" placeholder="請輸入您的電子郵箱" onblur="checkEmail(this)">
+            </div>
+            <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
+              <span class="iconfont icon-suo"></span>
+              <input type="password" class="input ml-2 mr-2  border-0" id="password" placeholder="請輸入密碼">
+              <span class="iconfont  icon-yanjing1 display_password"></span>
+            </div>
+
+            <!-- forget password begin -->
+            <div class="d-flex border-0 justify-content-between mt-4">
+              <!--<a href="forget_password.html" class="text-decoration-none link">忘记密码</a>-->
+              <a href="register.html" class="link text-decoration-none" id="toRegister">
+                沒有帳號，去註冊
+              </a>
+            </div>
+            <!-- forget password end -->
+            
+            <!-- submit begin -->
+            <button onsubmit="return false;" class="w-100 login_btn mt-2 loginBtn">登錄</button>
+            <!-- submit end -->
+          </form>
+        </div>
+      </div>
+      <!-- login end -->
+    </div>
+  </div>
+
+  <script src="__JS__/login.min.js"></script>
+  <script src="__JS__/common.min.js"></script>
+  <script src="__JS__/plugs/layer/layer.js"></script>
+  <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <!-- <script src="__JS__/md5.js"></script> -->
+  <script>
+        function setcookie (name, value){ 
+    //设置名称为name,值为value的Cookie
+    var expdate = new Date();   //初始化时间
+    expdate.setTime(expdate.getTime() + 10 * 24 * 60 * 60 * 1000);   //时间单位毫秒
+    document.cookie = name+"="+value+";expires="+expdate.toGMTString()+";path=/";
+ 
+   //即document.cookie= name+"="+value+";path=/";  时间默认为当前会话可以不要，但路径要填写，因为JS的默认路径是当前页，如果不填，此cookie只在当前页面生效！
+}
+      
+function getCookie(c_name){
+//判断document.cookie对象里面是否存有cookie
+if (document.cookie.length>0){
+  c_start=document.cookie.indexOf(c_name + "=")
+	//如果document.cookie对象里面有cookie则查找是否有指定的cookie，如果有则返回指定的cookie值，如果没有则返回空字符串
+  if (c_start!=-1){ 
+    c_start=c_start + c_name.length+1 
+    c_end=document.cookie.indexOf(";",c_start)
+    if (c_end==-1) c_end=document.cookie.length
+    return unescape(document.cookie.substring(c_start,c_end))
+    } 
+  }
+return ""
+}
+      $('.loginBtn').click(function(){
+          let username = $('#name').val();
+          let password = $('#password').val();
+          console.log(username, password)
+          
+          let url = getBaseUrl();
+
+
+          $.post(url+'user/login',{username:username,password:password},function(res){
+              if(res.code == 1){
+                  layer.msg('登录成功',{icon:1,time:1000},function(){
+                    $.cookie('token', res.token,{expires:1000})
+                      location.href = '/user.html';
+                      // console.log(res)
+                  });
+              }else{
+                  layer.msg('账号或密码错误',{icon:2})
+              }
+          })
+          
+          
+        //   request('userLogin/loginUser.do',{
+        //       "username" : username,
+        //       "password" : password
+        // },function(res){
+        //     console.log(res)
+        //     if(res.success){
+        //         // addCookie(res)
+        //         console.log(res.token_code)
+        //         setcookie('token', res.data.token_code)
+        //         layer.msg('登录成功',{icon:1})
+        //         location.href = '/user.html'
+        //     }else{
+        //         layer.msg(res.errorMsg,{icon:2})
+        //     }
+        // })
+      })
+      console.log(getCookie('token'))
+  </script>
+
+  <script>
+    if($.cookie('lang')=='en'){
+        $('.justify-content-center').text('Ares Logistics System');
+        $('#name').attr('placeholder', 'Please enter your e-mail');
+        $('#password').attr('placeholder', 'Please input your password');
+        $('#toRegister').text('To register');
+        $('.loginBtn').text('Login');
+    }
+  </script>
+</body>
+
+</html>

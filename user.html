@@ -1,0 +1,446 @@
+<!--
+ * @Author: liweilong
+ * @Date: 2020-12-23 10:02:33
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- common begin -->
+  <link rel="stylesheet" href="__CSS__/init.min.css">
+  <link rel="stylesheet" href="__CSS__/font.css">
+  <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/layout/header.css">
+  <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <!-- common end -->
+  <link rel="stylesheet" href="__CSS__/profile.css">
+  <link rel="stylesheet" href="__JS__/plugs/daterangepicker/daterangepicker.css">
+
+    
+  <link rel="stylesheet" href="__CSS__/table/jquery.datatables.min.css">
+  <link rel="stylesheet" href="__CSS__/table/buttons.dataTables.min.css">
+
+  <title>個人中心</title>
+</head>
+
+<body>
+  <!-- nav beigin -->
+ <nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+     
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <div class="language_wrap position-relative ">
+        <div class="top_wrap d-flex justify-content-between">
+          <span class="text langShow">繁體</span>
+          <span class="iconfont icon-iconfontarrows1"></span>
+        </div>
+        <!-- display bottom -->
+        <ul class="lan_ul position-absolute shadow-sm">
+          <li class="lan_li">
+            <a href="javascript:void(0);" class="set-lang lang_en" data-lang="en">英語</a>
+          </li>
+          <li class="lan_li">
+            <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="login_register d-flex justify-content-between">
+        <a href="register.html" class="register">註冊</a>
+        <a href="login.html" class="login">登錄</a>
+      </div>
+
+      <!-- logined -->
+      <!-- <a class="logined ml-5 text-decoration-none" href="profiledetail.html">
+      <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=236107512,1097719150&fm=26&gp=0.jpg"
+        alt="">
+    </a> -->
+    </div>
+  </div>
+
+</nav>
+<!-- nav end -->
+
+  <!-- body content begin -->
+  <section class="mt-5 nav_section">
+    <nav class="container p-0">
+      <ul class="nav_top d-flex justify-content-between align-items-center">
+        <li class="nav_top_li active" data-status="">
+          <a href="javascript:void(0)" class="myOrder">我的訂單</a>
+          <span class="line"></span>
+        </li>|
+        <li class="nav_top_li" data-status="1">
+          <a href="javascript:void(0)" class="delivered">已發貨</a>
+          <span class="line"></span>
+        </li>|
+        <li class="nav_top_li" data-status="0">
+          <a href="javascript:void(0)" class="toBedelivered">待發貨</a>
+          <span class="line"></span>
+        </li>|
+        <li class="nav_top_li" data-status="2">
+          <a href="javascript:void(0)" class="inTransit">运输中</a>
+          <span class="line"></span>
+        </li>|
+        <li class="nav_top_li" data-status="4">
+          <a href="javascript:void(0)" class="signedIn">已簽收</a>
+          <span class="line"></span>
+        </li>|
+        <li class="nav_top_li" data-status="3">
+          <a href="javascript:void(0)" class="toBeSigned">待签收</a>
+          <span class="line"></span>
+        </li>|
+        <li class="nav_top_li" data-status="5">
+          <a href="javascript:void(0)" class="signOneHalfOf">代簽收</a>
+          <span class="line"></span>
+        </li>
+      </ul>
+    </nav>
+    
+
+    <!-- search warp begin -->
+    <div class="search_wrap container pt-4 pb-4 pl-0 pr-0 d-flex justify-content-between align-items-center">
+      <did class="name_search d-flex align-items-center">
+        <form onsubmit="return false;">
+          <div class="input-group">
+            <input type="text" class="form_input rounded-sm pl-2" id="search" placeholder="賬單查詢">
+            <div class="input-group-append">
+              <button onsubmit="return false;" class="input-group-text btn_search">賬單查詢</button>
+            </div>
+          </div>
+        </form>
+        <div class="import_data_btn ml-5" id="generate-excel">
+          導出
+        </div>
+        <input name="file" type="file" hidden>
+      </did>
+      <!-- date search -->
+      <div class="date_search">
+        <label for="date_range" class="riqidate">日期：</label>
+        <input type="text" class="date_picker pl-2" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+      </div>
+    </div>
+    <!-- search warp end -->
+
+    <!-- table content begin -->
+    <div id="example_wrapper" class="dataTables_wrapper">
+    <!-- <div class="table_wrap container p-0" style="height: 680px;"> -->
+      <div class="table_wrap container p-0" style="min-height: 680px;">
+      <table class="table table-hover container p-0" id="orderTable">
+        <thead class="">
+          <tr class="thth">
+            <th>包裹號</th>
+            <th>發貨時間</th>
+            <th>包裹狀態</th>
+            <th>包裹重量</th>
+            <th>運費金額</th>
+            <th>收貨人姓名</th>
+            <th>收貨人電話</th>
+            <th>收貨地址</th>
+          </tr>
+        </thead>
+        <tbody class="tbody" id="showOrder">
+         
+        </tbody>
+      </table>
+    </div>
+
+    <!-- <div class="pagination clearfix float-right mt-5">
+      <div class="page prev">上一页</div>
+      <div class="count float-left page_num"><span class="page page-num active" data-page="1">1</span></div>
+      <div class="page next">下一页</div>
+    </div> -->
+
+
+    <!-- table content end -->
+    <!-- page number -->
+    <div class="card-footer clearfix">
+     <ul class="pagination pagination-sm m-0 float-right">
+
+     </ul>
+    </div>
+  </section>
+  <!-- body content end -->
+
+  <!-- footer begin -->
+  <footer class="row ml-0 mr-o p-0">
+    <div class="footer_top  d-none d-sm-none d-md-block">
+      <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
+        
+      </div>
+    </div>
+    <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
+      <div class="contact">客服电话：12345678142 电子邮件：1462845qq.com</div>
+      <div class="bottom_text">
+        京公网安备 11011502003298号
+      </div>
+    </div>
+  </footer>
+  <!-- footer end -->
+
+
+  <script src="__JS__/plugs/jquery/jquery.min.js"></script>
+  <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
+  <script src="__JS__/plugs/daterangepicker/moment.min.js"></script>
+  <script src="__JS__/plugs/daterangepicker/daterangepicker.js"></script>
+  <script src="__JS__/common.min.js"></script>
+  <script src="__JS__/plugs/layer/layer.js"></script>
+  <!-- <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script> -->
+  <script src="__JS__/cookie.js"></script>
+  <script src="__JS__/init.js"></script>
+
+
+
+  <script type="text/javascript" src="__JS__/table/jszip.min.js"></script>
+  <script type="text/javascript" src="__JS__/table/FileSaver.js"></script>
+  <script type="text/javascript" src="__JS__/table/excel-gen.js"></script>
+  <!-- <script type="text/javascript" src="scripts/demo.page.js"></script> -->
+
+
+
+  <script>
+
+
+    if(!$.cookie('token') || $.cookie('token') == '' || $.cookie('token') == null || $.cookie('token').length != 64){
+      location.href = '/login.html';
+    }
+
+
+
+
+    // date picker
+    $('input[name="dates"]').daterangepicker({
+      opens: 'center'
+    }, function (start, end, label) {
+      console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      Data.excStartTime = start.format('YYYY-MM-DD')
+      Data.excEndTime = end.format('YYYY-MM-DD')
+      getOrderList()
+    });
+  </script>
+<script type="text/javascript" charset="utf-8">
+
+
+function YMD(date) {
+  var date = new Date(date);
+  var YY = date.getFullYear() + '-';
+  var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+  var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+  var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+  var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+  return YY + MM + DD;
+}
+
+function jump(i=0){   
+    if(i != 0){
+        Data.pageNum = i;
+    }
+    getOrderList();
+  }
+
+$('.prev').click(function(){
+    if(Page.isFirstPage){
+        return false;
+    }
+    Page.pageNum = Page.prePage;
+    jump()
+})
+$('.next').click(function(){
+    if(Page.isLastPage){
+        return false;
+    }
+    Page.pageNum = Page.nextPage;
+    jump()
+})
+
+let token = $.cookie('token');
+console.log(token)
+var Data = {
+    token : token,
+    search : '',
+    sn : '',
+    status : '',
+    excStartTime : '',
+    excEndTime : '',
+    pageNum : 1,
+    pageSize:15
+};
+function getOrderList()
+{
+ let url = getBaseUrl()
+    $.post(url + 'order/likeOrderUserById',Data,function(res){
+        console.log(res)
+
+        Data.pageNum = res.pageNum;
+        Data.lastPage = res.pages;
+        Data.isLastPage = res.isLastPage;
+        Data.isFirstPage = res.isFirstPage;
+        Data.nextPage = res.nextPage;
+        Data.prePage = res.prePage;
+
+        let list = res.list
+        let str = '';
+        if(is_en()){
+          for(i in list){
+              str += '<li class="kd-clearfix clearfix"><div class="newslist-title float-left"><a href="/detail.html?id='+list[i].id+'" target="_blank">'+list[i].titleEn+'</a></div><div class="newslist-time float-right"><span class="newslist-time-auth"></span><span class="newslist-time-date">'+YMD(list[i].time)+'</span></div></li>';
+          }
+        }else{
+          for(i in list){
+              str += '<li class="kd-clearfix clearfix"><div class="newslist-title float-left"><a href="/detail.html?id='+list[i].id+'" target="_blank">'+list[i].title+'</a></div><div class="newslist-time float-right"><span class="newslist-time-auth"></span><span class="newslist-time-date">'+YMD(list[i].time)+'</span></div></li>';
+          }
+        }
+        
+        $('.newslist_ul').html(str);
+
+        // 分页
+        let pagestr = '<li class="page-item"><a class="page-link prev" href="javascript:void(0)">«</a></li>';
+        
+
+
+        for(let i = 1; i <= res.pages; i++){
+            if(res.pageNum == i){
+                pagestr += '<li class="page-item active"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
+            }else{
+                pagestr += '<li class="page-item"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+            }
+        }
+
+        pagestr += '<li class="page-item"><a class="page-link next" href="javascript:void(0)">»</a></li>';
+        $('.pagination-sm').html(pagestr)
+
+
+
+        let html = '';
+        for(i in list){
+            let status = '';
+            if(is_en()){
+                switch(list[i].status){
+                    case 0 :
+                        status = 'To be delivered';
+                        break;
+                    case 1 :
+                        status = 'Delivered'
+                        break;
+                    case 2 :
+                        status = 'In transit'
+                        break;
+                    case 3 :
+                        status = 'To be signed'
+                        break;
+                    case 4 :
+                        status = 'Signed in'
+                        break;
+                    case 5 :
+                        status = 'Sign on behalf of'
+                        break;
+                }
+                
+            }else{
+                        switch(list[i].status){
+                    case 0 :
+                        status = '待发货';
+                        break;
+                    case 1 :
+                        status = '已发货'
+                        break;
+                    case 2 :
+                        status = '运输中'
+                        break;
+                    case 3 :
+                        status = '待签收'
+                        break;
+                    case 4 :
+                        status = '已签收'
+                        break;
+                    case 5 :
+                        status = '代签收'
+                        break;
+                }
+            }
+            html += ' <tr><td>'+list[i].sn+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>￥'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td></tr>' ;
+        }
+        $('#showOrder').html(html);
+        btnShow();
+        excel = new ExcelGen({
+            "src_id": "orderTable",
+            "show_header": true
+        });
+        $("#generate-excel").click(function () {
+            excel.generate();
+        });
+    });
+}
+    getOrderList();
+    
+    $('.nav_top_li').click(function(){
+        $('.nav_top_li').removeClass('active');
+        $(this).addClass('active');
+        let status = $(this).attr('data-status');
+        console.log(status)
+        Data.status = status;
+        getOrderList();
+    })
+    $('.btn_search').click(function(){
+        let search = $('#search').val();
+        Data.search = search;
+        Data.status = '';
+        getOrderList();
+    })
+function btnShow(){
+  $('.prev').click(function(){
+        if(Data.isFirstPage){
+            return false;
+        }
+        Data.pageNum = Data.prePage;
+        jump()
+    })
+    $('.next').click(function(){
+        if(Data.isLastPage){
+            return false;
+        }
+        Data.pageNum = Data.nextPage;
+        jump()
+    })
+}
+    
+
+// jump()
+
+
+</script>
+<script>
+  if(is_en()){
+    $('.myOrder').text('My order');
+    $('.delivered').text('Delivered');
+    $('.toBedelivered').text('To be delivered');
+    $('.inTransit').text('In transit');
+    $('.signedIn').text('Signed in');
+    $('.toBeSigned').text('To be signed');
+    $('.signOneHalfOf').text('Sign on behalf of');
+    
+    $('#search').attr('placeholder', 'Bill inquiry');
+    $('.btn_search').text('Bill inquiry');
+    $('.import_data_btn').text('Export');
+    $('.riqidate').text('Date:');
+    $('.thth').html('<th>Package number</th><th>Delivery time</th><th>Package status</th><th>Package weight</th><th>Freight amount</th><th>Name of consignee</th><th>Receiver\'s telephone number</th><th>Receiving address</th>');
+
+
+  }
+
+
+  //渲染菜单
+ showMenu(5);
+</script>
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!--
+ * @Author: liweilong
+ * @Date: 2020-12-14 10:25:50
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- common begin -->
+  <link rel="stylesheet" href="__CSS__/init.min.css">
+  <link rel="stylesheet" href="__CSS__/font.css">
+  <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/layout/header.css">
+  <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <!-- common end -->
+  <link rel="stylesheet" href="__CSS__/websit.css">
+  <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=3.0&ak=j2iUMQMq7Ye6N6k08rQmBogRvsyydr3F&services=&t=20210512114808"></script>
+  <title>網點查詢</title>
+</head>
+
+<body>
+ <!-- nav beigin -->
+ <nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+     
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <div class="language_wrap position-relative ">
+        <div class="top_wrap d-flex justify-content-between">
+          <span class="text langShow">繁體</span>
+          <span class="iconfont icon-iconfontarrows1"></span>
+        </div>
+        <!-- display bottom -->
+        <ul class="lan_ul position-absolute shadow-sm">
+          <li class="lan_li">
+            <a href="javascript:void(0);" class="set-lang lang_en" data-lang="en">英語</a>
+          </li>
+          <li class="lan_li">
+            <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="login_register d-flex justify-content-between">
+        <a href="register.html" class="register">註冊</a>
+        <a href="login.html" class="login">登錄</a>
+      </div>
+
+      <!-- logined -->
+      <!-- <a class="logined ml-5 text-decoration-none" href="profiledetail.html">
+      <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=236107512,1097719150&fm=26&gp=0.jpg"
+        alt="">
+    </a> -->
+    </div>
+  </div>
+
+</nav>
+<!-- nav end -->
+
+
+  <!-- display theme image begin -->
+  <section class="theme_image position-relative">
+    <img src="__IMG__/website.png" class="img-fluid" alt="theme image">
+  </section>
+  <!-- display theme image end -->
+
+  <!-- search order beigin -->
+  <div class="container position-relative search_wrap bg-white shadow-lg  mt-4 pt-0 pl-4 pr-4 pb-4 pt-2">
+    <!-- search input -->
+    <form onsubmit="return false;" class="search_wrap_input justify-content-between row p-0 ml-0 mr-0">
+      <div class="input_wrap d-flex align-items-center justify-content-between p-3 col-md-10 mt-2 row ml-0 mr-0">
+        <div class="col-2 col-sm-2 col-lg-2">
+          <select onchange="searchBtn()" class="form-control rounded-sm select_city" style="padding:0px!important;">
+            <option value="0" class="allOption">全部</option>
+          </select>
+        </div>
+        <input type="text" class="search_input pl-4 col-9 col-sm-10 col-lg-10" placeholder="請輸入要查詢的網點">
+      </div>
+      <button onsubmit="return false;" class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">
+        <span class="iconfont icon-chaxun mr-2"></span>
+        <span class="text searchBtn">查快遞</span>
+      </button>
+    </form>
+
+    <div class="search_content pt-3 pb-3 d-flex justify-content-between row ml-0 mr-0">
+      <!-- left -->
+      <div id="queryResult" class="network-list col-lg-6">
+       
+      </div>
+      <!-- right -->
+      <div class="map_map col-lg-6" id="map_map">
+
+      </div>
+    </div>
+
+  </div>
+  <!-- search order end -->
+
+  <!-- footer begin -->
+  <footer class="row ml-0 mr-o p-0">
+    <div class="footer_top  d-none d-sm-none d-md-block">
+      <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
+        
+      </div>
+    </div>
+    <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
+      <div class="contact">客服电话：12345678142 电子邮件：1462845qq.com</div>
+      <div class="bottom_text">
+        京公网安备 11011502003298号
+      </div>
+    </div>
+  </footer>
+  <!-- footer end -->
+
+  <script src="__JS__/plugs/jquery/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
+  <script src="__JS__/common.min.js"></script>
+  <script src="__JS__/init.js"></script>
+
+  <script>
+    var map = new BMap.Map("map_map", {
+      coordsType: 5
+    });
+
+  function showMap(j, w)
+  {
+    var point = new BMap.Point(Number(j), Number(w));  // 创建点坐标  
+    map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别 
+    map.enableScrollWheelZoom(true);
+    map.clearOverlays()
+    var marker = new BMap.Marker(new BMap.Point(Number(j), Number(w)));
+    map.addOverlay(marker);
+
+  }
+
+  function clickShowMap(){
+    $('.show_map').click(function(){
+      let J = $(this).attr('data-J');
+      let W = $(this).attr('data-W');
+      showMap(J, W)
+    })
+  }
+
+
+
+  request('area/queryAreaList.do',{
+              "pageNum" : 1,
+              "pageSize" : 50
+  },function(res){
+      let area = res.data.list;
+      let option = '';
+      for(i in area){
+      option += '<option value="'+area[i].code+'">'+area[i].area+'</option>';
+      }
+      $('.select_city').append(option)
+  })
+
+
+  request('outlets/getOutletsList.do', {
+    "pageNum" : 1,
+    "pageSize" : 10
+  },function(res){
+    
+    let list = res.data.list
+
+    showMap(list[0].longitude, list[0].latitude)
+
+    let dl = ''
+    for(i in list){
+      let tel = list[i].company_tel?list[i].company_tel:'无'
+      dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].express_name+'</span><a href="javascript:void(0)">'+list[i].area_name+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].company_address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
+    }
+    $('#queryResult').html(dl)
+    clickShowMap()
+
+  })
+
+
+
+
+
+
+
+  // outlets/getOutletsList.do
+
+</script>
+
+<script>
+if(is_en()){
+  $('.search_input').attr('placeholder', 'Please enter the outlets to be inquired');
+  $('.searchBtn').text('Search');
+  $('.allOption').text('All');
+}
+
+ //渲染菜单
+ showMenu(2);
+
+</script>
+
+<script>
+  let Outlets = {
+    areaId : 0,
+    address : '',
+    addressEn : ''
+  }
+
+  $(document).ready(function(){
+    searchBtn();
+  });
+
+  function getAll()
+  {
+    let url = getBaseUrl();
+    $.get(url + 'area/areaAll',function(res){
+      let str = '';
+      if(is_en()){
+        for(i in res){
+          str += '<option value="'+res[i].id+'">'+res[i].areaen + '</option>';
+        }
+      }else{
+        for(i in res){
+          str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
+        }
+      }
+      $('.select_city').append(str);
+  });
+
+
+  $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
+    console.log(res)
+    let list = res;
+    let dl = ''
+    for(i in list){
+      if(is_en()){
+        let tel = list[i].phone?list[i].phone:'null'
+        dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.nameEn+'</span><a href="javascript:void(0)">'+list[i].area.areaEn+'<font color="red">Service Department</font></a></dt><dd>Company address：'+list[i].addressEn+'</dd><dd>Contact number：'+tel+'</dd></dl>';
+      }else{
+        let tel = list[i].phone?list[i].phone:'无'
+        dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
+      }
+    }
+    if(list.length > 0){
+
+      showMap(list[0].longitude,list[0].latitude)
+      $('#queryResult').html(dl)
+    }else{
+      let noDl="<p style='text-align :center;'>十分抱歉,暫無該地區的網點！</>";
+      $('#queryResult').html(noDl);
+    }
+
+    clickShowMap()
+
+    // for(i in list){
+    //   let tel = list[i].company_tel?list[i].company_tel:'无'
+    //   dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].express_name+'</span><a href="javascript:void(0)">'+list[i].area_name+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].company_address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
+    // }
+    // $('#queryResult').html(dl)
+  })
+  }
+
+  
+  function searchBtn(){
+    let area = $('.select_city').val();
+    let express_name = $('.search_input').val();
+
+    Outlets.areaId = area;
+    if(is_en()){
+      Outlets.addressEn = express_name;
+    }else{
+      Outlets.address = express_name;
+    }
+    getAll();
+  };
+
+  
+$('.search_btn').click(function(){
+  searchBtn();
+  // request('outlets/getOutletsList.do', {
+  //   "pageNum" : 1,
+  //   "pageSize" : 50,
+  //   "area" : area,
+  //   "express_name" : express_name
+  // },function(res){
+
+  //   let list = res.data.list
+  //   let dl = ''
+  //   for(i in list){
+  //     let tel = list[i].company_tel?list[i].company_tel:'无'
+  //     dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].express_name+'</span><a href="javascript:void(0)">'+list[i].area_name+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].company_address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
+  //   }
+  //   $('#queryResult').html(dl)
+  //   clickShowMap()
+
+  // })
+})
+// getAll()
+</script>
+</body>
+</html>

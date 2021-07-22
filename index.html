@@ -1,0 +1,186 @@
+<!--
+ * @Author: liweilong
+ * @Date: 2020-12-14 10:25:50
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- common begin -->
+  <link rel="stylesheet" href="__CSS__/init.min.css">
+  <link rel="stylesheet" href="__CSS__/font.css">
+  <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/layout/header.css">
+  <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <!-- common end -->
+  <link rel="stylesheet" href="__CSS__/index.css">
+  <title>首頁</title>
+</head>
+
+<body>
+  <!-- nav beigin -->
+  <nav class="navbar navbar-expand-lg navbar-dark ">
+    <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <div class="form-inline my-2 my-lg-0">
+        <div class="language_wrap position-relative ">
+          <div class="top_wrap d-flex justify-content-between">
+            <span class="text langShow">繁體</span>
+            <span class="iconfont icon-iconfontarrows1"></span>
+          </div>
+          <!-- display bottom -->
+          <ul class="lan_ul position-absolute shadow-sm">
+            <li class="lan_li">
+              <a href="javascript:void(0);" class="set-lang lang_en" data-lang="en">英語</a>
+            </li>
+            <li class="lan_li">
+              <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="login_register d-flex justify-content-between">
+          <a href="register.html" class="register">註冊</a>
+          <a href="login.html" class="login">登錄</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+ 
+  <!-- nav end -->
+
+  <!-- display theme image begin -->
+  <div class="theme_image position-relative">
+    <span class="theme_text position-absolute bannerText">
+      Ares物流系統
+    </span>
+    <img src="__IMG__/index.png" class="img-fluid" alt="theme image">
+  </div>
+  <!-- display theme image end -->
+
+  <!-- search order beigin -->
+  <div class="container position-relative search_wrap bg-white shadow-lg pt-2 pl-4 pr-4 pb-4">
+    <!-- search input -->
+    <form class="search_wrap_input  justify-content-between row p-0 ml-0 mr-0" onsubmit="return false;">
+      <div class="input_wrap d-flex align-items-center justify-content-between p-3 col-md-10 mt-2">
+        <span class="iconfont icon-kuaidi-"></span>
+        <input type="text" class="search_input pl-4 col-11" placeholder="請輸入包裹查詢號">
+      </div>
+      <button class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">
+        <span class="iconfont icon-chaxun mr-2"></span>
+        <span class="text searchBtn">查快遞</span>
+      </button>
+    </form>
+
+    <!-- order content state -->
+    <div id="search_content" class="order_state_wrap">
+
+    </div>
+
+  </div>
+  <!-- search order end -->
+
+  <!-- footer begin -->
+  <footer class="row ml-0 mr-o p-0">
+    <div class="footer_top  d-none d-sm-none d-md-block">
+      <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
+      </div>
+    </div>
+    <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
+      <div class="contact">
+        客服電話：+852 2353 0188 &nbsp;
+        電子郵件：info@hkares.com
+      </div>
+      <div class="bottom_text">
+        地址: 新蒲崗大有街1號 勤達中心1208室
+        <!--      京公网安备 11011502003298号-->
+      </div>
+    </div>
+  </footer>
+  <!-- footer end -->
+
+  <script src="__JS__/plugs/jquery/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
+  <script src="__JS__/plugs/layer/layer.js"></script>
+  <script src="__JS__/common.min.js"></script>
+  <script src="__JS__/init.js"></script>
+  
+<script>
+  if(is_en()){
+    $('.bannerText').text('OMS website system official website new online');
+    $('.search_input').attr('placeholder', 'Please enter the package inquiry number')
+    $('.searchBtn').text('Check Express');
+  }
+  //渲染菜单
+  showMenu(0);
+
+  let orderNumber;
+
+  $('.search_btn').click(function(){
+    if (!$('.search_input').val()) {
+      layer.alert('請輸入包裹查詢號', {icon: 2, time: 2000});
+      return false;
+    } else {
+      orderNumber = $('.search_input').val();
+      console.log($('.search_input').val());
+      $.ajax({
+        type: 'GET',
+        url: 'http://121.199.54.43:8888/package/queryOrderTracking?orderNo=' + orderNumber,
+        success : function(result){
+          console.log(result);
+          if(result.data == ''){
+            document.getElementById("search_content").innerHTML = '';
+            layer.alert('該包裹查詢不到軌跡，請核實單號是否正確',{icon:2,time:2000});
+          }
+          if(result.code == 200){
+            console.warn(result.data);
+            console.log(result.data.length);
+            document.getElementById("search_content").innerHTML = '';
+            var length = result.data.length-1
+            document.getElementById("search_content").innerHTML +=
+                    '<div class="time_line">\n' +
+                    '        <span class="line"></span>\n' +
+                    '        <div class="iconfont icon-yuancircle46"></div>\n' +
+                    '        <div class="state_text current_active">\n' +
+                    '          <span class="date">'+result.data[0].createTime+'&nbsp;&nbsp;&nbsp;</span>\n' +
+                    '          <span class="order_state">\n' +
+                    '            '+result.data[0].eventName +
+                    '          </span>\n' +
+                    '        </div>\n' +
+                    '      </div>'
+            for(var i=1; i<=length; i++){
+              document.getElementById("search_content").innerHTML +=
+                      '<div class="time_line">\n' +
+                      '        <span class="line"></span>\n' +
+                      '        <div class="iconfont icon-yuancircle46"></div>\n' +
+                      '        <div class="state_text">\n' +
+                      '          <span class="date">'+result.data[i].createTime+'&nbsp;&nbsp;&nbsp;</span>\n' +
+                      '          <span class="order_state">\n' +
+                      '            '+result.data[i].eventName +
+                      '          </span>\n' +
+                      '        </div>\n' +
+                      '      </div>'
+            }
+          }
+        }
+      })
+    }
+
+  });
+
+</script>
+</body>
+
+</html>
