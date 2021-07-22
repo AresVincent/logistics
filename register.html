@@ -1,0 +1,275 @@
+<!--
+ * @Author: liweilong
+ * @Date: 2020-12-21 15:41:38
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- common begin -->
+  <link rel="stylesheet" href="__CSS__/init.min.css">
+  <link rel="stylesheet" href="__CSS__/font.css">
+  <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
+  <!-- common end -->
+
+  <link rel="stylesheet" href="__CSS__/register.css">
+  <link rel="stylesheet" href="__JS__/plugs/swiper/swiper.min.css">
+  <link rel="stylesheet" href="__JS__/plugs/sweetalert2/sweetalert2.min.css">
+  <script src="__JS__/plugs/jquery/jquery.min.js"></script>
+  <script src="__JS__/plugs/sweetalert2/sweetalert2.min.js"></script>
+  <title>註冊</title>
+</head>
+
+<body>
+  <div class="login-wrap" style="background-image: url(__IMG__/login.png);">
+    <div class="login d-flex align-items-center">
+      <!-- login begin -->
+      <div class="container p-0 login_content d-flex justify-content-between shadow-lg">
+        <div class="left_wrap position-relative h-100">
+          <img class="login_people position-absolute" src="__IMG__/login_people.png" alt="图片">
+          <img class="login_cargo position-absolute" src="__IMG__/login_cargo.png" alt="图片">
+        </div>
+        <div class="right_wrap  h-100 ">
+          <div class="title w-100 d-flex justify-content-center" id="webName">Ares 物流系統</div>
+          <div class="tans_tag swiper-pagination d-flex justify-content-between w-100 position-relative p-2 mt-2">
+            <div class="buy_wrap title_text ">
+              <!--手機號註冊-->
+            </div>
+            <div class="used_wrap  title_text text_active">
+              <!--使用郵箱-->
+            </div>
+          </div>
+
+          <div class="swiper-container sign_login_swiper w-100 h-100">
+            <div class="swiper_wrap swiper-wrapper w-100 h-100">
+             
+
+              <!-- email register begin -->
+              <div class="slide_item swiper-slide w-100 h-100" data-hash="usedrecode">
+                <form class="login_form"  onsubmit="return false;">
+                  <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
+                    <span class="iconfont icon-iconzh1"></span>
+                    <input type="name" name="username" class="input ml-2 mr-2 border-0" placeholder="請輸入用戶名稱" onblur="checkStr(this)">
+                  </div>
+                  <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
+                    <span class="iconfont icon-iconzh1"></span>
+                    <input type="name" name="email" class="input ml-2 mr-2 border-0" placeholder="請輸入郵箱" onblur="checkEmail(this)">
+                  </div>
+                  <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
+                    <span class="iconfont icon-iconzh1"></span>
+                    <select name="districtNum" class="districtNum">
+                      <option value="852">+852</option>
+                      <option value="86">+86</option>
+                    </select>
+                    <input type="name" name="phone" class="input ml-2 mr-2 border-0" placeholder="請輸入電話號碼" onblur="checkNum(this)">
+                  </div>
+                  <!-- <div class="input-wrap w-100 d-flex justify-content-between" style="margin-top: 31px;">
+                    <span class="iconfont icon-suo pt-2 pl-2"></span>
+                    <input type="text" name="code" class="input ml-2 mr-2  border-0" placeholder="請輸郵箱驗證碼">
+                    <div class="d-flex verify_code justify-content-center align-items-center send_email_code">獲取驗證碼
+
+                    </div>
+                  </div> -->
+                  <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
+                    <span class="iconfont icon-suo"></span>
+                    <input type="password" name="password" class="input ml-2 mr-2  border-0" placeholder="請輸入密碼">
+                    <span class="iconfont  icon-yanjing1 display_password"></span>
+                  </div>
+                  <!-- <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
+                    <span class="iconfont icon-suo"></span>
+                    <input type="password" name="passwordtwo" class="input ml-2 mr-2  border-0" placeholder="確認密碼
+
+                    ">
+                    <span class="iconfont  icon-yanjing1 display_password"></span>
+                  </div> -->
+
+                  <!-- forget password begin -->
+                  <div class="d-flex border-0 justify-content-between mt-4">
+                    <a href="login.html" class="text-decoration-none link toLogin">已有帳號，去登錄</a>
+
+                  </div>
+                  <!-- forget password end -->
+
+                  <!-- submit begin -->
+                  <button onsubmit="return false;" class="w-100 login_btn mt-2 registerBtn">註冊</button>
+                  <!-- submit end -->
+                </form>
+              </div>
+              
+              
+              
+               <!-- phone register begin -->
+              <!--<div class="slide_item swiper-slide w-100 h-100" data-hash="buyrecode">-->
+              <!--  <form class="login_form">-->
+              <!--    <div class="input-wrap p-2 w-100 d-flex justify-content-between">-->
+              <!--      <span class="iconfont icon-iconzh1"></span>-->
+              <!--      <input type="name" class="input ml-2 mr-2 border-0" placeholder="请输入手机号">-->
+              <!--    </div>-->
+              <!--    <div class="input-wrap w-100 d-flex justify-content-between" style="margin-top: 31px;">-->
+              <!--      <span class="iconfont icon-securityCode-b pt-2 pl-2"></span>-->
+              <!--      <input type="text" class="input ml-2 mr-2  border-0" placeholder="请输手机验证码">-->
+              <!--      <div class="d-flex verify_code justify-content-center align-items-center send_sms">获取验证码</div>-->
+              <!--    </div>-->
+              <!--    <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">-->
+              <!--      <span class="iconfont icon-suo"></span>-->
+              <!--      <input type="password" class="input ml-2 mr-2  border-0" placeholder="请输入密码">-->
+              <!--      <span class="iconfont  icon-yanjing1 display_password"></span>-->
+              <!--    </div>-->
+              <!--    <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">-->
+              <!--      <span class="iconfont icon-suo"></span>-->
+              <!--      <input type="password" class="input ml-2 mr-2  border-0" placeholder="确认密码">-->
+              <!--      <span class="iconfont  icon-yanjing1 display_password"></span>-->
+              <!--    </div>-->
+
+                  <!-- forget password begin -->
+              <!--    <div class="d-flex border-0 justify-content-between mt-4">-->
+              <!--      <a href="login.html" class="text-decoration-none link">已有账号，去登录</a>-->
+
+              <!--    </div>-->
+                  <!-- forget password end -->
+
+                  <!-- submit begin -->
+              <!--    <button class="w-100 login_btn mt-2">註冊</button>-->
+                  <!-- submit end -->
+              <!--  </form>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- login end -->
+    </div>
+  </div>
+
+  <script src="__JS__/plugs/swiper/swiper.min.js"></script>
+  <script src="__JS__/login.min.js"></script>
+  <script src="__JS__/popout.min.js"></script>
+    <script src="__JS__/plugs/layer/layer.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="__JS__/common.min.js"></script>
+    <!-- <script src="__JS__/md5.js"></script> -->
+  <script>
+    var url = getBaseUrl();
+    // 驗證碼發送
+    function semsCode(times, el) {
+      let timer = null;
+      $(el).click(function () {
+      let email = $('input[name="email"]').val();
+      if(email == ''){
+        msg.error('請輸入郵箱');
+        return false;
+      }
+        let allsec = times;
+        if (timer) return;
+        $.post(url + 'user/getCode',{email:email},function(res){
+              console.log(res)
+              if(res == 1){
+                msg.success('發送成功!');
+                // 定时开始计算
+                  timer = setInterval(function () {
+                    allsec--;
+                    $(el).text(allsec + 's');
+                    $(el).css({
+                      'background-color': '#C0C0C0'
+                    });
+
+                    if (allsec <= 0) {
+                      $(el).css({
+                        'background-color': '#1890FF'
+                      });
+                      clearInterval(timer);
+                      $(el).text('發送驗證碼')
+                      semsCode(times, el);
+                    }
+                  }, 1000)
+              }else{
+                msg.error('發送頻繁！')
+              }
+          })
+        
+        
+
+      })
+    }
+
+    semsCode(5, '.send_email_code')
+
+   
+  </script>
+  <script type="text/javascript" charset="utf-8">
+      $('.registerBtn').click(function(){
+          let username = $('input[name="username"]').val();
+          let email = $('input[name="email"]').val();
+          let phone = $('.districtNum').val()+$('input[name="phone"]').val();
+          let password = $('input[name="password"]').val();
+          // let passwordtwo = $('input[name="passwordtwo"]').val();
+          
+          if(username == ''){
+              layer.msg('請輸入用戶名稱',{icon:2,time:1500});
+              return false;
+          }
+          if(email == ''){
+              layer.msg('請輸入郵箱',{icon:2,time:1500});
+              return false;
+          }
+          if(phone==""){
+            layer.msg('請輸入電話號碼',{icon:2,time:1500})
+            return false;
+          }
+          if(password == ''){
+              layer.msg('請輸入密碼',{icon:2,time:1500});
+              return false;
+          }
+    
+          // if(passwordtwo == ''){
+          //     layer.msg('請在輸一次',{icon:2,time:1500});
+          //     return false;
+          // }
+          // if(password !== passwordtwo){
+          //     layer.msg('兩次密碼不一致',{icon:2,time:1500});
+          //     return false;
+          // }
+         let data = {
+              email : email,
+              username:username,
+              phone:phone,
+              password :password,
+         }
+
+         
+         $.post(url + 'user/register',data,function(res){
+            if(res == 1){
+              msg.success('註冊成功');
+              window.location.href = './login.html';
+            }else if(res == -1){
+              msg.error('該郵箱已註冊');
+            }else{
+              msg.error('註冊失敗');
+            }
+
+         })
+      })
+  </script>
+
+  <script>
+    if($.cookie('lang')=='en'){
+        $('#webName').text('Ares Logistics System');
+        $('input[name="email"]').attr('placeholder', 'Please input your email');
+        // $('input[name="code"]').attr('placeholder', 'Please enter the code');
+        $('input[name="username"]').attr('placeholder', 'Please enter your username');
+        $('input[name="password"]').attr('placeholder', 'Please input your password');
+        $('input[name="phone"]').attr('placeholder', 'Please enter your phone number');
+        
+        $('.toLogin').text('To login');
+        $('.registerBtn').text('Register');
+        $('.send_email_code').text('Get code');
+        $('.registerBtn').text('Get code');
+    }
+
+
+  </script>
+</body>
+
+</html>
