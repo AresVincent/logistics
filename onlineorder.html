@@ -74,7 +74,7 @@
   <!-- form begin -->
   <div class="form_wrap container shadow-lg mt-4 p-5">
     <form action=""  onsubmit="return false;">
-      <div class=" mb-2 row">
+      <div class=" mb-form-standard row">
         <h4 class="col-md-3 col-12"><b>派送方式:</b></h4>
         <div class="col-12">
           <div class="row">
@@ -93,14 +93,14 @@
           </div>
         </div>
       </div>
-      <div class="mb-2 row">
+      <div class="mb-form-standard row">
         <h4 class="col-md-3 col-12"><b>寄件人資料:</b></h4>
       </div>
-      <div class=" mb-2 row mr-0">
+      <div class=" mb-form-standard row mr-0">
         <div class=" col-12 col-md-6">
           <div class="row">
-            <label for="send_name" class="col-form-label send_name col-5 col-md-3 mb-2">姓名:<span class="badge  text-danger">*</span></label>
-            <input type="text" name="send_name" class="form-control col-7 col-md-9 mb-2">
+            <label for="send_name" class="col-form-label send_name col-5 col-md-3 mb-form-standard">姓名:<span class="badge  text-danger">*</span></label>
+            <input type="text" name="send_name" class="form-control col-7 col-md-9 mb-form-standard">
           </div>
 
           <!-- <select name="send_name" class="form-control ml-2 rounded-sm sendAddressSelect">
@@ -108,13 +108,13 @@
         </div>
         <div class=" col-12 col-md-6">
           <div class="row">
-            <label for="send_phone" class="col-form-label send_phone col-5 col-md-3 mb-2">聯繫電話<span class="badge  text-danger">*</span></label>
-            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-2">
+            <label for="send_phone" class="col-form-label send_phone col-5 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
+            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard">
           </div>
         </div>
       </div>
       <!-- send address -->
-      <div class="mb-2 ">
+      <div class="mb-form-standard ">
         <div class=" row mr-0">
           <label for="send_area_id" class="col-form-label  send_area_id col-5 col-md-2">倉庫地址<span class="badge  text-danger">*</span></label>
           <!-- <label class="send_province col-form-label gudingdizhi">中國香港</label> -->
@@ -125,15 +125,15 @@
           </select>         
         </div>
       </div>
-      <div class="mb-2 row">
+      <div class="mb-form-standard row">
         <h4 class="col-md-3 col-12"><b>收件人資料:</b></h4>
       </div>
       <!-- receive people -->
-      <div class="mb-2 mr-0 row">
+      <div class="mb-form-standard mr-0 row">
           <div class=" col-12 col-md-6">
             <div class="row">
-              <label for="get_name" class="col-form-label get_name col-5 col-md-3 mb-2">姓名<span class="badge  text-danger">*</span></label>
-              <input type="text" name="get_name" class="form-control col-7 col-md-9 mb-2">
+              <label for="get_name" class="col-form-label get_name col-5 col-md-3 mb-form-standard">姓名<span class="badge  text-danger">*</span></label>
+              <input type="text" name="get_name" class="form-control col-7 col-md-9 mb-form-standard">
             </div>
           </div>
           <div class=" col-12 col-md-6">
@@ -145,7 +145,7 @@
       </div>
 
       <!-- mode select -->
-      <div class=" mb-2 row">
+      <div class=" mb-form-standard row">
         <div class="col-12">
           <div class="row">
             <!-- <div class="col-12 col-md-6">
@@ -159,7 +159,7 @@
               </div>
             </div> -->
             
-            <div class="mb-2 selfieBox col-12 col-md-6">
+            <div class="mb-form-standard selfieBox col-12 col-md-6">
               <div class="row mr-0">
                 <label for="place" class="col-form-label place col-5 col-md-3">自提點名稱</label>
                 <!-- <input type="text" name="place" class="form-control ml-2 rounded-sm"> -->
@@ -167,7 +167,7 @@
                 </select>
               </div>
             </div>
-            <div class="mb-2 col-12 col-md-6 ">
+            <div class="mb-form-standard col-12 col-md-6 ">
               <div class="row ml-2 mr-0">
                 <select name="point" class="form-control rounded-sm col-12">
                     <option value="0">請選擇自提點</option>
@@ -178,7 +178,7 @@
         </div>
       </div>
       <!-- receive address -->
-      <div class="mb-2 addressBox row"  style="display: none;">
+      <div class="mb-form-standard addressBox row"  style="display: none;">
             <label for="get_area_id" class="col-form-label col-5 col-md-2 get_area_id">地址<span class="badge  text-danger">*</span></label>
             <label class="send_province col-form-label gudingdizhi col-7 col-md-2">中國香港</label>
             <!-- <select class="form-control rounded-sm ml-3 areaSelect" name="get_area_id">
@@ -208,29 +208,35 @@
             </div>
             <!-- <input type="text" class="form-control ml-2 get_address" name="get_address" placeholder="詳細地址" style="width: 300px;"> -->
       </div>
-      <div class="mb-2 row">
+      <div class="mb-form-standard row">
         <h4 class="col-md-3 col-12"><b>貨物資料:</b></h4>
       </div>
 
       <!-- spec information -->
-      <div class="mb-2 row">
+      <div class="mb-form-standard row">
         <h5 class="col-md-3 col-12"><b>規格資料:</b></h5>
       </div>
-      <div class="row mb-2">
-        <div class="mb-2 col-12 col-md-6">
+      <div class="row mb-form-standard">
+        <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="weight" class="col-form-label  weight col-3 col-md-2">重量<span class="badge  text-danger">*</span></label>
-            <input type="text" name="weight" class="form-control rounded-sm col-9 col-md-10" placeholder="kg" onblur="CalculateFee()">
+            <input type="text" name="weight" class="form-control rounded-sm col-9 col-md-10" placeholder="kg" onchange="CalculateFee()">
           </div>
         </div>
-        <div class="mb-2 col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
-            <label for="volume" class="col-form-label volume col-2">長<span class="badge  text-danger"></span></label>
-            <input type="text" name="length" class="form-control rounded-sm col-2" placeholder="cm" onblur="checkNum(this)">
-            <label for="volume" class="col-form-label volume col-2">寬<span class="badge  text-danger"></span></label>
-            <input type="text" name="width" class="form-control rounded-sm col-2" placeholder="cm" onblur="checkNum(this)">
-            <label for="volume" class="col-form-label volume col-2">高<span class="badge  text-danger"></span></label>
-            <input type="text" name="height" class="form-control rounded-sm col-2" placeholder="cm" onblur="checkNum(this)">
+            <label for="length" class="col-form-label  col-2">長<span class="badge  text-danger"></span></label>
+            <input type="text" name="length" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkNum(this)" />
+            <label for="width" class="col-form-label  col-2">寬<span class="badge  text-danger"></span></label>
+            <input type="text" name="width" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkNum(this)" />
+            <label for="height" class="col-form-label  col-2">高<span class="badge  text-danger"></span></label>
+            <input type="text" name="height" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkNum(this)" />
+          </div>
+        </div>
+        <div class="mb-form-standard col-12">
+          <div class="mr-0 row">
+            <label for="volume" class="col-form-label col-md-3 col-6">包裹內是否包含電池<span class="badge  text-danger"></span></label>
+            <input type="checkbox" name="isHaveBattery" class="form-control rounded-sm col-md-1 col-2" />
           </div>
         </div>
         <!-- <div class="mb-3 col-12 col-md-6">
@@ -242,17 +248,17 @@
       </div>
      
       <!-- goods information -->
-      <div class="mb-2 row">
+      <div class="mb-form-standard row">
         <h5 class="col-md-3 col-12"><b>物品資料:</b></h5>
       </div>
       <div class="row">
-        <div class="mb-2 col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="goods" class="col-form-label goods col-4 col-md-2">名稱<span class="badge  text-danger">*</span></label>
             <input type="text" name="goods" class="form-control rounded-sm col-8 col-md-10">
           </div>
         </div>
-        <div class="mb-2 col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="num" class="col-form-label num col-4 col-md-2">數量<span class="badge  text-danger">*</span></label>
             <input type="number" name="num" class="form-control rounded-sm col-8 col-md-10">
@@ -263,7 +269,7 @@
 
           </div>
         </div>
-        <div class="mb-2 col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="price" class="col-form-label price col-4 col-md-3">運費<span class="badge  text-danger">*</span>$</label>
             <input type="text" id="Total" name="price" class="form-control rounded-sm col-8 col-md-9" value="0" readonly>
@@ -273,7 +279,7 @@
       
 
 
-      <div class="row mb-2">
+      <div class="row mb-form-standard">
         <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如貨物中物品種類多於一種,請點擊添加物品進行操作！</label>
       </div>
       <a id="addItem" href="javascript:void(0);">添加項目</a>
@@ -541,9 +547,9 @@ $('.submitBtn').click(function(){
 });
 $("#addItem").click(function(){
   let strForm=""
-  strForm+='<div class="mb-2 col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
+  strForm+='<div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
   strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="goods" class="form-control rounded-sm col-8 col-md-10">';
-  strForm+='</div></div><div class="mb-2 col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
+  strForm+='</div></div><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
   strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="num" class="form-control rounded-sm col-8 col-md-10">';
   strForm+='</div></div>';
   $(".elseItem .items").append(strForm);
