@@ -102,14 +102,11 @@
             <label for="send_name" class="col-form-label send_name col-5 col-md-3 mb-form-standard">姓名:<span class="badge  text-danger">*</span></label>
             <input type="text" name="send_name" class="form-control col-7 col-md-9 mb-form-standard">
           </div>
-
-          <!-- <select name="send_name" class="form-control ml-2 rounded-sm sendAddressSelect">
-          </select> -->
         </div>
         <div class=" col-12 col-md-6">
           <div class="row">
             <label for="send_phone" class="col-form-label send_phone col-5 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
-            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard">
+            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard" onchange="checkNum(this)">
           </div>
         </div>
       </div>
@@ -139,37 +136,26 @@
           <div class=" col-12 col-md-6">
             <div class="row">
               <label for="get_phone" class="col-form-label get_phone col-5 col-md-3">聯繫電話<span class="badge  text-danger">*</span></label>
-              <input type="text" name="get_phone" class="form-control col-7 col-md-9">
+              <input type="text" name="get_phone" class="form-control col-7 col-md-9" onchange="checkNum(this)">
             </div>
           </div>
       </div>
 
       <!-- mode select -->
-      <div class=" mb-form-standard row">
+      <div class=" mb-form-standard row pickupBox" >
         <div class="col-12">
           <div class="row">
-            <!-- <div class="col-12 col-md-6">
-              <div class="row">
-                <label for="mode" class="col-form-label mode col-3">派送方式<span class="badge  text-danger">*</span></label>
-                <select name="mode" class="form-control rounded-sm modeSelect col-9" onchange="changeWay()">
-                  <option value="home">送貨上門</option>
-                  <option value="selfiePoint">自提點</option>
-                  <option value="slefieBox">自提櫃</option>
-                </select>
-              </div>
-            </div> -->
-            
             <div class="mb-form-standard selfieBox col-12 col-md-6">
               <div class="row mr-0">
                 <label for="place" class="col-form-label place col-5 col-md-3">自提點名稱</label>
                 <!-- <input type="text" name="place" class="form-control ml-2 rounded-sm"> -->
-                <select name="place" class="form-control rounded-sm col-7 col-md-9">
+                <select name="get_area_id" class="form-control rounded-sm col-7 col-md-9" onchange="selectPickup()">
                 </select>
               </div>
             </div>
             <div class="mb-form-standard col-12 col-md-6 ">
               <div class="row ml-2 mr-0">
-                <select name="point" class="form-control rounded-sm col-12">
+                <select name="get_pickupPoint" class="form-control rounded-sm col-12">
                     <option value="0">請選擇自提點</option>
                 </select>
               </div>
@@ -187,7 +173,10 @@
             <div class="col-12 col-md-8">
               <div class="row ml-0 mr-0">
                 <select class="form-control rounded-sm mb-3 col-5 regionSelect" name="get_region">
-
+                  <option value="0">請選擇</option>
+                  <option value="1">九龍</option>
+                  <option value="2">港島</option>
+                  <option value="3">新界</option>
                 </select>
                 <div class="col-2"></div>
                 <select class="form-control rounded-sm mb-3 col-5 areaSelect" name="get_area_id">
@@ -197,13 +186,10 @@
             </div>
             <div class="col-12">
               <div class="row ml-0 mr-0">
-                <!-- <select class="form-control rounded-sm mb-3 streetSelect col-12 col-md-5" name="get_street_id">
-                  <option value="">請選擇一個街道</option>
-                </select> -->
-                <input type="text" class="form-control mb-3 send_address col-12 col-md-5"  placeholder="請填寫所在街道" name="get_street_id">
+                <input type="text" class="form-control mb-3 col-12 col-md-5"  placeholder="請填寫所在街道" name="get_street_id">
                 <div class="col-1 col-md-2"></div>
                 <!-- detail address -->
-                <input type="text" class="form-control mb-3 send_address col-12 col-md-5"  placeholder="請填寫所在大廈及樓層單位" name="get_address">
+                <input type="text" class="form-control mb-3 col-12 col-md-5"  placeholder="請填寫所在大廈及樓層單位" name="get_address">
               </div>
             </div>
             <!-- <input type="text" class="form-control ml-2 get_address" name="get_address" placeholder="詳細地址" style="width: 300px;"> -->
@@ -226,11 +212,11 @@
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="length" class="col-form-label  col-2">長<span class="badge  text-danger"></span></label>
-            <input type="text" name="length" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkNum(this)" />
+            <input type="text" name="length" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkFloat(this)" />
             <label for="width" class="col-form-label  col-2">寬<span class="badge  text-danger"></span></label>
-            <input type="text" name="width" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkNum(this)" />
+            <input type="text" name="width" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkFloat(this)" />
             <label for="height" class="col-form-label  col-2">高<span class="badge  text-danger"></span></label>
-            <input type="text" name="height" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkNum(this)" />
+            <input type="text" name="height" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkFloat(this)" />
           </div>
         </div>
         <div class="mb-form-standard col-12">
@@ -252,16 +238,17 @@
         <h5 class="col-md-3 col-12"><b>物品資料:</b></h5>
       </div>
       <div class="row">
+
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="goods" class="col-form-label goods col-4 col-md-2">名稱<span class="badge  text-danger">*</span></label>
-            <input type="text" name="goods" class="form-control rounded-sm col-8 col-md-10">
+            <input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">
           </div>
         </div>
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="num" class="col-form-label num col-4 col-md-2">數量<span class="badge  text-danger">*</span></label>
-            <input type="number" name="num" class="form-control rounded-sm col-8 col-md-10">
+            <input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10" onchange="checkNum(this)">
           </div>
         </div>
         <div class="elseItem col-12">
@@ -342,16 +329,17 @@
   <script src="__JS__/init.js"></script>
 <script>
   let url = getBaseUrl();
+
   $.get(url + 'area/areaAll',function(res){
     console.log(res)
     let str = ''; 
     if(is_en()){
-      str+='<option value="">please select a district</option>'
+      str+='<option value="0">please select a district</option>'
       for(i in res){
         str += '<option value="'+res[i].id+'">'+res[i].areaEn + '</option>';
       }
     }else{
-      str+='<option value="">請選擇地區'
+      str+='<option value="0">請選擇地區'
       for(i in res){
         str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
       }
@@ -368,33 +356,17 @@
     if(is_en()){
       str+='<option value="">please select a logistics point</option>';
       for(i in res){
-        str += '<option value="'+res[i].id+'">'+res[i].areaEn + '</option>';
+        str += '<option value="'+res[i].storeAddress+'">'+res[i].storeAddress + '</option>';
       }
     }else{
       str+='<option value="">請選擇倉庫地址</option>';
       for(i in res){
-        str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
+        str += '<option value="'+res[i].storeAddress+'">'+res[i].storeAddress + '</option>';
       }
     }
     console.log(str)
     $('select[name="send_address"]').html(str);
   })
-
-
-  // function request(url,data,fun){
-    // $.ajax({
-    //   headers:{
-    //     "Content-Type":"application/json;charset=UTF-8",
-    //     Accept:"*/*","Postman-Token":"c8ea7278-0a03-420f-866b-2c5337ed5c8c"
-    //   },method:"POST",
-    //   url:url+'area/areaAll',
-    //   data:JSON.stringify(data),
-    //   success:function(res){
-    //     // fun(res);
-    //     console.log(res)
-    //   }
-    // });
-//   }
 
 
 </script>
@@ -424,11 +396,11 @@
     }
     showMenu(1);
 
-
   </script>
 
 
 <!-- //calculate dilivery fee -->
+  <!-- main -->
   <script>
 
     var token = $.cookie('token');
@@ -523,96 +495,28 @@
 
     })
     $(document).ready(function(){
-
-$('.submitBtn').click(function(){
-  let data = getDate();
-  let baseUrl = getBaseUrl();
-  $.ajax({
-    url:baseUrl+'order/saveOrder',
-    data:JSON.stringify(data),
-    type:'POST',
-    dataType:'json',
-    contentType:"application/json; charset=utf-8",
-    success: function(){
-      console.log(res)
-      if(res == 1){
-        layer.msg('下單成功',{icon:1,time:1000},function(){
-          location.href = location.href;
-        })
-      }else{
-        layer.msg('下單失敗',{icon:2,time:1000})
-      }
-    }
-  });
-});
-$("#addItem").click(function(){
-  let strForm=""
-  strForm+='<div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
-  strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="goods" class="form-control rounded-sm col-8 col-md-10">';
-  strForm+='</div></div><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
-  strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="num" class="form-control rounded-sm col-8 col-md-10">';
-  strForm+='</div></div>';
-  $(".elseItem .items").append(strForm);
-});
-});
-
-  </script>
-  <script type="text/javascript" charset="utf-8">
-      
-        // request('area/queryAreaList.do', {
-        //     "pageNum" : 1,
-        //     "pageSize" : 10
-        //   },function(res){
-        //     console.log(res)
-        //     let html = '';
-        //     let list = res.data.list;
-        //     for(i in list){
-        //         html += '<option value="'+list[i].code+'">'+list[i].area+'</option>';
-        //     }
-        //     $('.areaSelect').html(html)
-        
-        //   })
-        // request('outlets/getOutletsList.do', {
-        //     "pageNum" : 1,
-        //     "pageSize" : 10
-        //   },function(res){
-        //     console.log(res)
-        //     let html = '';
-        //     let list = res.data.list;
-        //     for(i in list){
-        //         html += '<option value="'+list[i].code+'">【'+list[i].express_name+'】'+list[i].company_address  +'</option>';
-        //     }
-        //     $('.wangdian').html(html)
-        
-        //   })
-  </script>
-  <!-- main -->
-  <script type="text/javascript" charset="utf-8">
-    $(window).load(function(){
-      // let token = $.cookie('token');
-      if(token == ''){
-        location.href = '/login.html';
-      }
-    });
-    
-    $(document).ready(function(){
-
+      var isSubmitFirst=true;
       $('.submitBtn').click(function(){
         let data = getDate();
         let baseUrl = getBaseUrl();
+        if(!isSubmitFirst){
+          return;
+        }
+        isSubmitFirst=false;
         $.ajax({
-          url:baseUrl+'order/saveOrder',
+          url:baseUrl+'order/saveOrderV2',
           data:JSON.stringify(data),
           type:'POST',
           dataType:'json',
           contentType:"application/json; charset=utf-8",
-          success: function(){
+          success: function(res){
             console.log(res)
-            if(res == 1){
+            if(res.code == 200){
               layer.msg('下單成功',{icon:1,time:1000},function(){
                 location.href = location.href;
-              })
+              });
             }else{
+              isSubmitFirst=true;
               layer.msg('下單失敗',{icon:2,time:1000})
             }
           }
@@ -620,76 +524,135 @@ $("#addItem").click(function(){
       });
       $("#addItem").click(function(){
         let strForm=""
-        strForm+='<div class="d-flex mb-3 row"><div class="input-group mb-3 col-12 col-md-6"><label for="goods" class="col-form-label mr-3 goods">寄託物</label>';
-        strForm+=' <input type="text" name="goods" class="form-control ml-2 rounded-sm"></div><div class="input-group mb-3 col-12 col-md-6">';
-        strForm+='<label for="num" class="col-form-label mr-3 num">數量&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="number" name="num" value="1" class="form-control ml-2 rounded-sm">';
-        strForm+='</div></div><div class="d-flex mb-3 row"><div class="input-group mb-3 colo-12 col-md-6"><label for="weight" class="col-form-label mr-3 weight">重量</label>' ;
-        strForm+='<input type="text" name="weight" class="form-control ml-2 rounded-sm"> </div><div class="input-group mb-3 colo-12 col-md-6">';
-        strForm+='<label for="volume" class="col-form-label mr-3 volume">體積</label><input type="text" name="volume" class="form-control ml-2 rounded-sm"></div></div>';
-        strForm+='<div class="d-flex mb-3 row"><div class="input-group mb-3 col-12 col-md-6"><label for="mode" class="col-form-label mr-3 mode">派送方式</label>';
-        strForm+='<input type="text" name="mode" class="form-control ml-2 rounded-sm"></div><div class="input-group mb-3 col-12 col-md-6">';
-        strForm+='<label for="place" class="col-form-label mr-3 place">自提點名稱</label><input type="text" name="place" class="form-control ml-2 rounded-sm"></div></div>';
-        strForm+='<div class="d-flex mb-3"><div class="input-group mb-3 mr-5"><label for="price" class="col-form-label mr-3 price">運費 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>';
-        strForm+='<input type="text" id="Total" name="price" class="form-control ml-2 rounded-sm"></div></div>'
-        $(".elseItem").append(strForm);
+        strForm+='<div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
+        strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">';
+        strForm+='</div></div><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
+        strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10">';
+        strForm+='</div></div>';
+        $(".elseItem .items").append(strForm);
       });
     });
 
+    $(window).load(function(){
+      // let token = $.cookie('token');
+      if(token == ''){
+        location.href = '/login.html';
+      }
+    });
+    
+   
+
       function getDate()
       {
-        let send_name = $('input[name="send_name"]').val();
-        let send_phone = $('input[name="send_phone"]').val();
-        // let send_area_id = $('select[name="send_address"]').val();
-        let send_address = $('input[name="send_address"]').val();
-        let get_name = $('input[name="get_name"]').val();
-        let get_phone = $('input[name="get_phone"]').val();
-        let get_area_id = $('select[name="get_area_id"]').val();
-        let get_address = $('input[name="get_address"]').val();
-        let goods = $('input[name="goods"]').val();
-        let num = $('input[name="num"]').val();
-        let weight = $('input[name="weight"]').val();
-        let volume = $('input[name="volume"]').val();
-        let mode = $('input[name="mode"]').val();
-        let place = $('input[name="place"]').val();
-        let price = $('input[name="price"]').val();
+        let type=$('select[name="type"]').val();
+        let isHasBettery=$('input[name="isHasBettery"]').prop("checked");
+        if(isHasBettery=true){
+          isHasBettery="Y";
+        }else{
+          isHasBettery="N";
+        }
+
+        let sendAreaId;
+        let sendStreet;
+        let sendBuilding;
+        let sendAddress;
+        let getAddress;
+        let getAreaId;
+        let getBuilding;
+        let getStreet;
+        if(type=="HOME_DELIVERY"){
+          sendAreaId=$('select[name="send_area_id"]').val();
+          sendStreet=$('input[name="send_street"]').val();
+          sendBuilding=$('input[name="send_building"]').val();
+          sendAddress=sendStreet+sendBuilding;
+          getAreaId=$('select[name="get_area_id"]').val();
+          getBuilding=$('input[name="get_building"]').val();;
+          getStreet=$('input[name="send_street"]').val();;
+          getAddress=getStreet+getBuilding;
+          getAreaId=$(".addressBox select[name='get_area_id']").val();
+        }else{
+          sendAreaId=null;
+          sendStreet=null;
+          sendBuilding=null
+          sendAddress=$('select[name="send_address"]').val();
+          getStreet=null;
+          getBuilding=null;
+          getAddress= $(".pickupBox select[name='get_area_id'] option[selected='true']").text()+$(".pickupBox select[name='get_pickupPoint']").val();
+          getAresId=$(".pickupBox select[name='get_area_id']").val();
+        }
+
+        let product_list=[];
+        let item;
+        for(var i=0;i<$("input[name='product_name']").length;i++){
+          item={
+            "productName":$("input[name='product_name']").eq(i).val(),
+            "productUnitPrice": "50",
+            "currency": "HKD",
+            "qty": $("input[name='amount']").eq(i).val(),
+          }
+          product_list.push(item);
+        }
+
+        let sender_info={
+          "sendName":$('input[name="send_name"]').val(),
+          "sendPhone":$('input[name="send_phone"]').val(),
+          "sendAreaId":sendAreaId,
+          "sendStreet":sendStreet,
+          "sendBuilding":sendBuilding,
+          "sendAddress":sendAddress,
+        };
+        let recipient_info={
+          "getName":$('input[name="get_name"]').val(),
+          "getPhone":$('input[name="get_phone"]').val(),
+          "getAreaId":getAresId,
+          "getStreet":getStreet,
+          "getBuilding":getBuilding,
+          "getAddress":getAddress,    
+          "getPickUpPoint":$('select[name="get_pickupPoint"]').val()
+        };
+        let parcel_list={
+          "width":$('input[name="width"]').val(),
+          "length":$('input[name="width"]').val(),
+          "height":$('input[name="height"]').val(),
+          "weight":$('input[name="weight"]').val(),
+          "volume":$('input[name="width"]').val()*$('input[name="width"]').val()*$('input[name="height"]').val(),
+          "price":$('input[name="price"]').val(),
+          "includeBattery": isHasBettery,
+          "product_list":product_list
+        };
 
         let token = $.cookie('token');
         if(token == ''){
           location.href = '/login.html';
         }
         return data = {
-          sendName : send_name,
-          sendPhone : send_phone,
-          // sendAreaId : send_area_id,
-          sendAddress : send_address,
-          getName : get_name,
-          getPhone : get_phone,
-          getAreaId : get_area_id,
-          getAddress : get_address,
-          goods : goods,
-          num : num,
-          weight : weight,
-          volume : volume,
-          mode : mode,
-          place : place,
-          price : price,
-          token : token
+          token:token,
+          type:type,
+          sender_info:sender_info,
+          recipient_info:recipient_info,
+          parcel_list:parcel_list,
         }
       }
       
       function changeWay(){
-         if($(".modeSelect").val()=="home"){
+         if($(".modeSelect").val()=="HOME_DELIVERY"){
           $(".addressBox").show();
+          $('.addressBox select[name="get_region"] option:first').prop('selected',true);
           $('.addressBox select[name="get_area_id"] option:first').prop('selected',true);
           $('.addressBox input[name="get_address"]').val("");
-          $(".selfieBox").hide();
-          $('.selfBox select[name="place"] option:first').prop('selected',true);
+          $(".pickupBox").hide();
+          $('.selfieBox select[name="get_ares_id"] option:first').prop('selected',true);
+          $('.selfieBox select[name="get_pickupPoint"] option:first').prop('selected',true);
          }else{
+          //generate pickuppoint information
+          selectPickup();
           $(".addressBox").hide();
+          $('.addressBox select[name="get_region"] option:first').prop('selected',true);
           $('.addressBox select[name="get_area_id"] option:first').prop('selected',true);
           $('.addressBox input[name="get_address"]').val("");
-          $('.selfieBox select[name="place"] option:first').prop('selected',true);
-          $(".selfieBox").show();
+          $('.selfieBox select[name="get_area_id"] option:first').prop('selected',true);
+          $('.selfieBox select[name="get_pickupPoint"] option:first').prop('selected',true);
+          $(".pickupBox").show();
          }
       }
 
@@ -708,7 +671,7 @@ $("#addItem").click(function(){
           $('.loading_wrap').hide()
           return;
         }
-        if(!checkNum($('input[name="weight"]'))){
+        if(!checkFloat($('input[name="weight"]'))){
           $('input[name="weight"]').val("")
           $('.loading_wrap').hide();
           return;
@@ -735,58 +698,39 @@ $("#addItem").click(function(){
             }else{
               $('.loading_wrap').hide();
             }
+          },
+          error:function(){
+            $('.loading_wrap').hide();
 
           }
         });
       }
-        // $.post(url+'order/saveOrder', data, function(res){
-        //   console.log(res)
-        //   if(res == 1){
-        //     layer.msg('下單成功',{icon:1,time:1000},function(){
-        //       location.href = location.href
-        //     })
-        //   }else{
-        //     layer.msg('下單失敗',{icon:2,time:1000})
-        //   }
-        // });
-
-
-
-
-          // let consignor_name = $('input[name="consignor_name"]').val();
-          // let consignor_tel = $('input[name="consignor_tel"]').val();
-          // let consignor_area = $('select[name="consignor_area"]').val();
-          // let consignor_address = $('input[name="consignor_address"]').val();
-          
-          // let consignee_name = $('input[name="consignee_name"]').val();
-          // let consignee_tel = $('input[name="consignee_tel"]').val();
-          // let consignee_area = $('select[name="consignee_area"]').val();
-          // let consignee_address = $('input[name="consignee_address"]').val();
-          
-          // let order_weight = $('input[name="order_weight"]').val();
-          // let freight = $('input[name="freight"]').val();
-          // let ziti = $('select[name="ziti"]').val();
-          // $.post('/api/index/addOrder.html', {
-          //     'consignor_name' : consignor_name,
-          //     'consignor_tel' : consignor_tel,
-          //     'consignor_area' : consignor_area,
-          //     'consignor_address' : consignor_address,
-              
-          //     'consignee_name' : consignee_name,
-          //     'consignee_tel' : consignee_tel,
-          //     'consignee_area' : consignee_area,
-          //     'consignee_address' : consignee_address,
-              
-          //     'order_weight' : order_weight,
-          //     'freight' : freight,
-          //     'ziti' : ziti
-              
-          // }, function(res){
-          //     console.log(res)
-          //     if(res.data == 1){
-          //         alert('下单成功');
-          //     }
-          // })
+      
+      function selectPickup(){
+        let Outlets = {
+          areaId : $(".pickupBox select[name='get_area_id']").val(),
+          address : '',
+          addressEn : ''
+        }
+        let urls=getBaseUrl();
+        $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
+          console.log(res);
+          let str;
+          if(is_en()){
+              str+='<option value="">please select a pickup point</option>'
+              for(i in res){
+                str += '<option value="'+res[i].addressEn+'">'+res[i].addressEn+ '</option>';
+              }
+            }else{
+              str+='<option value="">請選擇自提點</option>';
+              for(i in res){
+                str += '<option value="'+res[i].address+'">'+res[i].address+ '</option>';
+              }
+            }
+            console.log(str)
+            $("select[name='get_pickupPoint']").html(str);
+        });
+      }
   </script>
 </body>
 
