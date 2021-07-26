@@ -269,7 +269,12 @@
       <div class="row mb-form-standard">
         <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如貨物中物品種類多於一種,請點擊添加物品進行操作！</label>
       </div>
-      <a id="addItem" href="javascript:void(0);">添加項目</a>
+      <!-- <a id="addItem" href="javascript:void(0);"><span class="iconfont icon-add" style="color:#fff;"></span>添加物品</a> -->
+      <button id="addItem" type="button" class="btn btn-primary btn-lg mb-2" style="border-radius: 1.5rem;background-color:#1890ff;">
+      添加物品
+      </button>
+
+      
 
       <!-- btn group -->
       <div class="button_group row justify-content-between align-items-center">
@@ -551,7 +556,6 @@
         }else{
           isHasBettery="N";
         }
-
         let sendAreaId;
         let sendStreet;
         let sendBuilding;
@@ -577,7 +581,7 @@
           sendAddress=$('select[name="send_address"]').val();
           getStreet=null;
           getBuilding=null;
-          getAddress= $(".pickupBox select[name='get_area_id'] option[selected='true']").text()+$(".pickupBox select[name='get_pickupPoint']").val();
+          getAddress= $(".pickupBox select[name='get_area_id'] option:selected").text()+$(".pickupBox select[name='get_pickupPoint']").val();
           getAresId=$(".pickupBox select[name='get_area_id']").val();
         }
 
@@ -716,6 +720,10 @@
         $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
           console.log(res);
           let str;
+          if(res.length<1){
+            layer.msg('暫無該地區的自提點，請重新選擇地區',{icon:2,time:1500});
+            return;
+          }
           if(is_en()){
               str+='<option value="">please select a pickup point</option>'
               for(i in res){

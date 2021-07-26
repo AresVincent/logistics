@@ -74,67 +74,74 @@
   <!-- body content begin -->
   <section class="mt-5 nav_section">
     <nav class="container p-0">
-      <ul class="nav_top d-flex justify-content-between align-items-center">
-        <li class="nav_top_li active" data-status="">
-          <a href="javascript:void(0)" class="myOrder">我的訂單</a>
-          <span class="line"></span>
-        </li>|
-        <li class="nav_top_li" data-status="1">
-          <a href="javascript:void(0)" class="delivered">已發貨</a>
-          <span class="line"></span>
-        </li>|
-        <li class="nav_top_li" data-status="0">
-          <a href="javascript:void(0)" class="toBedelivered">待發貨</a>
-          <span class="line"></span>
-        </li>|
-        <li class="nav_top_li" data-status="2">
-          <a href="javascript:void(0)" class="inTransit">运输中</a>
-          <span class="line"></span>
-        </li>|
-        <li class="nav_top_li" data-status="4">
-          <a href="javascript:void(0)" class="signedIn">已簽收</a>
-          <span class="line"></span>
-        </li>|
-        <li class="nav_top_li" data-status="3">
-          <a href="javascript:void(0)" class="toBeSigned">待签收</a>
-          <span class="line"></span>
-        </li>|
-        <li class="nav_top_li" data-status="5">
-          <a href="javascript:void(0)" class="signOneHalfOf">代簽收</a>
-          <span class="line"></span>
-        </li>
-      </ul>
+      <div class="row ml-3 mr-3" style="overflow: auto;">
+        <ul class="nav_top d-flex justify-content-between align-items-center">
+          <li class="nav_top_li active" data-status="">
+            <a href="javascript:void(0)" class="myOrder">我的訂單</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="1">
+            <a href="javascript:void(0)" class="delivered">已發貨</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="0">
+            <a href="javascript:void(0)" class="toBedelivered">待發貨</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="2">
+            <a href="javascript:void(0)" class="inTransit">运输中</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="4">
+            <a href="javascript:void(0)" class="signedIn">已簽收</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="3">
+            <a href="javascript:void(0)" class="toBeSigned">待签收</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="5">
+            <a href="javascript:void(0)" class="signOneHalfOf">代簽收</a>
+            <span class="line"></span>
+          </li>
+        </ul>
+      </div>
     </nav>
     
 
     <!-- search warp begin -->
-    <div class="search_wrap container pt-4 pb-4 pl-0 pr-0 d-flex justify-content-between align-items-center">
-      <did class="name_search d-flex align-items-center">
-        <form onsubmit="return false;">
-          <div class="input-group">
-            <input type="text" class="form_input rounded-sm pl-2" id="search" placeholder="賬單查詢">
-            <div class="input-group-append">
-              <button onsubmit="return false;" class="input-group-text btn_search">賬單查詢</button>
+    <div class="search_wrap container pt-4 pb-4 pl-0 pr-0 justify-content-between align-items-center">
+      <div class="row">
+
+        <div class="name_search align-items-center col-md-8 ml-3 mr-3">
+          <div class="row mb-3">
+            <form onsubmit="return false;" class="col-9">
+              <div class="input-group row ml-0">
+                <input type="text" class="form_input rounded-sm pl-2 col-8" id="search" placeholder="賬單查詢">
+                <div class="input-group-append col-4"  style="padding-left: 0;">
+                  <button onsubmit="return false;" class="input-group-text btn_search">賬單查詢</button>
+                </div>
+              </div>
+            </form>
+            <div class="import_data_btn col-3" id="generate-excel">
+              <span>導出</span>
             </div>
+            <input name="file" type="file" hidden>
           </div>
-        </form>
-        <div class="import_data_btn ml-5" id="generate-excel">
-          導出
         </div>
-        <input name="file" type="file" hidden>
-      </did>
-      <!-- date search -->
-      <div class="date_search">
-        <label for="date_range" class="riqidate">日期：</label>
-        <input type="text" class="date_picker pl-2" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+        <div class="date_search col-md-4 ml-3 mr-3">
+          <label for="date_range" class="riqidate">日期：</label>
+          <input type="text" class="date_picker pl-2" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+        </div>
       </div>
+      
+      <!-- date search -->
     </div>
     <!-- search warp end -->
 
     <!-- table content begin -->
     <div id="example_wrapper" class="dataTables_wrapper">
-    <!-- <div class="table_wrap container p-0" style="height: 680px;"> -->
-      <div class="table_wrap container p-0" style="min-height: 680px;">
+      <div class="table_wrap container p-0" style="min-height: 680px;overflow-x: auto;">
       <table class="table table-hover container p-0" id="orderTable">
         <thead class="">
           <tr class="thth">
@@ -146,19 +153,15 @@
             <th>收貨人姓名</th>
             <th>收貨人電話</th>
             <th>收貨地址</th>
+            <th>快遞單</th>
           </tr>
         </thead>
         <tbody class="tbody" id="showOrder">
          
         </tbody>
       </table>
+      </div>
     </div>
-
-    <!-- <div class="pagination clearfix float-right mt-5">
-      <div class="page prev">上一页</div>
-      <div class="count float-left page_num"><span class="page page-num active" data-page="1">1</span></div>
-      <div class="page next">下一页</div>
-    </div> -->
 
 
     <!-- table content end -->
@@ -170,7 +173,13 @@
     </div>
   </section>
   <!-- body content end -->
-
+  <!-- loading begin -->
+  <div class="loading_wrap position-fixed">
+    <div class="spinner-border text-primary loading position-absolute" role="status">
+      <span class="">Loading...</span>
+    </div>
+  </div>
+  <!-- loading end -->
   <!-- footer begin -->
   <footer class="row ml-0 mr-o p-0">
     <div class="footer_top  d-none d-sm-none d-md-block">
@@ -277,7 +286,8 @@ var Data = {
 };
 function getOrderList()
 {
- let url = getBaseUrl()
+ let url = getBaseUrl();
+ $('.loading_wrap').show();
     $.post(url + 'order/likeOrderUserById',Data,function(res){
         console.log(res)
 
@@ -299,7 +309,7 @@ function getOrderList()
               str += '<li class="kd-clearfix clearfix"><div class="newslist-title float-left"><a href="/detail.html?id='+list[i].id+'" target="_blank">'+list[i].title+'</a></div><div class="newslist-time float-right"><span class="newslist-time-auth"></span><span class="newslist-time-date">'+YMD(list[i].time)+'</span></div></li>';
           }
         }
-        
+        $('.loading_wrap').hide();
         $('.newslist_ul').html(str);
 
         // 分页
@@ -325,50 +335,54 @@ function getOrderList()
             let status = '';
             if(is_en()){
                 switch(list[i].status){
-                    case 0 :
+                    case "0" :
                         status = 'To be delivered';
                         break;
-                    case 1 :
+                    case "1" :
                         status = 'Delivered'
                         break;
-                    case 2 :
+                    case "2" :
                         status = 'In transit'
                         break;
-                    case 3 :
+                    case "3" :
                         status = 'To be signed'
                         break;
-                    case 4 :
+                    case "4" :
                         status = 'Signed in'
                         break;
-                    case 5 :
+                    case "5" :
                         status = 'Sign on behalf of'
                         break;
                 }
                 
             }else{
                         switch(list[i].status){
-                    case 0 :
+                    case "0" :
                         status = '待发货';
                         break;
-                    case 1 :
+                    case "1" :
                         status = '已发货'
                         break;
-                    case 2 :
+                    case "2" :
                         status = '运输中'
                         break;
-                    case 3 :
+                    case "3" :
                         status = '待签收'
                         break;
-                    case 4 :
+                    case "4" :
                         status = '已签收'
                         break;
-                    case 5 :
+                    case "5" :
                         status = '代签收'
                         break;
                 }
             }
-            html += ' <tr><td>'+list[i].sn+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>￥'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td></tr>' ;
-        }
+            html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td></tr>' ;
+            // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
+            // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
+            // html+='</table></div></td></tr>';
+            html+='<tr class="childTr" data-show="false"></tr>';
+          }
         $('#showOrder').html(html);
         btnShow();
         excel = new ExcelGen({
@@ -412,7 +426,73 @@ function btnShow(){
         jump()
     })
 }
-    
+function printWayBill(e){
+  let token=$.cookie("token");
+  let baseUrl = getBaseUrl();
+  let data={token:token,orderNo:$(e).attr("data-orderNo")};
+  event.stopPropagation();
+  $.ajax({
+    url:baseUrl+'order/getOrderByOrderNoAndToken',
+    data:data,
+    type:'GET',
+    dataType:'json',
+    contentType:"application/json; charset=utf-8",
+    success: function(res){
+      console.log(res)
+      let printUrl="/waybill/waybill_pickup.html?";
+      if(res.code == 200){
+        let queryString="";
+        var data=res.data[0];
+        for (const [key, value,index] of Object.entries(data)) {
+          queryString+=key+'='+value+'&';
+        }
+        printUrl+=queryString;
+        window.open(printUrl,'_blank');
+      }else{
+        layer.msg('查詢失敗',{icon:2,time:1000});
+      }
+    }
+  });
+}
+function toggleTable(e){
+  let token=$.cookie("token");
+  let baseUrl = getBaseUrl();
+  for(let i=0;i<$(".upperTr").length;i++){
+    $(".upperTr").eq(i).next().find(".tableDetail").slideUp();
+    $(".upperTr").eq(i).attr("data-show","false");
+  }
+  if($(e).attr("data-show")=="false"){
+    $(".loading_wrap ").show();
+    let data={token:token,orderNo:$(e).attr("data-orderNo")};
+    $.ajax({  
+      url:baseUrl+'productList/getProductListByOrderNo',
+      data:data,
+      type:'GET',
+      dataType:'json',
+      contentType:"application/json; charset=utf-8",
+      success: function(res){
+        if(res.code==200){
+          let htmlStr='<td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%">';
+          htmlStr+='<tr><td>名稱</td><td>數量</td></tr><tbody>';
+          let data=res.data;
+          for(var i=0;i<data.length;i++){
+            htmlStr+='<tr><td width="50%">'+data[i].productName+'</td><td width="50%">'+data[i].qty+'</td></tr>';
+          }
+          htmlStr+='</tbody></table></div></td>'
+          $(".loading_wrap ").hide();
+          $(e).next().html(htmlStr);
+          $(e).attr("data-show","true");
+          $(e).next().find(".tableDetail").slideDown();
+        }else{
+          layer.msg('查詢失敗',{icon:2,time:1000});
+        }
+      }
+    });
+  }else{
+    $(e).attr("data-show","false");
+    $(e).next().find(".tableDetail").slideUp();
+  }
+}
 
 // jump()
 
