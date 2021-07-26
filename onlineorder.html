@@ -33,12 +33,11 @@
          
         </ul>
         <div class="form-inline my-2 my-lg-0">
-          <div class="language_wrap position-relative ">
+          <!-- <div class="language_wrap position-relative ">
             <div class="top_wrap d-flex justify-content-between">
               <span class="text langShow">繁體</span>
               <span class="iconfont icon-iconfontarrows1"></span>
             </div>
-            <!-- display bottom -->
             <ul class="lan_ul position-absolute shadow-sm">
               <li class="lan_li">
                 <a href="javascript:void(0);" class="set-lang lang_en" data-lang="en">英語</a>
@@ -47,8 +46,8 @@
                 <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
               </li>
             </ul>
-          </div>
-  
+          </div> -->
+
           <div class="login_register d-flex justify-content-between">
             <a href="register.html" class="register">註冊</a>
             <a href="login.html" class="login">登錄</a>
@@ -267,7 +266,7 @@
 
 
       <div class="row mb-form-standard">
-        <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如貨物中物品種類多於一種,請點擊添加物品進行操作！</label>
+        <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如包裹中物品種類多於一種,請點擊添加物品進行操作！</label>
       </div>
       <!-- <a id="addItem" href="javascript:void(0);"><span class="iconfont icon-add" style="color:#fff;"></span>添加物品</a> -->
       <button id="addItem" type="button" class="btn btn-primary btn-lg mb-2" style="border-radius: 1.5rem;background-color:#1890ff;">
@@ -504,6 +503,9 @@
       $('.submitBtn').click(function(){
         let data = getDate();
         let baseUrl = getBaseUrl();
+        if(!data){
+          return;
+        }
         if(!isSubmitFirst){
           return;
         }
@@ -569,10 +571,10 @@
           sendStreet=$('input[name="send_street"]').val();
           sendBuilding=$('input[name="send_building"]').val();
           sendAddress=sendStreet+sendBuilding;
-          getAreaId=$('select[name="get_area_id"]').val();
-          getBuilding=$('input[name="get_building"]').val();;
-          getStreet=$('input[name="send_street"]').val();;
-          getAddress=getStreet+getBuilding;
+          getAreaId=$('.addressBox select[name="get_area_id"]').val();
+          getBuilding=$('input[name="get_building"]').val();
+          getStreet=$('input[name="get_street"]').val();
+          getAddress=$(".addressBox select[name='get_area_id'] option:selected").text()+getStreet+getBuilding;
           getAreaId=$(".addressBox select[name='get_area_id']").val();
         }else{
           sendAreaId=null;
@@ -581,7 +583,7 @@
           sendAddress=$('select[name="send_address"]').val();
           getStreet=null;
           getBuilding=null;
-          getAddress= $(".pickupBox select[name='get_area_id'] option:selected").text()+$(".pickupBox select[name='get_pickupPoint']").val();
+          getAddress= $(".pickupBox select[name='get_area_id'] option:selected").text()+$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
           getAresId=$(".pickupBox select[name='get_area_id']").val();
         }
 
@@ -629,6 +631,57 @@
         if(token == ''){
           location.href = '/login.html';
         }
+        if(type==null){
+          layer.msg('請選擇派送方式！',{icon:2})
+          return false;
+        }else if(type=="HOME_DELIVERY"){
+          //todo,when home delivery checking
+        }else{
+
+        }
+        if($("input[name='send_name']").val()==""){
+          layer.msg('請填寫寄件人名字！',{icon:2});
+          return false;
+        }
+        if($("input[name='send_phone']").val()==""){
+          layer.msg('請填寫寄件人號碼！',{icon:2});
+          return false;
+        }
+        if($("input[name='get_name']").val()==""){
+          layer.msg('請填寫收件人名字！',{icon:2});
+          return false;
+        }
+        if($("input[name='get_phone']").val()==""){
+          layer.msg('請填寫收件人號碼！',{icon:2});
+          return false;
+        }
+        if($("input[name='weight']").val()==""){
+          layer.msg('請填寫包裹重量！',{icon:2});
+          return false;
+        }
+        if($("input[name='length']").val()==""){
+          layer.msg('請填寫包裹長度！',{icon:2});
+          return false;
+        }
+        if($("input[name='width']").val()==""){
+          layer.msg('請填寫包裹寬度！',{icon:2});
+          return false;
+        }
+        if($("input[name='height']").val()==""){
+          layer.msg('請填寫包裹高度',{icon:2});
+          return false;
+        }
+        for(let i=0;i<$(".goods").length;i++){
+          if($("input[name='product_name']").eq(i).val()==""){
+            layer.msg('請填寫物品名稱',{icon:2})
+            return false;
+          }
+          if($("input[name='amount']").eq(i).val()==""){
+            layer.msg('請填寫物品數量！',{icon:2})
+            return false;
+          }
+        }
+
         return data = {
           token:token,
           type:type,
@@ -721,18 +774,18 @@
           console.log(res);
           let str;
           if(res.length<1){
-            layer.msg('暫無該地區的自提點，請重新選擇地區',{icon:2,time:1500});
+            layer.msg('暫無該地區的自提點，請重新選擇地區！',{icon:2,time:1500});
             return;
           }
           if(is_en()){
               str+='<option value="">please select a pickup point</option>'
               for(i in res){
-                str += '<option value="'+res[i].addressEn+'">'+res[i].addressEn+ '</option>';
+                str += '<option value="'+res[i]. storeCode+'">'+res[i].addressEn+ '</option>';
               }
             }else{
               str+='<option value="">請選擇自提點</option>';
               for(i in res){
-                str += '<option value="'+res[i].address+'">'+res[i].address+ '</option>';
+                str += '<option value="'+res[i].storeCode+'">'+res[i].address+ '</option>';
               }
             }
             console.log(str)

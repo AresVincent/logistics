@@ -38,13 +38,12 @@
     <ul class="navbar-nav mr-auto">
      
     </ul>
-    <div class="form-inline my-2 my-lg-0">
+    <!-- <div class="form-inline my-2 my-lg-0">
       <div class="language_wrap position-relative ">
         <div class="top_wrap d-flex justify-content-between">
           <span class="text langShow">繁體</span>
           <span class="iconfont icon-iconfontarrows1"></span>
         </div>
-        <!-- display bottom -->
         <ul class="lan_ul position-absolute shadow-sm">
           <li class="lan_li">
             <a href="javascript:void(0);" class="set-lang lang_en" data-lang="en">英語</a>
@@ -53,7 +52,7 @@
             <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
           </li>
         </ul>
-      </div>
+      </div> -->
 
       <div class="login_register d-flex justify-content-between">
         <a href="register.html" class="register">註冊</a>
@@ -70,7 +69,6 @@
 
 </nav>
 <!-- nav end -->
-
   <!-- body content begin -->
   <section class="mt-5 nav_section">
     <nav class="container p-0">
@@ -81,27 +79,31 @@
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="1">
-            <a href="javascript:void(0)" class="delivered">已發貨</a>
-            <span class="line"></span>
-          </li>|
-          <li class="nav_top_li" data-status="0">
-            <a href="javascript:void(0)" class="toBedelivered">待發貨</a>
+            <a href="javascript:void(0)" class="delivered">已下單</a>
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="2">
-            <a href="javascript:void(0)" class="inTransit">运输中</a>
-            <span class="line"></span>
-          </li>|
-          <li class="nav_top_li" data-status="4">
-            <a href="javascript:void(0)" class="signedIn">已簽收</a>
+            <a href="javascript:void(0)" class="toBedelivered">倉庫簽入</a>
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="3">
-            <a href="javascript:void(0)" class="toBeSigned">待签收</a>
+            <a href="javascript:void(0)" class="inTransit">倉庫簽出</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="4">
+            <a href="javascript:void(0)" class="signedIn">再次派送</a>
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="5">
-            <a href="javascript:void(0)" class="signOneHalfOf">代簽收</a>
+            <a href="javascript:void(0)" class="toBeSigned">已上架</a>
+            <span class="line"></span>
+          </li>|
+          <li class="nav_top_li" data-status="6">
+            <a href="javascript:void(0)" class="signOneHalfOf">已簽收</a>
+            <span class="line"></span>
+          </li>
+          <li class="nav_top_li" data-status="7">
+            <a href="javascript:void(0)" class="signOneHalfOf">已超時</a>
             <span class="line"></span>
           </li>
         </ul>
@@ -156,7 +158,7 @@
             <th>快遞單</th>
           </tr>
         </thead>
-        <tbody class="tbody" id="showOrder">
+        <tbody class="tbody" id="showOrder" style="word-break: keep-all;">
          
         </tbody>
       </table>
@@ -276,7 +278,7 @@ let token = $.cookie('token');
 console.log(token)
 var Data = {
     token : token,
-    search : '',
+    orderNo : '',
     sn : '',
     status : '',
     excStartTime : '',
@@ -335,46 +337,50 @@ function getOrderList()
             let status = '';
             if(is_en()){
                 switch(list[i].status){
-                    case "0" :
-                        status = 'To be delivered';
-                        break;
                     case "1" :
-                        status = 'Delivered'
+                        status = 'Ordered';
                         break;
                     case "2" :
-                        status = 'In transit'
+                        status = 'In stock'
                         break;
                     case "3" :
-                        status = 'To be signed'
+                        status = 'Out stock'
                         break;
                     case "4" :
-                        status = 'Signed in'
+                        status = 'Delivered second time'
                         break;
                     case "5" :
-                        status = 'Sign on behalf of'
+                        status = 'On Shelf'
+                        break;
+                    case "6" :
+                        status = 'Signed'
+                    case "7" :
+                    status = 'Overtime'
                         break;
                 }
                 
             }else{
                         switch(list[i].status){
-                    case "0" :
-                        status = '待发货';
-                        break;
                     case "1" :
-                        status = '已发货'
+                        status = '已下單';
                         break;
                     case "2" :
-                        status = '运输中'
+                        status = '倉庫簽入'
                         break;
                     case "3" :
-                        status = '待签收'
+                        status = '倉庫簽出'
                         break;
                     case "4" :
-                        status = '已签收'
+                        status = '再次派送'
                         break;
                     case "5" :
-                        status = '代签收'
+                        status = '自提件已上架'
                         break;
+                    case "6" :
+                        status = '已簽收'
+                        break;
+                    case "7" :
+                        status= '自提件已超時'
                 }
             }
             html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td></tr>' ;
@@ -406,7 +412,7 @@ function getOrderList()
     })
     $('.btn_search').click(function(){
         let search = $('#search').val();
-        Data.search = search;
+        Data.orderNo = search;
         Data.status = '';
         getOrderList();
     })
@@ -457,7 +463,11 @@ function printWayBill(e){
 function toggleTable(e){
   let token=$.cookie("token");
   let baseUrl = getBaseUrl();
+
   for(let i=0;i<$(".upperTr").length;i++){
+    if($(".upperTr").eq(i).attr("data-show")==$(e).attr("data-show")){
+      continue ;
+    }
     $(".upperTr").eq(i).next().find(".tableDetail").slideUp();
     $(".upperTr").eq(i).attr("data-show","false");
   }
