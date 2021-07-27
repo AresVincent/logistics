@@ -53,10 +53,25 @@
           </li>
         </ul>
       </div> -->
-
-      <div class="login_register d-flex justify-content-between">
-        <a href="register.html" class="register">註冊</a>
-        <a href="login.html" class="login">登錄</a>
+<!-- 
+      <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
+        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+      </div>
+      <div class="login_register justify-content-between" id="username_logout" style="display: none;">
+        <a class="logined text-decoration-none" href="/user.html"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=236107512,1097719150&fm=26&gp=0.jpg" alt="">
+          <span class="username" style="overflow: hidden;padding-left: 5px;text-overflow: ellipsis;"></span>
+        </a>
+        <a href="javascript:void(0);" onclick="logout()" class="login">登出</a>
+      </div> -->
+      <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
+        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+      </div>
+      <!-- logined -->
+      <div class="login_register justify-content-between" id="username_logout" style="display: none;">
+        <a class="logined text-decoration-none" href="/user.html"><img src="./__IMG__/info.png" style="margin-left: 5px;" alt="" />
+          <span class="username" style="overflow: hidden;padding-left: 5px;text-overflow: ellipsis;color: #000;"></span>
+        </a>
+        <a href="javascript:void(0);" onclick="logout()" class="login"  id="logout">登出</a>
       </div>
 
       <!-- logined -->
@@ -186,18 +201,38 @@
   <footer class="row ml-0 mr-o p-0">
     <div class="footer_top  d-none d-sm-none d-md-block">
       <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
-        
       </div>
     </div>
     <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
-      <div class="contact">客服电话：12345678142 电子邮件：1462845qq.com</div>
+      <div class="contact">
+        客服電話：+852 2353 0188 &nbsp;
+        電子郵件：info@hkares.com
+      </div>
       <div class="bottom_text">
-        京公网安备 11011502003298号
+        地址: 新蒲崗大有街1號 勤達中心1208室
+        <!--      京公网安备 11011502003298号-->
       </div>
     </div>
   </footer>
   <!-- footer end -->
-
+  <table id="itemTable" class="itemTable" style="display: none;">
+    <thead class="">
+      <tr class="itemHead">
+        <th>包裹號</th>
+        <th>發貨時間</th>
+        <th>包裹狀態</th>
+        <th>包裹重量</th>
+        <th>運費金額</th>
+        <th>收貨人姓名</th>
+        <th>收貨人電話</th>
+        <th>收貨地址</th>
+        <th>快遞單</th>
+      </tr>
+    </thead>
+    <tbody class="tbody" id="showItem" style="word-break: keep-all;">
+     
+    </tbody>
+  </table>
 
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
   <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
@@ -333,6 +368,7 @@ function getOrderList()
 
 
         let html = '';
+        let itemHtml='';
         for(i in list){
             let status = '';
             if(is_en()){
@@ -383,19 +419,33 @@ function getOrderList()
                         status= '自提件已超時'
                 }
             }
+
             html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td></tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
             // html+='</table></div></td></tr>';
             html+='<tr class="childTr" data-show="false"></tr>';
+            itemHtml+= ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>' ;
+            for(let index=0;index<list[i].product_list.length;index++){
+              if(list[i].product_list.length>$(".itemName").length){
+                $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th")
+              }
+              itemHtml+="<td>"+list[i].product_list[index].productName+"</td><td>"+list[i].product_list[index].qty+"</td>";
+            }
+            itemHtml+='</tr>';
           }
         $('#showOrder').html(html);
+        $('#showItem').html(itemHtml);
         btnShow();
         excel = new ExcelGen({
-            "src_id": "orderTable",
+            "src_id": "itemTable",
             "show_header": true
         });
         $("#generate-excel").click(function () {
+          // let excel=new ExcelGen({
+          //   "src_id": "itemTable",
+          //   "show_header": true
+          // });
             excel.generate();
         });
     });
@@ -483,7 +533,7 @@ function toggleTable(e){
       success: function(res){
         if(res.code==200){
           let htmlStr='<td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%">';
-          htmlStr+='<tr><td>名稱</td><td>數量</td></tr><tbody>';
+          htmlStr+='<thead><tr><td>名稱</td><td>數量</td></tr></thead><tbody>';
           let data=res.data;
           for(var i=0;i<data.length;i++){
             htmlStr+='<tr><td width="50%">'+data[i].productName+'</td><td width="50%">'+data[i].qty+'</td></tr>';
@@ -530,6 +580,7 @@ function toggleTable(e){
 
   //渲染菜单
  showMenu(5);
+ initialHeader();
 </script>
 </body>
 

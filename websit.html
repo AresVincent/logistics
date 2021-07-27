@@ -49,9 +49,23 @@
         </ul>
       </div> -->
 
-      <div class="login_register d-flex justify-content-between">
+      <!-- <div class="login_register justify-content-between" id="login_register" style="display: none;">
         <a href="register.html" class="register">註冊</a>
         <a href="login.html" class="login">登錄</a>
+      </div>
+      <div class="login_register justify-content-between" id="username_logout" style="display: none;">
+        <span class="register username" id="loginName" style="width:50%;overflow: hidden;padding-left: 5px;text-overflow: ellipsis;line-height: 30px;"></span>
+        <a href="javascript:void(0);" onclick="logout()" class="login">登出</a>
+      </div> -->
+      <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
+        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+      </div>
+      <!-- logined -->
+      <div class="login_register justify-content-between" id="username_logout" style="display: none;">
+        <a class="logined text-decoration-none" href="/user.html"><img src="./__IMG__/info.png" style="margin-left: 5px;" alt=""/>
+          <span class="username" style="overflow: hidden;padding-left: 5px;text-overflow: ellipsis;color: #000;"></span>
+        </a>
+        <a href="javascript:void(0);" onclick="logout()" class="login"  id="logout">登出</a>
       </div>
 
       <!-- logined -->
@@ -108,13 +122,16 @@
   <footer class="row ml-0 mr-o p-0">
     <div class="footer_top  d-none d-sm-none d-md-block">
       <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
-        
       </div>
     </div>
     <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
-      <div class="contact">客服电话：12345678142 电子邮件：1462845qq.com</div>
+      <div class="contact">
+        客服電話：+852 2353 0188 &nbsp;
+        電子郵件：info@hkares.com
+      </div>
       <div class="bottom_text">
-        京公网安备 11011502003298号
+        地址: 新蒲崗大有街1號 勤達中心1208室
+        <!--      京公网安备 11011502003298号-->
       </div>
     </div>
   </footer>
@@ -215,6 +232,7 @@ if(is_en()){
 
   $(document).ready(function(){
     searchBtn();
+    initialHeader();
   });
 
   function getAll()

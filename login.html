@@ -93,11 +93,13 @@ return ""
       $('.loginBtn').click(function(){
           let username = $('#name').val();
           let password = $('#password').val();
-          console.log(username, password)
+          console.log(username, password);
+          let data={
+            username:username,
+            password:password
+          };
           
           let url = getBaseUrl();
-
-
           $.post(url+'user/login',{username:username,password:password},function(res){
               if(res.code == 1){
                   layer.msg('登录成功',{icon:1,time:1000},function(){
@@ -138,6 +140,13 @@ return ""
         $('#toRegister').text('To register');
         $('.loginBtn').text('Login');
     }
+    $(function(){
+      if($.cookie("token")){
+        layer.msg('賬號已登入',{icon:1,time:500},function(){
+        location.href="/index.html";
+      });
+      }
+    })
   </script>
 </body>
 
