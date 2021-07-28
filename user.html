@@ -321,6 +321,7 @@ var Data = {
     pageNum : 1,
     pageSize:15
 };
+var isFinished=false;
 function getOrderList()
 {
  let url = getBaseUrl();
@@ -446,8 +447,13 @@ function getOrderList()
           //   "src_id": "itemTable",
           //   "show_header": true
           // });
-            excel.generate();
-        });
+          if(isFinished){
+            return;
+          }
+          isFinished=true;
+          excel.generate();
+          isFinished=false;
+      });
     });
 }
     getOrderList();

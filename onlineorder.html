@@ -155,7 +155,7 @@
           <div class="row">
             <div class="mb-form-standard selfieBox col-12 col-md-6">
               <div class="row mr-0">
-                <label for="place" class="col-form-label place col-5 col-md-3">自提點名稱</label>
+                <label for="place" class="col-form-label place col-5 col-md-3">自提點名稱<span class="badge  text-danger">*</span></label>
                 <!-- <input type="text" name="place" class="form-control ml-2 rounded-sm"> -->
                 <select name="get_area_id" class="form-control rounded-sm col-7 col-md-9" onchange="selectPickup()">
                 </select>
@@ -213,8 +213,8 @@
       <div class="row mb-form-standard">
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
-            <label for="weight" class="col-form-label  weight col-3 col-md-2">重量<span class="badge  text-danger">*</span></label>
-            <input type="text" name="weight" class="form-control rounded-sm col-9 col-md-10" placeholder="kg" onchange="CalculateFee()">
+            <label for="weight" class="col-form-label  weight col-4 col-md-2">重量<span class="badge  text-danger">*</span></label>
+            <input type="text" name="weight" class="form-control rounded-sm col-8 col-md-10" placeholder="kg" onchange="CalculateFee()">
           </div>
         </div>
         <div class="mb-form-standard col-12 col-md-6">
@@ -229,7 +229,7 @@
         </div>
         <div class="mb-form-standard col-12">
           <div class="mr-0 row">
-            <label for="volume" class="col-form-label col-md-3 col-6">包裹內是否包含電池<span class="badge  text-danger"></span></label>
+            <label for="volume" class="col-form-label col-md-3 col-8">包裹內是否包含電池<span class="badge  text-danger">*</span></label>
             <input type="checkbox" name="isHaveBattery" class="form-control rounded-sm col-md-1 col-2" />
           </div>
         </div>
@@ -545,6 +545,7 @@
           success: function(res){
             console.log(res)
             if(res.code == 200){
+              isSubmitFirst=true;
               layer.open({
                 type: 1,
                 title: "信息",
@@ -619,7 +620,18 @@
           getAddress=$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
           getAresId=$(".pickupBox select[name='get_area_id']").val();
         }
-
+        if(sendAddress==""){
+          layer.msg("寄件地址不能為空！",{icon:2});
+          return ;
+        }
+        if(getAreaId==""){
+          layer.msg("收件地區不能為空",{icon:2});
+          return ;
+        }
+        if(getAddress==""){
+          layer.msg("收件地址不能為空",{icon:2});
+          return ;
+        }
         let product_list=[];
         let item;
         for(var i=0;i<$("input[name='product_name']").length;i++){
