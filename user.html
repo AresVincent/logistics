@@ -116,7 +116,7 @@
           <li class="nav_top_li" data-status="6">
             <a href="javascript:void(0)" class="signOneHalfOf">已簽收</a>
             <span class="line"></span>
-          </li>
+          </li>|
           <li class="nav_top_li" data-status="7">
             <a href="javascript:void(0)" class="signOneHalfOf">已超時</a>
             <span class="line"></span>
@@ -159,21 +159,21 @@
     <!-- table content begin -->
     <div id="example_wrapper" class="dataTables_wrapper">
       <div class="table_wrap container p-0" style="min-height: 680px;overflow-x: auto;">
-      <table class="table table-hover container p-0" id="orderTable">
+      <table class="table table-hover container p-0" id="orderTable" style="width: 100%;">
         <thead class="">
           <tr class="thth">
-            <th>包裹號</th>
-            <th>發貨時間</th>
-            <th>包裹狀態</th>
-            <th>包裹重量</th>
-            <th>運費金額</th>
-            <th>收貨人姓名</th>
-            <th>收貨人電話</th>
-            <th>收貨地址</th>
-            <th>快遞單</th>
+            <th style="width: 10%;min-width:120px;">包裹號</th>
+            <th style="width: 10%;min-width:120px;">發貨時間</th>
+            <th style="width: 10%;min-width:120px;">包裹狀態</th>
+            <th style="width: 10%;min-width:120px;">包裹重量</th>
+            <th style="width: 10%;min-width:120px;">運費金額</th>
+            <th style="width: 10%;min-width:120px;">收貨人姓名</th>
+            <th style="width: 10%;min-width:120px;">收貨人電話</th>
+            <th style="width: 20%;min-width:120px;">收貨地址</th>
+            <th style="width: 10%;min-width:120px;">快遞單</th>
           </tr>
         </thead>
-        <tbody class="tbody" id="showOrder" style="word-break: keep-all;">
+        <tbody class="tbody" id="showOrder">
          
         </tbody>
       </table>
@@ -215,7 +215,7 @@
     </div>
   </footer>
   <!-- footer end -->
-  <table id="itemTable" class="itemTable" style="display: none;">
+  <table id="itemTable" class="itemTable" style="display: none;width: 100%;">
     <thead class="">
       <tr class="itemHead">
         <th>包裹號</th>
