@@ -114,7 +114,7 @@
         <div class=" col-12 col-md-6">
           <div class="row">
             <label for="send_phone" class="col-form-label send_phone col-5 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
-            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard" placeholder="請輸入電話號碼,如:85212341234" maxlength="11" onchange="checkNum(this)">
+            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard" placeholder="請輸入區號加電話號碼,如:85212341234" maxlength="11" onchange="checkNum(this)">
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@
           <div class=" col-12 col-md-6">
             <div class="row">
               <label for="get_phone" class="col-form-label get_phone col-5 col-md-3">聯繫電話<span class="badge  text-danger">*</span></label>
-              <input type="text" name="get_phone" class="form-control col-7 col-md-9" maxlength="11" placeholder="請輸入電話號碼,如:85212341234" onchange="checkNum(this)">
+              <input type="text" name="get_phone" class="form-control col-7 col-md-9" maxlength="11" placeholder="請輸入區號加電話號碼,如:85212341234" onchange="checkNum(this)">
             </div>
           </div>
       </div>
@@ -219,12 +219,12 @@
         </div>
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
-            <label for="length" class="col-form-label  col-2">長<span class="badge  text-danger"></span></label>
-            <input type="text" name="length" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkFloat(this)" />
-            <label for="width" class="col-form-label  col-2">寬<span class="badge  text-danger"></span></label>
-            <input type="text" name="width" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkFloat(this)" />
-            <label for="height" class="col-form-label  col-2">高<span class="badge  text-danger"></span></label>
-            <input type="text" name="height" class="form-control rounded-sm col-2" placeholder="cm" onchange="checkFloat(this)" />
+            <label for="length" class="col-form-label  col-md-2 col-3 mb-form-standard">長<span class="badge  text-danger">*</span></label>
+            <input type="text" name="length" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="checkFloat(this)" />
+            <label for="width" class="col-form-label  col-md-2 col-3">寬<span class="badge  text-danger">*</span></label>
+            <input type="text" name="width" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="checkFloat(this)" />
+            <label for="height" class="col-form-label  col-md-2 col-3">高<span class="badge  text-danger">*</span></label>
+            <input type="text" name="height" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="checkFloat(this)" />
           </div>
         </div>
         <div class="mb-form-standard col-12">
@@ -260,9 +260,7 @@
           </div>
         </div>
         <div class="elseItem col-12">
-          <div class="row items">
-
-          </div>
+          
         </div>
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
@@ -271,21 +269,25 @@
           </div>
         </div>
       </div>
-      
-
 
       <div class="row mb-form-standard">
         <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如包裹中物品種類多於一種,請點擊添加物品進行操作！</label>
       </div>
-      <!-- <a id="addItem" href="javascript:void(0);"><span class="iconfont icon-add" style="color:#fff;"></span>添加物品</a> -->
-      <button id="addItem" type="button" class="btn btn-primary btn-lg mb-2" style="border-radius: 1.5rem;background-color:#1890ff;">
-      添加物品
-      </button>
-
-      
+      <div class="button_group row justify-content-between align-items-center mb-3">
+        <button onsubmit="return false;" class="col-12 col-sm-4 mt-2 d-flex justify-content-center" id="addItem">
+          <div class="btn_wrap">
+            添加物品
+          </div>
+        </button>
+        <div class="col-12 col-sm-4 mt-2 d-flex justify-content-center" id="reduceItem">
+          <div class="btn_wrap">
+            刪除物品
+          </div>
+        </div>
+      </div>
 
       <!-- btn group -->
-      <div class="button_group row justify-content-between align-items-center">
+      <div class="button_group row justify-content-between align-items-center button_group_order">
         <!-- <div class=" col-12 col-sm-4 mt-2 d-flex justify-content-center">
           <div class="carriage_btn btn_wrap priceCalc">
             運費試算
@@ -531,6 +533,9 @@
         $.cookie("send_phone",$("input[name='send_phone']").val());
         $.cookie("send_address",$("select[name='send_address']").val())
         isSubmitFirst=false;
+        let contentSuccess="";
+        contentSuccess+='<i class="layui-layer-ico layui-layer-ico1"></i><span style="margin-left: 30px;">下單成功！</span></div><span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a></span>';
+        contentSuccess+='<div class="layui-layer-btn layui-layer-btn-" style="text-align:center;"><a class="layui-layer-btn0" href="/onlineorder.html">繼續下單</a><a class="layui-layer-btn0" href="/index.html">返回首頁</a></div>'
         $.ajax({
           url:baseUrl+'order/saveOrderV2',
           data:JSON.stringify(data),
@@ -540,8 +545,13 @@
           success: function(res){
             console.log(res)
             if(res.code == 200){
-              layer.msg('下單成功',{icon:1,time:1000},function(){
-                location.href = location.href;
+              layer.open({
+                type: 1,
+                title: "信息",
+                closeBtn: 0,
+                shadeClose: true,
+                skin: 'layui-layer-dialog',
+                content:contentSuccess
               });
             }else{
               isSubmitFirst=true;
@@ -552,12 +562,19 @@
       });
       $("#addItem").click(function(){
         let strForm=""
-        strForm+='<div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
+        strForm+='<div class="row items"><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
         strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">';
         strForm+='</div></div><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
         strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10">';
-        strForm+='</div></div>';
-        $(".elseItem .items").append(strForm);
+        strForm+='</div></div></div>';
+        $(".elseItem").append(strForm);
+      });
+      $("#reduceItem").click(function(){
+        if($("input[name='product_name']").length<2){
+          layer.msg('至少填寫一項物品，不能繼續刪除該選項！',{icon:2})
+          return;
+        }
+        $(".elseItem .items").last().remove();
       });
     });
 
@@ -598,7 +615,8 @@
           sendAddress=$('select[name="send_address"]').val();
           getStreet=null;
           getBuilding=null;
-          getAddress= $(".pickupBox select[name='get_area_id'] option:selected").text()+$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
+          // getAddress= $(".pickupBox select[name='get_area_id'] option:selected").text()+$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
+          getAddress=$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
           getAresId=$(".pickupBox select[name='get_area_id']").val();
         }
 
@@ -805,7 +823,7 @@
             }else{
               str+='<option value="">請選擇自提點</option>';
               for(i in res){
-                str += '<option value="'+res[i].storeCode+'">'+res[i].address+ '</option>';
+                str += '<option value="'+res[i].storeCode+'">'+res[i].address + '</option>';
               }
             }
             

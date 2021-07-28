@@ -11,12 +11,3 @@
 .table .childTr .childTd{
     padding: 0;
 }
-.loading_wrap {
-    display: none;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background-color: hsla(0,0%,100%,.6);
-}
-.loading_wrap .loading{z-index:1;top:50%;left:50%}

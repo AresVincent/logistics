@@ -2,3 +2,8 @@
 .mb-form-standard{
     margin-bottom: 25px;
 }
+@media screen and (max-width:768px){
+    .form_wrap .button_group_order{
+        margin-top: 60px;
+    }
+}

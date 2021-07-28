@@ -75,9 +75,9 @@
             <div class="row" style="border-bottom: solid 2px #000000">
                 <div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;">
                     <p>
-                        <span>收件人: <span class="getName">ABC</span></span> <br>
-                        <span>電話:+<span class="getPhone">85224581456</span></span><br>
-                        <span>地址:<span class="getAddress">九龍黃大仙蒲崗村道61-87號富祐商場27-28號地舖</span></span> <br>
+                        <span>收件人: <span class="getName"></span></span> <br>
+                        <span>電話:+<span class="getPhone"></span></span><br>
+                        <span>地址:<span class="getAddress"></span></span> <br>
                         <span>備注:</span><br>
                         <span>注: 免收附加費</span>
                     </p>
@@ -85,20 +85,20 @@
                 <div class="col-4" style="padding:0px;">
                     <div class="transport_method container center" style="padding:0px;">
                         <div class="col-12" style="border-bottom: solid 2px #000000">
-                            <b class="getPickUpPoint">4PX-黃大仙富佑 HK059點</b>
+                            <b class="getPickUpPoint"></b>
                         </div>
                         <div class="col-12" style="border-bottom: solid 2px #000000">
                             <b class="type">自提點</b>
                         </div>
                         <div class="col-12">
-                            <b class="getAreaId">黃大仙區</b>
+                            <b class="getAreaId"></b>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row" style="border-bottom: solid 2px #000000">
                 <div class="col-4" style="padding-top: 10px;padding-bottom: 5px;border-right:solid 2px #000000">
-                    <p>
+                    <p style="font-size: 14px;">
                         付款方式:寄付<br>
                         運費:HKD$<span class="price">25</span><br>
                         代收貨款:<br>
@@ -153,7 +153,7 @@
                 <div class="col-8">
                     <div class="row center">
                         <div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;">
-                            <b style="font-size: 15px;" class="getPickUpPoint">4PX-黃大仙富佑 HK059點</b>
+                            <b style="font-size: 15px;" class="getPickUpPoint"></b>
                         </div>
 <!--                        <div class="col-6 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;border-right: solid 2px #000000;">-->
 <!--                            <b style="font-size: 15px;">4PX-黃大仙富佑</b>-->
@@ -164,16 +164,16 @@
                     </div>
                     <div class="row" style="padding-top:5px;border-bottom: solid 2px #000000">
                         <p>
-                            收件人: <span class="getName">ABC</span><br>
-                            電話:+852<span class="getPhone">24581456</span><br>
-                            地址:<span class="getAddress">九龍黃大仙蒲崗村道61-87號富祐商場27-28號地舖</span><br>
+                            收件人: <span class="getName"></span><br>
+                            電話:+852<span class="getPhone"></span><br>
+                            地址:<span class="getAddress"></span><br>
                             備注:<br>
                             注: 免收附加費
                         </p>
                     </div>
                     <div class="row">
                         <div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">
-                            <p style="line-height: 20px;font-size: 12px;">
+                            <p style="line-height: 20px;font-size: 14px;">
                                 付款方式:寄付<br>
                                 運費:HKD$<span class="price">25</span><br>
                                 代收貨款:<br>
@@ -269,8 +269,6 @@
                 console.log("doesn't exist class"+ key+"element");
             }
         });
-        let area=address.split("區")[0];
-        $(".getAreaId").text(area);
         $(".type").text(type);
         let urls=getBaseUrl();
         let Outlets = {
@@ -281,7 +279,10 @@
         $.post(urls+'outlets/getOutletsLikeAll',Outlets,function(res){
             for(let i=0;i<res.length;i++){
                 if(res[i].storeCode==storeCode){
-                    $(".getPickUpPoint").text(res[i].storeName);
+                    $(".getPickUpPoint").text(res[i].storeName.split(' ')[0]);
+                    let area=res[i].area.area;
+                    $(".getAreaId").text(area);
+                    $(".getAddress").text(area+res[i].shortAddress);
                 }
             }
         })
