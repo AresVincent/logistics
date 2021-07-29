@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head type="text/css" media="print">
+    <meta charset="UTF-8">
+    <title>Print Order Test</title>
+    <script rel="text/javascript" src="js/JsBarcode.code128.min.js"></script>
+    <script rel="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script rel="text/javascript" src="js/bootstrap.js"></script>
+    <style>
+        @page {
+            size: A6;
+            margin: 0;
+        }
+        html,body{
+            height:150mm;
+            width:100mm;
+            font-family: 微軟正黑體;
+            font-weight: bold;
+        }
+        @media print {
+            @page {
+                size: 100mm 150mm;
+                /* you can also specify margins here: */
+                margin: 0mm;
+                margin-right: 0mm; /* for compatibility with both A4 and Letter */
+            }
+            .print{
+                page-break-after: always;
+            }
+        }
+        .center{
+            text-align: center;
+        }
+        .print_upper{
+            height:90mm;
+            width:100mm;
+            border-bottom:solid 1px #d5d5d5;
+        }
+        .print_lower{
+            height:60mm;
+            width:100mm;
+            /*border:dotted 1px #f00;*/
+        }
+        .print{
+            height:150.7mm;
+            width:100mm;
+            border:solid 2px #000000;
+        }
+        p{
+            line-height: 18px;
+            font-size: 15px;
+            margin-bottom: 0px;
+        }
+        .transport_method{
+            font-size: 18px;
+        }
+        .transport_method .col-12{
+            padding-top:2px;
+            padding-bottom:2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="print">
+        <div class="container print_upper">
+            <div class="row" style="border-bottom: solid 2px #000000">
+                <div class="col-4">
+                    <img src="img/logo.png" style="height: auto;width:100px; margin-top:20px;margin-left:10px;">
+                </div>
+                <div class="col-8">
+                    <svg height="60" id="barcode" style="position: absolute;"></svg>
+                </div>
+            </div>
+            <div class="row" style="border-bottom: solid 2px #000000">
+                <div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;">
+                    <p>
+                        <span>收件人: <span class="getName"></span></span> <br>
+                        <span>電話:+<span class="getPhone"></span></span><br>
+                        <span>地址:<span class="getAddress"></span></span> <br>
+                        <span>備注:</span><br>
+                        <span>注: 免收附加費</span>
+                    </p>
+                </div>
+                <div class="col-4" style="padding:0px;">
+                    <div class="transport_method container center" style="padding:0px;">
+                        <div class="col-12" style="border-bottom: solid 2px #000000">
+                            <b class="getPickUpPoint"></b>
+                        </div>
+                        <div class="col-12" style="border-bottom: solid 2px #000000">
+                            <b class="type">自提點</b>
+                        </div>
+                        <div class="col-12">
+                            <b class="getAreaId"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="border-bottom: solid 2px #000000">
+                <div class="col-4" style="padding-top: 10px;padding-bottom: 5px;border-right:solid 2px #000000">
+                    <p style="font-size: 14px;">
+                        付款方式:寄付<br>
+                        運費:HKD$<span class="price">25</span><br>
+                        代收貨款:<br>
+                    </p>
+                </div>
+                <div class="col-4" style="border-right:solid 2px #000000">
+                    <div class="container" style="padding:0px;">
+                        <div class="col-12" style="padding-top: 10px">
+                            <p>件數: 1</p>
+                        </div>
+                        <div class="col-12" style="padding-top: 10px">
+                            <p>重量: <span class="weight">5</span> kg</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4" style="padding: 0px 3px 0px 0px;">
+                    <div class="container center" style="padding: 0px;">
+                        <div class="col-12" style="padding-top: 6px;border-bottom: solid 2px #000000">
+                            <b>四方格</b>
+                        </div>
+                        <div class="col-12" style="padding-top: 6px">
+                            <b>LOCAL_ARES</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">
+                    <p class="sendTime">2021-07-19 18:51:09</p>
+                </div>
+                <div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">
+                    <p>
+                        簽名:<br>
+                        日期:
+                    </p>
+                </div>
+                <div class="col-4 center" style="font-size:24px;padding-top: 5px;">
+                    <b class="barcodeEnd">825395</b>
+                </div>
+            </div>
+        </div>
+        <div class="container print_lower">
+            <div class="row">
+                <div class="col-4" style="padding: 0px;border-right:solid 2px #000000">
+                    <div class="container" style="padding:0px;">
+                        <img src="img/logo.png" style="height: 50px;width:auto;padding-left: 20px;padding-top:10px;">
+                        <div class="col-12" style="transform:rotate(90deg);margin-left:-10px;margin-top: 20px;">
+                            <svg height="60" id="barcode2"></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="row center">
+                        <div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;">
+                            <b style="font-size: 15px;" class="getPickUpPoint"></b>
+                        </div>
+<!--                        <div class="col-6 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;border-right: solid 2px #000000;">-->
+<!--                            <b style="font-size: 15px;">4PX-黃大仙富佑</b>-->
+<!--                        </div>-->
+<!--                        <div class="col-6" style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000">-->
+<!--                            <b style="font-size: 15px;">黃大仙區</b>-->
+<!--                        </div>-->
+                    </div>
+                    <div class="row" style="padding-top:5px;border-bottom: solid 2px #000000">
+                        <p>
+                            收件人: <span class="getName"></span><br>
+                            電話:+<span class="getPhone"></span><br>
+                            地址:<span class="getAddress"></span><br>
+                            備注:<br>
+                            注: 免收附加費
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">
+                            <p style="line-height: 20px;font-size: 14px;">
+                                付款方式:寄付<br>
+                                運費:HKD$<span class="price">25</span><br>
+                                代收貨款:<br>
+                            </p>
+                        </div>
+                        <div class="col-6" style="padding: 0px 3px 0px 0px;">
+                            <div class="container center" style="padding: 0px;">
+                                <div class="col-12" style="padding-top: 6px;padding-bottom: 6px;border-bottom: solid 2px #000000">
+                                    <b>四方格</b>
+                                </div>
+                                <div class="col-12" style="padding-top: 6px">
+                                    <b>件數:1</b>
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="col-6">-->
+<!--                            <div class="container">-->
+<!--                                <div class="col-12" style="border-bottom: solid 2px #000000">-->
+<!--                                    <b style="font-size: 15px;">四方格</b>-->
+<!--                                </div>-->
+<!--                                <div class="col-12" style="border-bottom: solid 2px #000000">-->
+<!--                                    <b style="font-size: 15px;">件數:1</b>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../__JS__/common.min.js"></script>
+<script>
+    $.fn.extend({
+        print: function() {
+            var frameName = 'printIframe';
+            var doc = window.frames[frameName];
+            if (!doc) {
+                $('<iframe>').hide().attr('name', frameName).appendTo(document.body);
+                doc = window.frames[frameName];
+            }
+            doc.document.body.innerHTML = this.html();
+            doc.window.print();
+            return this;
+        }
+    });
+    var barcode;
+    $(document).ready(function(){
+        SetQueryToText();
+        //generate barcode
+        JsBarcode("#barcode", barcode,{
+            height: 60,
+            fontSize: 12,
+        });
+        JsBarcode("#barcode2", barcode,{
+            height: 60,
+            width:1.4,
+            fontSize: 12,
+        });
+    });        
+
+    //set queryString value to table cell 
+    function SetQueryToText(){
+        let queryString=window.location.search;
+        let search=new URLSearchParams(queryString);
+        let address;
+        let type;
+        let storeCode;
+        search.forEach(function(value,key){
+            if($("."+key).length>0){
+                if(key=="getAddress"){
+                    address=value;
+                }
+                if(key=="type"){
+                    if(value=="SELF_PICKUP_STATION"){
+                        type="自提點";
+                    }else if(value=="HOME_DELIVERY"){
+                        type="送貨上門"
+                    }else{
+                        type="自提櫃";
+                    }
+                }
+                if(key=="getPickUpPoint"){
+                    storeCode=value;
+                }
+                $("."+key).text(value);
+                
+            }else{
+                if(key=="waybillNo"){
+                    barcode=value;
+                    $(".barcodeEnd").text(barcode.slice(barcode.length-6,barcode.length));
+                }
+                console.log("doesn't exist class"+ key+"element");
+            }
+        });
+        $(".type").text(type);
+        let urls=getBaseUrl();
+        let Outlets = {
+            areaId : 0,
+            address : '',
+            addressEn : ''
+        };
+        $.post(urls+'outlets/getOutletsLikeAll',Outlets,function(res){
+            for(let i=0;i<res.length;i++){
+                if(res[i].storeCode==storeCode){
+                    $(".getPickUpPoint").text(res[i].storeName.split(' ')[0]);
+                    let area=res[i].area.area;
+                    $(".getAreaId").text(area);
+                    $(".getAddress").text(area+res[i].shortAddress);
+                }
+            }
+        })
+    }
+
+
+</script>
+</html>
