@@ -7,3 +7,28 @@
         margin-top: 60px;
     }
 }
+.addItem{
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    background: url(../__IMG__/add_blue.png) no-repeat;
+    transition: all 0.5s;
+
+}
+
+.reduceItem{
+    width:32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    background: url(../__IMG__/reduce_blue.png) no-repeat;
+    transition: all 0.5s;
+}
+.addItem:hover,.reduceItem:hover{
+    box-shadow: 0 0 10px #0886fb ;
+}

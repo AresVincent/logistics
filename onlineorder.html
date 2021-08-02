@@ -247,16 +247,21 @@
       </div>
       <div class="row">
 
-        <div class="mb-form-standard col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-5">
           <div class="row mr-0">
-            <label for="goods" class="col-form-label goods col-4 col-md-2">名稱<span class="badge  text-danger">*</span></label>
-            <input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">
+            <label for="goods" class="col-form-label goods col-4 col-md-3">名稱<span class="badge  text-danger">*</span></label>
+            <input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-9">
           </div>
         </div>
-        <div class="mb-form-standard col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-5">
           <div class="row mr-0">
-            <label for="num" class="col-form-label num col-4 col-md-2">數量<span class="badge  text-danger">*</span></label>
-            <input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10" onchange="checkNum(this)">
+            <label for="num" class="col-form-label num col-4 col-md-3">數量<span class="badge  text-danger">*</span></label>
+            <input type="number" name="amount" class="form-control rounded-sm col-8 col-md-9" onchange="checkNum(this)">
+          </div>
+        </div>
+        <div class="mb-form-standard col-12 col-md-2">
+          <div class="row ml-3">
+            <a class="addItem" id="addItem" onclick="javascript:void(0);"></a>
           </div>
         </div>
         <div class="elseItem col-12">
@@ -273,7 +278,9 @@
       <div class="row mb-form-standard">
         <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如包裹中物品種類多於一種,請點擊添加物品進行操作！</label>
       </div>
-      <div class="button_group row justify-content-between align-items-center mb-3">
+
+      <!-- add item and remove item -->
+      <!-- <div class="button_group row justify-content-between align-items-center mb-3">
         <button onsubmit="return false;" class="col-12 col-sm-4 mt-2 d-flex justify-content-center" id="addItem">
           <div class="btn_wrap">
             添加物品
@@ -284,7 +291,7 @@
             刪除物品
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- btn group -->
       <div class="button_group row justify-content-between align-items-center button_group_order">
@@ -313,7 +320,7 @@
   <!-- loading begin -->
   <div class="loading_wrap position-fixed">
     <div class="spinner-border text-primary loading position-absolute" role="status">
-      <span class="">Loading...</span>
+      <span class=""></span>
     </div>
   </div>
   <!-- loading end -->
@@ -337,7 +344,8 @@
   </div>
 </footer>
 <!-- footer end -->
-
+<!-- for download excel -->
+<a style="display: none;" class="downloadResult" id="downloadResult" href="" download="result.xlsx"></a>
 
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -490,7 +498,7 @@
       formData.append('token', token);
 
       $.ajax({
-　　   url: url + '/export/readExcel',
+　　   url: url + 'export/readExcel',
               type: 'POST',
               cache: false,    //上传文件不需要缓存
               data: formData,
@@ -500,7 +508,10 @@
                     console.log(res)
                     if(res == 1){
                         layer.msg('导入成功',{icon:1,time:1000},function(){
-                          location.href=location.href
+                          // location.href=location.href
+                          let urlDownload="/result/result"+$.cookie("username")+".xlsx";
+                          $(".downloadResult").attr("href",urlDownload);
+                          document.getElementById("downloadResult").click();
                         });
                     }else{
                       layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
@@ -561,27 +572,23 @@
           }
         });
       });
+      //add item
       $("#addItem").click(function(){
-        let strForm=""
-        strForm+='<div class="row items"><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
-        strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">';
-        strForm+='</div></div><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
-        strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10">';
-        strForm+='</div></div></div>';
+        let strForm="";
+        strForm+='<div class="row items"><div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-3">名稱';
+        strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-9">';
+        strForm+='</div></div><div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-3">';
+        strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-9">';
+        strForm+='</div></div>';
+        strForm+='<div class="mb-form-standard col-12 col-md-2"><div class="row ml-3"><a class="reduceItem" id="reduceItem" onclick="removeItem(this)"></a></div></div>';
+        strForm+='</div>';
         $(".elseItem").append(strForm);
       });
-      $("#reduceItem").click(function(){
-        if($("input[name='product_name']").length<2){
-          layer.msg('至少填寫一項物品，不能繼續刪除該選項！',{icon:2})
-          return;
-        }
-        $(".elseItem .items").last().remove();
-      });
     });
-
-
-
-
+    //remove item
+      function removeItem(e){
+        $(e).closest(".items").remove();
+      }
       function getDate()
       {
         let type=$('select[name="type"]').val();

@@ -374,11 +374,10 @@ function ExcelGen(options) {
         workbook.xl.file("sharedStrings.xml", this.sharedStrings.to_xml());
         workbook.tables.file("table1.xml", this.table.to_xml());
         workbook.base.generateAsync({ type: "blob" })
-            .then(function (content) {
-                saveAs(content, "example.xlsx");
-            });
+        .then(function (content) {
+            saveAs(content, "example.xlsx");
+        });
     };
-
 
     //initialize the object
     this.__initialize__(options);
