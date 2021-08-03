@@ -22,7 +22,7 @@
 <body>
     <!-- nav beigin -->
     <nav class="navbar navbar-expand-lg navbar-dark ">
-      <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+      <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -492,7 +492,19 @@
 
     $('.importFile').change(function(){
 
-      console.log(this.files[0])
+      console.log(this.files[0]);
+      let checkName= this.files[0].name;
+      let suffix = checkName.substr(checkName.lastIndexOf("."));
+      if(this.files[0]==""){
+        layer.msg("請上傳excel文件！",{icon:2,time:1000});
+        $(this).val()=="";
+        return;
+      }
+      if(".xls" != suffix && ".xlsx" != suffix ){    
+            layer.msg("所上傳文件非excel格式的文件！",{icon:2,time:1000});
+           $(this).val()=="";
+           return;
+      }
       var formData = new FormData();
       formData.append('file',this.files[0]);
       formData.append('token', token);
@@ -506,15 +518,15 @@
               contentType: false, // 告诉jQuery不要去设置Content-Type请求头
               success: function (res) {
                     console.log(res)
-                    if(res == 1){
-                        layer.msg('导入成功',{icon:1,time:1000},function(){
+                    if(res.code == 200){
+                        layer.msg(res.msg,{icon:1,time:1000},function(){
                           // location.href=location.href
                           let urlDownload="/result/result"+$.cookie("username")+".xlsx";
                           $(".downloadResult").attr("href",urlDownload);
                           document.getElementById("downloadResult").click();
                         });
                     }else{
-                      layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
+                      layer.msg(res.msg,{icon:2,time:1500})
                     }
                 },
                 error: function (err) {

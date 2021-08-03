@@ -28,7 +28,7 @@
 <body>
   <!-- nav beigin -->
  <nav class="navbar navbar-expand-lg navbar-dark ">
-  <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+  <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -263,7 +263,6 @@
   <script src="__JS__/plugs/daterangepicker/daterangepicker.js"></script>
   <script src="__JS__/common.min.js"></script>
   <script src="__JS__/plugs/layer/layer.js"></script>
-  <!-- <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script> -->
   <script src="__JS__/cookie.js"></script>
   <script src="__JS__/init.js"></script>
 
@@ -272,7 +271,6 @@
   <script type="text/javascript" src="__JS__/table/jszip.min.js"></script>
   <script type="text/javascript" src="__JS__/table/FileSaver.js"></script>
   <script type="text/javascript" src="__JS__/table/excel-gen.js"></script>
-  <!-- <script type="text/javascript" src="scripts/demo.page.js"></script> -->
 
 
 
@@ -443,7 +441,7 @@ function getOrderList()
                 }
             }
 
-            html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].waybillNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
+            html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].waybillNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
             html+='<td  onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td></tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
@@ -461,18 +459,17 @@ function getOrderList()
         $('#showOrder').html(html);
         $('#showItem').html(itemHtml);
         btnShow();
-
-        
+        excel = new ExcelGen({
+          "src_id": "itemTable",
+          "show_header": true
+        });
+        $("#generate-excel").off("click").on("click",function(){
+          excel.generate();
+        });
     });
 }
     getOrderList();
-    $("#generate-excel").click(function () {
-      let excel = new ExcelGen({
-          "src_id": "itemTable",
-          "show_header": true
-      });
-      excel.generate();
-    });
+
     $('.nav_top_li').click(function(){
         $('.nav_top_li').removeClass('active');
         $(this).addClass('active');
