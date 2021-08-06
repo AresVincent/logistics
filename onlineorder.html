@@ -188,7 +188,7 @@
                 </select>
                 <div class="col-2"></div>
                 <select class="form-control rounded-sm mb-3 col-5 areaSelect" name="get_area_id">
-          
+                  
                 </select>
               </div>
             </div>
@@ -353,6 +353,10 @@
   <script src="__JS__/common.min.js"></script>
   <script src="__JS__/plugs/layer/layer.js"></script>
   <script src="__JS__/init.js"></script>
+  <!-- websocket -->
+  <script src="./__JS__/plugs/socketJs.min.js"></script>
+  <script src="./__JS__/plugs/stomp.min.js"></script>
+
 <script>
   let url = getBaseUrl();
 
@@ -440,7 +444,7 @@
       let weight = $('input[name="weight"]').val();
       if(weight == ''){
         layer.msg('重量為空',{icon:2,time:1500});
-        $('.loading_wrap').hide()
+        $('.loading_wrap').hide();
         return false;
       }
       let num = $('input[name="num"]').val();
@@ -491,49 +495,74 @@
     })
 
     $('.importFile').change(function(){
-
       console.log(this.files[0]);
       let checkName= this.files[0].name;
       let suffix = checkName.substr(checkName.lastIndexOf("."));
       if(this.files[0]==""){
         layer.msg("請上傳excel文件！",{icon:2,time:1000});
-        $(this).val()=="";
+        $(this).val("");
         return;
       }
       if(".xls" != suffix && ".xlsx" != suffix ){    
             layer.msg("所上傳文件非excel格式的文件！",{icon:2,time:1000});
-           $(this).val()=="";
+           $(this).val("");
            return;
       }
+      //try connect websocket
+      connect();
       var formData = new FormData();
       formData.append('file',this.files[0]);
       formData.append('token', token);
-
+      //for inform customers know it's working
+      let contentStr='<div class="spinner-border text-primary loading" role="status"><span class=""></span></div>';
+      contentStr+='<p style="text-align:center"><span>正在導入中,請耐心等候！</span></p><p  class="detail">已上傳</p>'
+      layer.open({
+            type: 1,
+            skin: 'layui-layer importCountdown', 
+            closeBtn:0,
+            area: ['320px', '215px'],
+            content:contentStr,
+      });
+      // timer=setInterval(function(){
+      //   $(".importCountdown .detail").text('已耗時'+time+'s!');
+      //   time+=1;
+      // },1000);
+      
       $.ajax({
-　　   url: url + 'export/readExcel',
-              type: 'POST',
-              cache: false,    //上传文件不需要缓存
-              data: formData,
-              processData: false, // 告诉jQuery不要去处理发送的数据
-              contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-              success: function (res) {
-                    console.log(res)
-                    if(res.code == 200){
-                        layer.msg(res.msg,{icon:1,time:1000},function(){
-                          // location.href=location.href
-                          let urlDownload="/result/result"+$.cookie("username")+".xlsx";
-                          $(".downloadResult").attr("href",urlDownload);
-                          document.getElementById("downloadResult").click();
-                        });
-                    }else{
-                      layer.msg(res.msg,{icon:2,time:1500})
-                    }
-                },
-                error: function (err) {
-                    console.log(err)
-                    layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
-                }
-            })
+　　    url: url + 'export/readExcel',
+        type: 'POST',
+        cache: false,    //上传文件不需要缓存
+        data: formData,
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+        success: function (res) {
+            // console.log(res);
+            // clearInterval(timer);
+            layer.closeAll();
+            if(res.code == 200){
+                layer.msg(res.msg,{icon:1,time:1500},function(){
+                  // location.href=location.href
+                  let urlDownload="/result/result"+$.cookie("username")+".xlsx";
+                  $(".downloadResult").attr("href",urlDownload);
+                  document.getElementById("downloadResult").click();
+                });
+            }else{
+              layer.msg(res.msg,{icon:2,time:1500})
+            }
+            disconnect();
+            $('.importFile').val("");
+        },
+        error: function (err) {
+            // console.log(err);
+            // clearInterval(timer);
+            disconnect();
+            layer.closeAll();
+            layer.msg('导入失败，请稍后重试！',{icon:2,time:1500});
+            $('.importFile').val("");
+        }
+      });
+
+      //websocket for progress bar
     })
     $(document).ready(function(){
       let token = $.cookie('token');
@@ -862,6 +891,37 @@
             $("select[name='get_pickupPoint']").html(str);
         });
       }
+      var stompClient = null;
+
+      //for websocket connection!
+      function setConnected(connected) {
+        console.log("successful");
+      }
+
+      function connect() {
+          var socket = new SockJS(getBaseUrl()+'progressBar');
+          stompClient = Stomp.over(socket);
+          stompClient.connect({}, function (frame) {
+              setConnected(true);
+              console.log('Connected: ' + frame);
+              stompClient.subscribe('/topic/progressBar', function (res) {
+              $(".importCountdown .detail").text('已上傳('+JSON.parse(res.body).current+'/'+JSON.parse(res.body).total+')');
+              });
+          });
+      }
+
+      function disconnect() {
+          if (stompClient !== null) {
+              stompClient.disconnect();
+          }
+          setConnected(false);
+          console.log("Disconnected");
+      }
+
+      function sendName() {
+        stompClient.send(getBaseUrl()+'topic/progressBar',{},formData)
+      }
+
   </script>
 </body>
 

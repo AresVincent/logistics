@@ -32,3 +32,13 @@
 .addItem:hover,.reduceItem:hover{
     box-shadow: 0 0 10px #0886fb ;
 }
+.importCountdown .layui-layer-content{
+    text-align: center;
+    padding: 30px;
+}
+.importCountdown .layui-layer-content p{
+    margin-bottom: 5px;
+}
+.importCountdown .layui-layer-content .loading{
+    margin-bottom: 15px;
+}

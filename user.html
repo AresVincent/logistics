@@ -104,16 +104,16 @@
           <li class="nav_top_li" data-status="3">
             <a href="javascript:void(0)" class="inTransit">倉庫簽出</a>
             <span class="line"></span>
-          </li>|
-          <li class="nav_top_li" data-status="4">
+          </li>
+          <!-- |<li class="nav_top_li" data-status="4">
             <a href="javascript:void(0)" class="signedIn">再次派送</a>
             <span class="line"></span>
-          </li>|
-          <li class="nav_top_li" data-status="5">
+          </li> -->
+          |<li class="nav_top_li" data-status="5">
             <a href="javascript:void(0)" class="toBeSigned">已上架</a>
             <span class="line"></span>
-          </li>|
-          <li class="nav_top_li" data-status="6">
+          </li>
+          |<li class="nav_top_li" data-status="6">
             <a href="javascript:void(0)" class="signOneHalfOf">已簽收</a>
             <span class="line"></span>
           </li>|
@@ -161,7 +161,7 @@
                   <span>批量列印</span>
                 </div>
                 <div class="col-md-3 col-12 trade_print" id="trade_print" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
-                  <span>交易詳情</span>
+                  <span onclick="itemIndex()">交收表詳情</span>
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@
             <th style="width: 10%;min-width:120px;">收貨人電話</th>
             <th style="width: 15%;min-width:150px;">收貨地址</th>
             <th style="width: 10%;min-width:120px;">快遞單</th>
-            <th style="width: 5%;min-width: 120px;">全選<input type="checkbox" class="ml-1" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
+            <th style="width: 5%;min-width: 100px;">全選<input type="checkbox" class="ml-1" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
           </tr>
         </thead>
         <tbody class="tbody" id="showOrder">
@@ -206,8 +206,8 @@
 
     <!-- table content end -->
     <!-- page number -->
-    <div class="card-footer clearfix">
-     <ul class="pagination pagination-sm m-0 float-right">
+    <div class="card-footer clearfix" style="display: flex;align-items: center;justify-content: center;">
+     <ul class="pagination pagination-sm m-0" style="text-align: center;">
 
      </ul>
     </div>
@@ -242,6 +242,8 @@
     <thead class="">
       <tr class="itemHead">
         <th>包裹號</th>
+        <th>運單號</th>
+        <th>發貨地址</th>
         <th>發貨時間</th>
         <th>包裹狀態</th>
         <th>包裹重量</th>
@@ -249,7 +251,6 @@
         <th>收貨人姓名</th>
         <th>收貨人電話</th>
         <th>收貨地址</th>
-        <th>快遞單</th>
       </tr>
     </thead>
     <tbody class="tbody" id="showItem" style="word-break: keep-all;">
@@ -291,6 +292,10 @@
       console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
       Data.excStartTime = start.format('YYYY-MM-DD')
       Data.excEndTime = end.format('YYYY-MM-DD')
+      localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
+      localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
+      printData.excStartTime=start.format('YYYY-MM-DD');
+      printData.excEndTime=end.format('YYYY-MM-DD');
       getOrderList()
     });
   </script>
@@ -342,13 +347,24 @@ var Data = {
     pageNum : 1,
     pageSize:15
 };
+// for generating exported excel
+var printData={
+  token : token,
+  orderNo : '',
+  sn : '',
+  status : '',
+  excStartTime : '',
+  excEndTime : '',
+  pageNum : 1,
+  pageSize:999999
+};
+
 function getOrderList()
 {
  let url = getBaseUrl();
  $('.loading_wrap').show();
     $.post(url + 'order/likeOrderUserById',Data,function(res){
-        console.log(res)
-
+        console.log(res);
         Data.pageNum = res.pageNum;
         Data.lastPage = res.pages;
         Data.isLastPage = res.isLastPage;
@@ -371,27 +387,37 @@ function getOrderList()
         $('.newslist_ul').html(str);
 
         // 分页
-        let pagestr = '<li class="page-item"><a class="page-link prev" href="javascript:void(0)">«</a></li>';
+        let pagestr = '<li class="page-item  page-block"><a class="page-link prev" href="javascript:void(0)">«</a></li>';
         
-
-
-        for(let i = 1; i <= res.pages; i++){
+        if(res.pageNum>=30){
+          pagestr+='<li class="page-item  page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+1+')">...</a></li>';
+        }
+        for(let i = 1; i <= res.pages; i++){  
             if(res.pageNum == i){
-                pagestr += '<li class="page-item active"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
+                pagestr += '<li class="page-item active page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
             }else{
-                pagestr += '<li class="page-item"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+              if(res.pages<30){
+                pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+              }else{
+                //when page count >30
+                 if(i<(Math.min(res.pageNum+30,res.pages)) && i>res.pageNum){
+                  pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+                 }
+              }
             }
         }
 
-        pagestr += '<li class="page-item"><a class="page-link next" href="javascript:void(0)">»</a></li>';
+        if(res.pageNum>=30){
+          pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
+        }
+        pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">»</a></li>';
         $('.pagination-sm').html(pagestr)
 
 
 
         let html = '';
-        let itemHtml='';
         for(i in list){
-            let status = '';
+            let status = ''; 
             if(is_en()){
                 switch(list[i].status){
                     case "1" :
@@ -441,31 +467,15 @@ function getOrderList()
                 }
             }
 
-            html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].waybillNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
-            html+='<td  onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td></tr>' ;
+            html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
+            html+='<td onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td></tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
             // html+='</table></div></td></tr>';
             html+='<tr class="childTr" data-show="false"></tr>';
-            itemHtml+= ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td>'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" >列印</a></td>' ;
-            for(let index=0;index<list[i].product_list.length;index++){
-              if(list[i].product_list.length>$(".itemName").length){
-                $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th")
-              }
-              itemHtml+="<td>"+list[i].product_list[index].productName+"</td><td>"+list[i].product_list[index].qty+"</td>";
-            }
-            itemHtml+='</tr>';
           }
         $('#showOrder').html(html);
-        $('#showItem').html(itemHtml);
         btnShow();
-        excel = new ExcelGen({
-          "src_id": "itemTable",
-          "show_header": true
-        });
-        $("#generate-excel").off("click").on("click",function(){
-          excel.generate();
-        });
     });
 }
     getOrderList();
@@ -476,6 +486,7 @@ function getOrderList()
         let status = $(this).attr('data-status');
         console.log(status)
         Data.status = status;
+        printData.status=status;
         getOrderList();
     })
     $('.btn_search').click(function(){
@@ -490,7 +501,7 @@ function btnShow(){
             return false;
         }
         Data.pageNum = Data.prePage;
-        jump()
+        jump();
     })
     $('.next').click(function(){
         if(Data.isLastPage){
@@ -596,7 +607,10 @@ function selectAll(e){
   }
 }
 // jump()
-
+//remember time
+function itemIndex(){
+  window.open("/itemList/index.html",'_blank');
+}
 
 </script>
 <script>
@@ -618,7 +632,7 @@ function selectAll(e){
 
   }
   $(document).ready(function(){
-
+    //for batch print
     $(".batch_print").click(function(){
       let orderList=[];
        for(let i=0;i<$(".isPrint").length;i++){
@@ -656,7 +670,7 @@ function selectAll(e){
                 "weight":res.data[i].weight,
                 "sendTime":res.data[i].sendTime,
                 "barcode":res.data[i].waybillNo,
-                "orderNo":res.data[i].waybillNo
+                "orderNo":res.data[i].orderNo
               };
               arrayOrder.push(item);
             }
@@ -669,6 +683,86 @@ function selectAll(e){
         }
       });
     });
+
+    //export excel 
+        $("#generate-excel").off("click").on("click",function(){
+          let itemHtml='';
+          if(printData.excStartTime==""||printData.excEndTime==""){
+            printData.excStartTime=YMD(new Date());
+            printData.excEndTime=YMD(new Date());
+          }
+          $(".loading_wrap").show();
+          $.post(getBaseUrl() + 'order/likeOrderUserById',printData,function(res){
+            let list=res.list;
+            for(let i=0;i<list.length;i++){
+              if(is_en()){
+                switch(list[i].status){
+                    case "1" :
+                        status = 'Ordered';
+                        break;
+                    case "2" :
+                        status = 'In stock'
+                        break;
+                    case "3" :
+                        status = 'Out stock'
+                        break;
+                    case "4" :
+                        status = 'Delivering'
+                        break;
+                    case "5" :
+                        status = 'On Shelf'
+                        break;
+                    case "6" :
+                        status = 'Signed'
+                    case "7" :
+                    status = 'Overtime'
+                        break;
+                }}else{
+                      
+                  switch(list[i].status){
+                        case "1" :
+                            status = '已下單';
+                            break;
+                        case "2" :
+                            status = '倉庫簽入'
+                            break;
+                        case "3" :
+                            status = '倉庫簽出'
+                            break;
+                        case "4" :
+                            status = '派送中'
+                            break;
+                        case "5" :
+                            status = '自提件已上架'
+                            break;
+                        case "6" :
+                            status = '已簽收'
+                            break;
+                        case "7" :
+                            status= '自提件已超時'
+                    }
+                }
+
+              itemHtml+= ' <tr class="upperTr"><td>'+list[i].orderNo+'</td><td>'+list[i].waybillNo+'</td><td>'+list[i].sendAddress+'</td>';
+              itemHtml+='<td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>' ;
+              for(let index=0;index<list[i].product_list.length;index++){
+                if(list[i].product_list.length>$(".itemName").length){
+                  $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th")
+                }
+                itemHtml+="<td>"+list[i].product_list[index].productName+"</td><td>"+list[i].product_list[index].qty+"</td>";
+              }
+            itemHtml+='</tr>';
+            }
+            $('#showItem').html(itemHtml);
+            let excel = new ExcelGen({
+              "src_id": "itemTable",
+              "show_header": true
+            });
+            $(".loading_wrap").hide();
+            excel.generate();
+          });
+        });
+
   });
 
   //渲染菜单

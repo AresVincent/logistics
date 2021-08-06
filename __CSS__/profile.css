@@ -16,3 +16,9 @@
         padding-right: 15px;
     }
 }
+.card-footer .pagination-sm .page-block{
+    padding-left: 0;
+    padding-right: 0;
+    width: 36px;
+    
+}
