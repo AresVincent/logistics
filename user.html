@@ -289,9 +289,11 @@
     $('input[name="dates"]').daterangepicker({
       opens: 'center'
     }, function (start, end, label) {
-      console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      // console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
       Data.excStartTime = start.format('YYYY-MM-DD')
       Data.excEndTime = end.format('YYYY-MM-DD')
+      $.cookie("startTime",start.format('YYYY-MM-DD'));
+      $.cookie("endTime",end.format('YYYY-MM-DD'));
       localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
       localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
       printData.excStartTime=start.format('YYYY-MM-DD');
@@ -336,7 +338,7 @@ $('.next').click(function(){
 })
 
 let token = $.cookie('token');
-console.log(token)
+// console.log(token)
 var Data = {
     token : token,
     orderNo : '',
@@ -364,7 +366,7 @@ function getOrderList()
  let url = getBaseUrl();
  $('.loading_wrap').show();
     $.post(url + 'order/likeOrderUserById',Data,function(res){
-        console.log(res);
+        // console.log(res);
         Data.pageNum = res.pageNum;
         Data.lastPage = res.pages;
         Data.isLastPage = res.isLastPage;
@@ -484,7 +486,7 @@ function getOrderList()
         $('.nav_top_li').removeClass('active');
         $(this).addClass('active');
         let status = $(this).attr('data-status');
-        console.log(status)
+        // console.log(status)
         Data.status = status;
         printData.status=status;
         getOrderList();
@@ -525,7 +527,7 @@ function printWayBill(e){
     dataType:'json',
     contentType:"application/json; charset=utf-8",
     success: function(res){
-      console.log(res)
+      // console.log(res)
       let printUrl="/waybill/waybill_pickup.html";
       if(res.code == 200){
         let arrayOrder=[];
@@ -654,7 +656,7 @@ function itemIndex(){
         dataType:'json',
         contentType:"application/json;charset=utf-8",
         success: function(res){
-          console.log(res)
+          // console.log(res)
           if(res.code == 200){
             let arrayOrder=[];
             let item;

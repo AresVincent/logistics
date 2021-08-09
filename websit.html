@@ -100,7 +100,7 @@
       </div>
       <button onsubmit="return false;" class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">
         <span class="iconfont icon-chaxun mr-2"></span>
-        <span class="text searchBtn">查快遞</span>
+        <span class="text searchBtn">查網點</span>
       </button>
     </form>
 
@@ -264,7 +264,7 @@ if(is_en()){
     }
     $(".loading_wrap").show();
     $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
-      console.log(res)
+      // console.log(res)
       let list = res;
       let dl = ''
       for(i in list){
@@ -273,7 +273,7 @@ if(is_en()){
           dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.nameEn+'</span><a href="javascript:void(0)">'+list[i].area.areaEn+'<font color="red">Service Department</font></a></dt><dd>Company address：'+list[i].addressEn+'</dd><dd>Contact number：'+tel+'</dd></dl>';
         }else{
           let tel = list[i].phone?list[i].phone:'无'
-          dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
+          dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">自提點</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>聯繫電話：'+tel+'</dd></dl>';
         }
       }
       if(list.length > 0){

@@ -44,7 +44,7 @@
               </li>
               <li class="lan_li">
                 <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
-              </li>
+              </li> 
             </ul>
           </div> -->
 
@@ -92,9 +92,9 @@
               <div class="row ml-0 mr-0">
                 <select name="type" class="form-control rounded-sm modeSelect col-12" onchange="changeWay()">
                   <option value="0">請選擇</option>
-                  <!-- <option value="HOME_DELIVERY">送貨上門</option> -->
+                  <option value="HOME_DELIVERY">送貨上門</option>
                   <option value="SELF_PICKUP_STATION">自提點</option>
-                  <!-- <option value="SELF_SERVICE_STATION">自提櫃</option> -->
+                  <option value="SELF_SERVICE_STATION">自提櫃</option>
                 </select>
               </div>
             </div>
@@ -361,7 +361,7 @@
   let url = getBaseUrl();
 
   $.get(url + 'area/areaAll',function(res){
-    console.log(res)
+    // console.log(res)
     let str = ''; 
     if(is_en()){
       str+='<option value="0">please select a district</option>'
@@ -374,14 +374,14 @@
         str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
       }
     }
-    console.log(str)
+    // console.log(str)
     $('select[name="get_area_id"]').html(str);
     $('select[name="send_area_id"]').html(str);
     $('select[name="place"]').html(str);
   })
 
   $.get(url + 'logisticStore/logisticStoreAll',function(res){
-    console.log(res)
+    // console.log(res)
     let str = '';
     if(is_en()){
       str+='<option value="">please select a logistics point</option>';
@@ -394,7 +394,7 @@
         str += '<option value="'+res[i].storeAddress+'">'+res[i].storeAddress + '</option>';
       }
     }
-    console.log(str)
+    // console.log(str)
     $('select[name="send_address"]').html(str);
     if($.cookie("send_address")){
       $("select[name='send_address']").val($.cookie("send_address"));
@@ -465,10 +465,9 @@
         data: JSON.stringify(send_obj),
         dataType: "json",
         success: function(res){
-          console.log(send_obj);
-          console.log(res);
+          // console.log(send_obj);
+          // console.log(res);
           $('.loading_wrap').hide()
-          console.log(res)
           let total_amount = 0;
           if(res.length > 0){
             if(res[0].firstWeight >= weight){
@@ -595,7 +594,7 @@
           dataType:'json',
           contentType:"application/json; charset=utf-8",
           success: function(res){
-            console.log(res)
+            // console.log(res)
             if(res.code == 200){
               isSubmitFirst=true;
               layer.open({
@@ -868,7 +867,7 @@
         }
         let urls=getBaseUrl();
         $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
-          console.log(res);
+          // console.log(res);
           let str;
           if(res.length<1){
             layer.msg('暫無該地區的自提點，請重新選擇地區！',{icon:2,time:1500});
@@ -887,7 +886,7 @@
               }
             }
             
-            console.log(str)
+            // console.log(str);
             $("select[name='get_pickupPoint']").html(str);
         });
       }

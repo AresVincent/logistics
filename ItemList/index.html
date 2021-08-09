@@ -152,8 +152,8 @@
 <script rel="text/javascript" src="../__JS__/plugs/layer/layer.js"></script>
 <script>
     $(function(){
-        let startTime=localStorage.getItem("startTime");
-        let endTime=localStorage.getItem("endTime");
+        let startTime=$.cookie("startTime");
+        let endTime=$.cookie("endTime");
         if(!startTime){
             startTime=YMD(new Date());
         }
@@ -241,9 +241,9 @@
         });
     });
     function baseUrl(){ 
-    return 'http://192.168.100.103:8083/';
+    // return 'http://192.168.100.103:8083/';
     //return 'http://192.168.100.252:8083/';
-    //return 'http://122.10.80.32:8888/';
+    return 'http://122.10.80.32:8888/';
     }
     function YMD(date) {
         var date = new Date(date);

@@ -144,20 +144,20 @@
     } else {
       let url=getBaseUrl();
       orderNumber = $('.search_input').val();
-      console.log($('.search_input').val());
+      // console.log($('.search_input').val());
       $.ajax({
         type: 'GET',
         url: url+'event/queryEventByOrderNo?orderNo=' + orderNumber,
         success : function(result){
-          console.log(result);
+          // console.log(result);
           if(result.data == ''){
             document.getElementById("search_content").innerHTML = '';
             layer.alert('該包裹查詢不到軌跡，請核實單號是否正確',{icon:2,time:2000});
             return;
           }
           if(result.code == 200){
-            console.warn(result.data);
-            console.log(result.data.length);
+            // console.warn(result.data);
+            // console.log(result.data.length);
             document.getElementById("search_content").innerHTML = '';
             var length = result.data.length-1
             document.getElementById("search_content").innerHTML +=
