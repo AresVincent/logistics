@@ -57,7 +57,7 @@
             <a href="javascript:void(0);" onclick="logout()" class="login">登出</a>
           </div> -->
           <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
-            <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+            <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登入</a>
           </div>
           <!-- logined -->
           <div class="login_register justify-content-between" id="username_logout" style="display: none;">
@@ -92,9 +92,9 @@
               <div class="row ml-0 mr-0">
                 <select name="type" class="form-control rounded-sm modeSelect col-12" onchange="changeWay()">
                   <option value="0">請選擇</option>
-                  <option value="HOME_DELIVERY">送貨上門</option>
+                  <!-- <option value="HOME_DELIVERY">送貨上門</option> -->
                   <option value="SELF_PICKUP_STATION">自提點</option>
-                  <option value="SELF_SERVICE_STATION">自提櫃</option>
+                  <!-- <option value="SELF_SERVICE_STATION">自提櫃</option> -->
                 </select>
               </div>
             </div>
@@ -354,7 +354,7 @@
   <script src="__JS__/plugs/layer/layer.js"></script>
   <script src="__JS__/init.js"></script>
   <!-- websocket -->
-  <script src="./__JS__/plugs/socketJs.min.js"></script>
+  <script src="./__JS__/plugs/sockJs.min.js"></script>
   <script src="./__JS__/plugs/stomp.min.js"></script>
 
 <script>
@@ -435,7 +435,7 @@
 <!-- //calculate dilivery fee -->
   <!-- main -->
   <script>
-
+    var connectId=getRandomKey();
     var token = $.cookie('token');
     // 點擊計算運費
     $('.carriage_btn').click(function () {
@@ -512,6 +512,7 @@
       var formData = new FormData();
       formData.append('file',this.files[0]);
       formData.append('token', token);
+      formData.append('sessionId', connectId);
       //for inform customers know it's working
       let contentStr='<div class="spinner-border text-primary loading" role="status"><span class=""></span></div>';
       contentStr+='<p style="text-align:center"><span>正在導入中,請耐心等候！</span></p><p  class="detail">已上傳</p>'
@@ -903,7 +904,7 @@
           stompClient.connect({}, function (frame) {
               setConnected(true);
               console.log('Connected: ' + frame);
-              stompClient.subscribe('/topic/progressBar', function (res) {
+              stompClient.subscribe('/topic/progressBar'+'/'+connectId, function (res) {
               $(".importCountdown .detail").text('已上傳('+JSON.parse(res.body).current+'/'+JSON.parse(res.body).total+')');
               });
           });

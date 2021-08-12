@@ -64,7 +64,7 @@
         <a href="javascript:void(0);" onclick="logout()" class="login">登出</a>
       </div> -->
       <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
-        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登入</a>
       </div>
       <!-- logined -->
       <div class="login_register justify-content-between" id="username_logout" style="display: none;">
@@ -160,8 +160,8 @@
                 <div class="col-md-3 col-12 batch_print mb-3" id="batch_print" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
                   <span>批量列印</span>
                 </div>
-                <div class="col-md-3 col-12 trade_print" id="trade_print" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
-                  <span onclick="itemIndex()">交收表詳情</span>
+                <div class="col-md-3 col-12 trade_print" id="trade_print" onclick="itemIndex()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
+                  <span>交收表詳情</span>
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@
             <th style="width: 10%;min-width:120px;">收貨人電話</th>
             <th style="width: 15%;min-width:150px;">收貨地址</th>
             <th style="width: 10%;min-width:120px;">快遞單</th>
-            <th style="width: 5%;min-width: 100px;">全選<input type="checkbox" class="ml-1" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
+            <th style="width: 5%;min-width: 100px;">全選<input type="checkbox" class="ml-1 select_all" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
           </tr>
         </thead>
         <tbody class="tbody" id="showOrder">
@@ -221,7 +221,7 @@
   </div>
   <!-- loading end -->
   <!-- footer begin -->
-  <footer class="row ml-0 mr-o p-0">
+  <footer class="row ml-0 mr-0 p-0">
     <div class="footer_top  d-none d-sm-none d-md-block">
       <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
       </div>
@@ -344,8 +344,8 @@ var Data = {
     orderNo : '',
     sn : '',
     status : '',
-    excStartTime : '',
-    excEndTime : '',
+    excStartTime : YMD(new Date()),
+    excEndTime : YMD(new Date()),
     pageNum : 1,
     pageSize:15
 };
@@ -364,6 +364,7 @@ var printData={
 function getOrderList()
 {
  let url = getBaseUrl();
+ $(".select_all").prop("checked",false);
  $('.loading_wrap').show();
     $.post(url + 'order/likeOrderUserById',Data,function(res){
         // console.log(res);
@@ -373,8 +374,7 @@ function getOrderList()
         Data.isFirstPage = res.isFirstPage;
         Data.nextPage = res.nextPage;
         Data.prePage = res.prePage;
-
-        let list = res.list
+        let list = res.list;
         let str = '';
         if(is_en()){
           for(i in list){
@@ -389,31 +389,37 @@ function getOrderList()
         $('.newslist_ul').html(str);
 
         // 分页
-        let pagestr = '<li class="page-item  page-block"><a class="page-link prev" href="javascript:void(0)">«</a></li>';
-        
-        if(res.pageNum>=30){
-          pagestr+='<li class="page-item  page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+1+')">...</a></li>';
-        }
-        for(let i = 1; i <= res.pages; i++){  
-            if(res.pageNum == i){
-                pagestr += '<li class="page-item active page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
-            }else{
-              if(res.pages<30){
-                pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+        //if list is emoty,don't generate pagination
+        if(list.length>=1){
+          let pagestr = '<li class="page-item  page-block"><a class="page-link prev" href="javascript:void(0)">«</a></li>';
+          
+          if(res.pageNum>=30){
+            pagestr+='<li class="page-item  page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+1+')">...</a></li>';
+          }
+          for(let i = 1; i <= res.pages; i++){  
+              if(res.pageNum == i){
+                  pagestr += '<li class="page-item active page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
               }else{
-                //when page count >30
-                 if(i<(Math.min(res.pageNum+30,res.pages)) && i>res.pageNum){
+                if(res.pages<30){
                   pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
-                 }
+                }else{
+                  //when page count >30
+                  if(i<(Math.min(res.pageNum+30,res.pages)) && i>res.pageNum){
+                    pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+                  }
+                }
               }
-            }
+          }
+
+          if(res.pageNum>=30){
+            pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
+          }
+          pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">»</a></li>';
+          $('.pagination-sm').html(pagestr)
+        }else{
+          $('.pagination-sm').html('');
         }
 
-        if(res.pageNum>=30){
-          pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
-        }
-        pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">»</a></li>';
-        $('.pagination-sm').html(pagestr)
 
 
 
@@ -495,6 +501,8 @@ function getOrderList()
         let search = $('#search').val();
         Data.orderNo = search;
         Data.status = '';
+        Data.excStartTime='';
+        Data.excEndTime='';
         getOrderList();
     })
 function btnShow(){

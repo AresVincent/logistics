@@ -17,7 +17,7 @@
 
   <link rel="stylesheet" href="__CSS__/login.css">
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
-  <title>登录</title>
+  <title>登入</title>
 </head>
 
 <body>
@@ -38,7 +38,7 @@
             </div>
             <div class="input-wrap p-2 w-100 d-flex justify-content-between" style="margin-top: 31px;">
               <span class="iconfont icon-suo"></span>
-              <input type="password" class="input ml-2 mr-2  border-0" id="password" placeholder="請輸入密碼">
+              <input type="password" class="input ml-2 mr-2  border-0" id="password" placeholder="請輸入密碼" onblur="checkStr(this)">
               <span class="iconfont  icon-yanjing1 display_password"></span>
             </div>
 
@@ -52,7 +52,7 @@
             <!-- forget password end -->
             
             <!-- submit begin -->
-            <button onsubmit="return false;" class="w-100 login_btn mt-2 loginBtn">登錄</button>
+            <button onsubmit="return false;" class="w-100 login_btn mt-2 loginBtn">登入</button>
             <!-- submit end -->
           </form>
         </div>
@@ -102,13 +102,14 @@ return ""
           let url = getBaseUrl();
           $.post(url+'user/login',{username:username,password:password},function(res){
               if(res.code == 1){
-                  layer.msg('登录成功',{icon:1,time:1000},function(){
-                    $.cookie('token', res.token,{expires:1000})
+                  layer.msg('登入成功',{icon:1,time:1000},function(){
+                    $.cookie('token', res.token,{expires:1}); //the old one expires time is 1000
+                    $.cookie('session_id',res.sessionId);
                       location.href = '/user.html';
                       // console.log(res)
                   });
               }else{
-                  layer.msg('账号或密码错误',{icon:2})
+                  layer.msg('賬號或密碼錯誤',{icon:2})
               }
           })
           
