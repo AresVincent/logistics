@@ -537,8 +537,6 @@
            $(this).val("");
            return;
       }
-      //try connect websocket
-      connect();
       var formData = new FormData();
       formData.append('file',this.files[0]);
       formData.append('token', token);
@@ -553,6 +551,8 @@
             area: ['320px', '215px'],
             content:contentStr,
       });
+      //try connect websocket
+      connect();
       // timer=setInterval(function(){
       //   $(".importCountdown .detail").text('已耗時'+time+'s!');
       //   time+=1;

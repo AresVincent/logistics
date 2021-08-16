@@ -339,6 +339,8 @@ $('.next').click(function(){
 })
 
 let token = $.cookie('token');
+$.cookie("startTime",YMD(new Date()));
+$.cookie("endTime",YMD(new Date()));
 // console.log(token)
 var Data = {
     token : token,

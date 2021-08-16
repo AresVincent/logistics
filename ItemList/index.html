@@ -191,7 +191,6 @@
 
         //finish
         
-        connect();
         //for inform customers know it's working
         let contentStr='<div class="spinner-border text-primary loading" role="status"><span class=""></span></div>';
         contentStr+='<p style="text-align:center"><span>正在獲取中,請耐心等候！</span></p><p  class="detail">已上傳</p>'
@@ -202,6 +201,7 @@
                 area: ['320px', '215px'],
                 content:contentStr,
         });
+        connect();
         $.post(baseUrl() + 'order/waybillDetailBySendAddress',Data,function(res){
             if(res.length<1){
                 $(".loading_wrap").hide();
@@ -223,8 +223,6 @@
                         warehouse="觀塘倉";
                         break;
                     case "屏廈路169號流浮山廈村屏廈路海暉重櫃場對面":
-                        warehouse="元朗倉";
-                        break;
                     case "屏廈路169號流浮山廈村屏廈路 海暉重櫃場對面":
                         warehouse="元朗倉";
                         break;
@@ -237,7 +235,7 @@
                 itemHtml+='<h3><b>貨物交接表格</b></h3></div><img class="col-2 no-padding" src="4px.png" style="height: 44.83px; width:auto;"></div>';
                 //header part
                 itemHtml+='<div class="row"><div class="col-6 no-padding"><div class="row"><b class="col-4">日期：</b>';
-                itemHtml+='<span class="col-8" id="date"></span>';
+                itemHtml+='<span class="col-8 date" id="date"></span>';
                 itemHtml+='</div><div class="row"><b class="col-4">寄貨公司：</b><span class="col-8">Ares Solution Limited</span></div>';
                 itemHtml+='<div class="row"><b class="col-4">聯絡人：</b><span class="col-8">Oscar Lau</span></div><div class="row">';
                 itemHtml+='<b class="col-4">電話號碼：</b><span class="col-8">85260155854</span></div></div><div class="col-6 no-padding">';
@@ -251,7 +249,6 @@
                 for(let j=0;j<res[i].orderList.length;j++){
                     itemHtml+='<tr><td>'+(j+1)+'</td><td>';
                     let itemType="";
-                    console.log(i+","+j+"/"+res[i].orderList[j].product_list)
                     for(let k=0;k<res[i].orderList[j].product_list.length;k++){
                         //item
                         if(k==0){
@@ -271,9 +268,11 @@
                 itemHtml+='</div>';
             }
             $("body").append(itemHtml);
-            let n =  new Date();let y = n.getFullYear();
+            let n =  new Date();
+            let y = n.getFullYear();
             let m = n.getMonth() + 1;
             let d = n.getDate();
+            $(".date").html(m + "/" + d + "/" + y);
             document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
            $(".loading_wrap").hide();
            layer.closeAll();
