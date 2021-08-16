@@ -42,3 +42,63 @@
 .importCountdown .layui-layer-content .loading{
     margin-bottom: 15px;
 }
+.flagBox{
+    display: flex;
+    align-items: center;
+    border:1px solid #ced4da;
+    cursor:pointer;
+    position: relative;
+    justify-content: center;
+}
+.flagBox .flagBlock{
+    display: flex;
+    align-items: center;
+}
+.flagBlock .arrow{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #555;
+}
+.flagBox .flagIcon{
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    box-shadow: 0 0 1px 0 #888;
+    background-image: url(../__IMG__/flags.png);
+    background-repeat: no-repeat;
+    background-color: #dbdbdb;
+    background-position: 20px 0;
+}
+.flagBox .hk{
+    background-position: -2171px 0;
+}
+.flagBox .cn{
+    background-position: -1049px 0;
+}
+.flagBox .flagSelect{
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    margin-top: 38px;
+    border: 1px solid #ced4da;
+    background:#fff;
+}
+.flagSelect li{
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+.flagSelect li:hover{
+    background:#D6D6D6;
+
+}
+.flagSelect li.active{
+    background:#D6D6D6;
+}

@@ -113,8 +113,18 @@
         </div>
         <div class=" col-12 col-md-6">
           <div class="row">
-            <label for="send_phone" class="col-form-label send_phone col-5 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
-            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard" placeholder="請輸入區號加電話號碼,如:85212341234" maxlength="11" onchange="checkNum(this)">
+            <label for="send_phone" class="col-form-label send_phone col-12 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
+            <div class="col-4 col-md-3 flagBox form-control" tabindex="0">
+              <p class="flagBlock mb-0"><a data-value="852" class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span><span class="arrow"></span></p>
+              <div class="flagSelect">
+                <ul class="flagList mb-0">
+                  <li class="active" data-value="852"><a  class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span></li>
+                  <li  data-value="86" ><a class="flagIcon cn" onclick="javascript:void(0);"></a><span class="code_num">+86</span></li>
+                </ul>
+              </div>
+              <input class="send_phone_code phone_code" name="send_phone_code" value="852" type="hidden"/> 
+            </div>
+            <input type="text" name="send_phone" class="form-control col-8 col-md-6 mb-form-standard" placeholder="請輸入電話號碼" maxlength="11" onchange="checkNum(this)">
           </div>
         </div>
       </div>
@@ -143,8 +153,22 @@
           </div>
           <div class=" col-12 col-md-6">
             <div class="row">
-              <label for="get_phone" class="col-form-label get_phone col-5 col-md-3">聯繫電話<span class="badge  text-danger">*</span></label>
-              <input type="text" name="get_phone" class="form-control col-7 col-md-9" maxlength="11" placeholder="請輸入區號加電話號碼,如:85212341234" onchange="checkNum(this)">
+              <label for="get_phone" class="col-form-label get_phone col-12 col-md-3">聯繫電話<span class="badge  text-danger">*</span></label>
+              <!-- <select name="get_phone_code" class="col-md-3 col-4 form-control get_phone_code">
+                <option value="852">+852</option>
+                <option value="86">+86</option>
+              </select> -->
+              <div class="col-4 col-md-3 flagBox form-control" tabindex="0">
+                <p class="flagBlock mb-0"><a data-value="852" class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span><span class="arrow"></span></p>
+                <div class="flagSelect">
+                  <ul class="flagList mb-0">
+                    <li class="active" data-value="852"><a  class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span></li>
+                    <li data-value="86"><a class="flagIcon cn" onclick="javascript:void(0);"></a><span class="code_num">+86</span></li>
+                  </ul>
+                </div>
+                <input class="get_phone_code phone_code" name="get_phone_code" value="852" type="hidden"/> 
+              </div>
+              <input type="text" name="get_phone" class="form-control col-8 col-md-6" maxlength="11" placeholder="請輸入電話號碼" onchange="checkNum(this)">
             </div>
           </div>
       </div>
@@ -230,7 +254,7 @@
         <div class="mb-form-standard col-12">
           <div class="mr-0 row">
             <label for="volume" class="col-form-label col-md-3 col-8">包裹內是否包含電池<span class="badge  text-danger">*</span></label>
-            <input type="checkbox" name="isHaveBattery" class="form-control rounded-sm col-md-1 col-2" />
+            <input type="checkbox" name="isHasBettery" class="form-control rounded-sm col-md-1 col-2" />
           </div>
         </div>
         <!-- <div class="mb-3 col-12 col-md-6">
@@ -264,10 +288,16 @@
             <a class="addItem" id="addItem" onclick="javascript:void(0);"></a>
           </div>
         </div>
+        <div class="mb-form-standard col-12 col-md-5">
+          <div class="row mr-0">
+            <label for="num" class="col-form-label num col-4 col-md-3">單價<span class="badge  text-danger">*</span>$</label>
+            <input type="number" name="productUnitPrice" class="form-control rounded-sm col-8 col-md-9" onchange="checkPrice(this)">
+          </div>
+        </div>
         <div class="elseItem col-12">
           
         </div>
-        <div class="mb-form-standard col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-5">
           <div class="row mr-0">
             <label for="price" class="col-form-label price col-4 col-md-3">運費<span class="badge  text-danger">*</span>$</label>
             <input type="text" id="Total" name="price" class="form-control rounded-sm col-8 col-md-9" value="0" readonly>
@@ -622,8 +652,37 @@
         strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-9">';
         strForm+='</div></div>';
         strForm+='<div class="mb-form-standard col-12 col-md-2"><div class="row ml-3"><a class="reduceItem" id="reduceItem" onclick="removeItem(this)"></a></div></div>';
+        strForm+='<div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-3">';
+        strForm+='<span class="badge  text-danger">*</span>$</label><input type="number" name="productUnitPrice" class="form-control rounded-sm col-8 col-md-9" onblur="checkPrice(this)">';
+        strForm+='</div></div>';
         strForm+='</div>';
         $(".elseItem").append(strForm);
+      });
+      //select flag show
+      $(".flagBox").click(function(){
+        $(this).find(".flagSelect").toggle();
+      });
+      //simulate select onblur effect
+      $(".flagBox").blur(function(){
+        $(this).find(".flagSelect").hide();
+      });
+      //change flag
+      $(".flagList li").click(function(){
+        event.stopPropagation();
+        $(this).addClass("active").siblings("li").removeClass("active");
+        $(this).closest(".flagSelect").hide();
+        $(this).closest(".flagSelect").siblings(".phone_code").val($(this).attr("data-value"));
+        $(this).closest(".flagSelect").siblings(".flagBlock").find(".code_num").text("+"+$(this).attr("data-value"));
+        //switch different flag icon
+        switch($(this).attr("data-value")){
+          case "852":
+            $(this).closest(".flagSelect").siblings(".flagBlock").find(".flagIcon").removeClass().addClass("flagIcon").addClass("hk");
+            break;
+          case "86":
+            $(this).closest(".flagSelect").siblings(".flagBlock").find(".flagIcon").removeClass().addClass("flagIcon").addClass("cn");
+            break;
+          default:break;
+        }
       });
     });
     //remove item
@@ -670,22 +729,22 @@
         }
         if(sendAddress==""){
           layer.msg("寄件地址不能為空！",{icon:2});
-          return ;
+          return false;
         }
         if(getAreaId==""){
           layer.msg("收件地區不能為空",{icon:2});
-          return ;
+          return false;
         }
         if(getAddress==""){
           layer.msg("收件地址不能為空",{icon:2});
-          return ;
+          return false;
         }
         let product_list=[];
         let item;
         for(var i=0;i<$("input[name='product_name']").length;i++){
           item={
             "productName":$("input[name='product_name']").eq(i).val(),
-            "productUnitPrice": "50",
+            "productUnitPrice": $("input[name='productUnitPrice']").eq(i).val(),
             "currency": "HKD",
             "qty": $("input[name='amount']").eq(i).val(),
           }
@@ -694,7 +753,7 @@
 
         let sender_info={
           "sendName":$('input[name="send_name"]').val(),
-          "sendPhone":$('input[name="send_phone"]').val(),
+          "sendPhone":$('input[name=send_phone_code]').val()+$('input[name="send_phone"]').val(),
           "sendAreaId":sendAreaId,
           "sendStreet":sendStreet,
           "sendBuilding":sendBuilding,
@@ -702,7 +761,7 @@
         };
         let recipient_info={
           "getName":$('input[name="get_name"]').val(),
-          "getPhone":$('input[name="get_phone"]').val(),
+          "getPhone":$('input[name="get_phone_code"]').val()+$('input[name="get_phone"]').val(),
           "getAreaId":getAresId,
           "getStreet":getStreet,
           "getBuilding":getBuilding,
@@ -747,6 +806,18 @@
         if($("input[name='get_phone']").val()==""){
           layer.msg('請填寫收件人號碼！',{icon:2});
           return false;
+        }
+        if($('input[name=get_phone_code]').val()=="852"){
+          if($("input[name='get_phone']").val().length>8){
+            layer.msg('收件人電話號碼格式不正確！',{icon:2});
+            return false;
+          }
+        }
+        if($('input[name=send_phone_code]').val()=="852"){
+          if($("input[name='send_phone']").val().length>8){
+            layer.msg('寄件人電話號碼格式不正確！',{icon:2});
+            return false;
+          }
         }
         if($("input[name='weight']").val()==""){
           layer.msg('請填寫包裹重量！',{icon:2});

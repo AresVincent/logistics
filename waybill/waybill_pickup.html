@@ -149,7 +149,7 @@ function initialLabel(){
         printHtml+='<img src="img/logo.png" style="height: 50px;width:auto;padding-left: 20px;padding-top:10px;"><div class="col-12" style="transform:rotate(90deg);margin-left:-10px;margin-top: 20px;">';
         printHtml+='<svg height="60" id="barcode2'+i+'"></svg></div></div></div>';
         printHtml+='<div class="col-8"><div class="row center"><div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 15px;" class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b>'
-        printHtml+='</div></div><div class="row" style="padding-top:5px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
+        printHtml+='</div></div><div class="row" style="padding-top:3px;padding-bottom:3px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
         printHtml+='地址:<span class="getAddress"></span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
         printHtml+='<p style="line-height: 20px;font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
         // 
@@ -160,17 +160,18 @@ function initialLabel(){
     $("body").prepend(printHtml);
     // Outlets.areaId=arrayOrder[i].getAreaId;
     for(let i=0;i<arrayOrder.length;i++){
-            JsBarcode("#barcode"+i, arrayOrder[i].barcode,{
-                height: 60,
-                fontSize: 12,
-            });
-            JsBarcode("#barcode2"+i, arrayOrder[i].barcode,{
-                height: 60,
-                width:1.4,
-                fontSize: 12,
-            });
+        JsBarcode("#barcode"+i, arrayOrder[i].barcode,{
+            height: 60,
+            fontSize: 12,
+        });
+        JsBarcode("#barcode2"+i, arrayOrder[i].barcode,{
+            height: 60,
+            width:1.4,
+            fontSize: 12,
+        });
     }
 
+    
     //different company,differnt logo
     // switch($.cookie("username")){
         
@@ -192,9 +193,9 @@ function initialLabel(){
 }
 function getBaseUrl(){
 //   return 'http://192.168.100.103:8083/';
-//   return 'http://192.168.100.252:8083/';
+    //return 'http://192.168.100.252:8083/';
     //production
-     return 'http://122.10.80.32:8888/';
+    return 'http://122.10.80.32:8888/';
 }
 </script>
 </html>

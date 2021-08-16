@@ -248,7 +248,7 @@
                 for(let j=0;j<res[i].orderList.length;j++){
                     itemHtml+='<tr><td>'+(j+1)+'</td><td>';
                     let itemType="";
-                    console.log(i+"/"+res[i].orderList[j].product_list);
+                    console.log(i+","+j+"/"+res[i].orderList[j].product_list)
                     for(let k=0;k<res[i].orderList[j].product_list.length;k++){
                         //item
                         if(k==0){
@@ -306,7 +306,6 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/progressBar'+'/'+connectId, function (res) {
-
             $(".importCountdown .detail").text('已獲取('+JSON.parse(res.body).current+'/'+JSON.parse(res.body).total+')');
         });
     });

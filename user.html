@@ -38,6 +38,7 @@
     <ul class="navbar-nav mr-auto">
      
     </ul>
+    <!-- language switcher -->
     <!-- <div class="form-inline my-2 my-lg-0">
       <div class="language_wrap position-relative ">
         <div class="top_wrap d-flex justify-content-between">
@@ -501,8 +502,6 @@ function getOrderList()
         let search = $('#search').val();
         Data.orderNo = search;
         Data.status = '';
-        Data.excStartTime='';
-        Data.excEndTime='';
         getOrderList();
     })
 function btnShow(){
@@ -586,10 +585,10 @@ function toggleTable(e){
       success: function(res){
         if(res.code==200){
           let htmlStr='<td colspan="10" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%">';
-          htmlStr+='<thead><tr><td>名稱</td><td>數量</td></tr></thead><tbody>';
+          htmlStr+='<thead><tr><td>名稱</td><td>數量</td><td>單價</td></tr></thead><tbody>';
           let data=res.data;
           for(var i=0;i<data.length;i++){
-            htmlStr+='<tr><td width="50%">'+data[i].productName+'</td><td width="50%">'+data[i].qty+'</td></tr>';
+            htmlStr+='<tr><td width="33.3%">'+data[i].productName+'</td><td width="33.3%">'+data[i].qty+'</td><td width="33.3%">'+data[i].productUnitPrice+'</td></tr>';
           }
           htmlStr+='</tbody></table></div></td>'
           $(".loading_wrap ").hide();
@@ -757,13 +756,13 @@ function itemIndex(){
               itemHtml+='<td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>' ;
               for(let index=0;index<list[i].product_list.length;index++){
                 if(list[i].product_list.length>$(".itemName").length){
-                  $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th")
+                  $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th><th>單價</th>")
                 }
-                itemHtml+="<td>"+list[i].product_list[index].productName+"</td><td>"+list[i].product_list[index].qty+"</td>";
+                itemHtml+="<td>"+list[i].product_list[index].productName+"</td><td>"+list[i].product_list[index].qty+"</td><td>"+list[i].product_list[index].productUnitPrice+"</td>";
               }
             itemHtml+='</tr>';
-            }
-            $('#showItem').html(itemHtml);
+            } 
+            $('#showItem').html(itemHtml); 
             let excel = new ExcelGen({
               "src_id": "itemTable",
               "show_header": true
