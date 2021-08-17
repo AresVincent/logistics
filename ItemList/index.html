@@ -164,33 +164,8 @@
   <script src="../__JS__/plugs/sockJs.min.js"></script>
   <script src="../__JS__/plugs/stomp.min.js"></script>
 <script>
-    var connectId=getRandomKey();
     $(function(){
-        let startTime=$.cookie("startTime");
-        let endTime=$.cookie("endTime");
-        if(!startTime){
-            startTime=YMD(new Date());
-        }
-        if(!endTime){
-            endTime=YMD(new Date());
-        }
-        var Data = {
-            token : $.cookie("token"),
-            orderNo : '',
-            sn : '',
-            status : '',
-            excStartTime :startTime,
-            excEndTime : endTime,
-            pageNum : 1,
-            pageSize:999999,
-            sessionId:connectId,
-        };
-        
-        $(".loading_wrap").show();
-        let itemHtml='';
-
         //finish
-        
         //for inform customers know it's working
         let contentStr='<div class="spinner-border text-primary loading" role="status"><span class=""></span></div>';
         contentStr+='<p style="text-align:center"><span>正在獲取中,請耐心等候！</span></p><p  class="detail">已上傳</p>'
@@ -201,7 +176,64 @@
                 area: ['320px', '215px'],
                 content:contentStr,
         });
+        //try connect websocket
         connect();
+       
+    });
+    function baseUrl(){ 
+    // return 'http://192.168.100.103:8083/'; 
+    //return 'http://192.168.100.252:8083/';
+    return 'http://122.10.80.32:8888/';
+    }
+    function YMD(date) {
+        var date = new Date(date);
+        var YY = date.getFullYear() + '-';
+        var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+        var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+        var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+        var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+        return YY + MM + DD;
+    }
+    var stompClient = null;
+
+//for websocket connection!
+function setConnected(connected) {
+  console.log("successful");
+}
+
+function connect() {
+    let startTime=$.cookie("startTime");
+    let endTime=$.cookie("endTime");
+    let connectId=getRandomKey();
+    if(!startTime){
+        startTime=YMD(new Date());
+    }
+    if(!endTime){
+        endTime=YMD(new Date());
+    }
+    let Data = {
+        token : $.cookie("token"),
+        orderNo : '',
+        sn : '',
+        status : '',
+        excStartTime :startTime,
+        excEndTime : endTime,
+        pageNum : 1,
+        pageSize:999999,
+        sessionId:connectId,
+    };
+    $(".loading_wrap").show();
+    let itemHtml='';
+    var socket = new SockJS(baseUrl()+'progressBar');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        setConnected(true);
+        stompClient.subscribe('/topic/progressBar'+'/'+connectId, function (res) {
+            $(".importCountdown .detail").text('已獲取('+JSON.parse(res.body).current+'/'+JSON.parse(res.body).total+')');
+        });
+        console.log('Connected: ' + frame);
+        //after connect then send post request
         $.post(baseUrl() + 'order/waybillDetailBySendAddress',Data,function(res){
             if(res.length<1){
                 $(".loading_wrap").hide();
@@ -209,9 +241,7 @@
                     location.href="/user.html";
                 })
                 return; 
-            }
-                  //try connect websocket
-           
+            }           
             for(let i=0;i<res.length;i++){
                 //begin;
                 let warehouse;
@@ -276,39 +306,7 @@
             document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
            $(".loading_wrap").hide();
            layer.closeAll();
-           disconnect();
-        });
-    });
-    function baseUrl(){ 
-    // return 'http://192.168.100.103:8083/'; 
-    //return 'http://192.168.100.252:8083/';
-    return 'http://122.10.80.32:8888/';
-    }
-    function YMD(date) {
-        var date = new Date(date);
-        var YY = date.getFullYear() + '-';
-        var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
-        var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-        var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-        var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-        return YY + MM + DD;
-    }
-    var stompClient = null;
-
-//for websocket connection!
-function setConnected(connected) {
-  console.log("successful");
-}
-
-function connect() {
-    var socket = new SockJS(baseUrl()+'progressBar');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/progressBar'+'/'+connectId, function (res) {
-            $(".importCountdown .detail").text('已獲取('+JSON.parse(res.body).current+'/'+JSON.parse(res.body).total+')');
+        //    disconnect();
         });
     });
 }
