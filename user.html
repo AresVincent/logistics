@@ -23,6 +23,12 @@
   <link rel="stylesheet" href="__CSS__/table/buttons.dataTables.min.css">
 
   <title>個人中心</title>
+  <style>
+    .container{
+      padding-right: 25px;
+      padding-left: 25px;
+    }
+  </style>
 </head>
 
 <body>
@@ -86,7 +92,7 @@
 </nav>
 <!-- nav end -->
   <!-- body content begin -->
-  <section class="mt-5 nav_section">
+  <section class="mt-5 nav_section" style="padding: 0px 50px 0px 50px;">
     <nav class="container p-0">
       <div class="row ml-3 mr-3" style="overflow: auto;">
         <ul class="nav_top d-flex justify-content-between align-items-center">
@@ -185,16 +191,16 @@
       <table class="table table-hover container p-0" id="orderTable" style="width: 100%;">
         <thead class="">
           <tr class="thth">
-            <th style="width: 10%;min-width:120px;">包裹號</th>
-            <th style="width: 10%;min-width:120px;">發貨時間</th>
-            <th style="width: 10%;min-width:100px;">包裹狀態</th>
-            <th style="width: 10%;min-width:100px;">包裹重量</th>
-            <th style="width: 10%;min-width:100px;">運費金額</th>
-            <th style="width: 10%;min-width:120px;">收貨人姓名</th>
-            <th style="width: 10%;min-width:120px;">收貨人電話</th>
-            <th style="width: 15%;min-width:150px;">收貨地址</th>
-            <th style="width: 10%;min-width:120px;">快遞單</th>
-            <th style="width: 5%;min-width: 100px;">全選<input type="checkbox" class="ml-1 select_all" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
+            <th style="width: 1%;min-width: 50px;"><input type="checkbox" class="select_all" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
+            <th style="width: 5%;min-width:50px;">包裹號</th>
+            <th style="width: 9%;min-width:120px;">下單時間</th>
+            <th style="width: 7%;min-width:100px;">包裹狀態</th>
+            <th style="width: 2%;min-width:100px;">包裹重量</th>
+            <th style="width: 2%;min-width:100px;">運費金額</th>
+            <th style="width: 3%;min-width:120px;">收貨人姓名</th>
+            <th style="width: 3%;min-width:120px;">收貨人電話</th>
+            <th style="width: 32%;min-width:150px;">收貨地址</th>
+            <th style="width: 1%;min-width:80px;text-align: center">快遞單</th>
           </tr>
         </thead>
         <tbody class="tbody" id="showOrder">
@@ -207,12 +213,12 @@
 
     <!-- table content end -->
     <!-- page number -->
-    <div class="card-footer clearfix" style="display: flex;align-items: center;justify-content: center;">
-     <ul class="pagination pagination-sm m-0" style="text-align: center;">
-
-     </ul>
-    </div>
   </section>
+  <div class="card-footer clearfix" style="display: flex;align-items: center;justify-content: flex-end;">
+    <ul class="pagination pagination-sm m-0" style="text-align: center;">
+
+    </ul>
+  </div>
   <!-- body content end -->
   <!-- loading begin -->
   <div class="loading_wrap position-fixed">
@@ -222,11 +228,11 @@
   </div>
   <!-- loading end -->
   <!-- footer begin -->
-  <footer class="row ml-0 mr-0 p-0">
-    <div class="footer_top  d-none d-sm-none d-md-block">
-      <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">
-      </div>
-    </div>
+  <footer class="row ml-0 mr-0 p-0" style="margin-top:0px;">
+<!--    <div class="footer_top  d-none d-sm-none d-md-block">-->
+<!--      <div class="bottom_nav d-flex justify-content-around align-items-center container p-0">-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
       <div class="contact">
         客服電話：+852 2353 0188 &nbsp;
@@ -477,9 +483,10 @@ function getOrderList()
                         status= '自提件已超時'
                 }
             }
-
-            html += ' <tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false"><td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
-            html+='<td onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td></tr>' ;
+            html += '<tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false">'
+            html += '<td onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td>' ;
+            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
+            html += '</tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
             // html+='</table></div></td></tr>';
