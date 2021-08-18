@@ -23,7 +23,7 @@
 <body>
  <!-- nav beigin -->
  <nav class="navbar navbar-expand-lg navbar-dark ">
-  <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+  <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -58,7 +58,7 @@
         <a href="javascript:void(0);" onclick="logout()" class="login">登出</a>
       </div> -->
       <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
-        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+        <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登入</a>
       </div>
       <!-- logined -->
       <div class="login_register justify-content-between" id="username_logout" style="display: none;">
@@ -82,7 +82,7 @@
 
   <!-- display theme image begin -->
   <section class="theme_image position-relative">
-    <img src="__IMG__/website.png" class="img-fluid" alt="theme image">
+    <img src="__IMG__/website.jpg" class="img-fluid" alt="theme image">
   </section>
   <!-- display theme image end -->
 
@@ -96,11 +96,21 @@
             <option value="0" class="allOption">全部</option>
           </select>
         </div>
+        <!-- <div class="col-2 col-sm-2 col-lg-2">
+          <select onchange="searchBtn()" class="form-control rounded-sm select_type" style="padding:0px!important;">
+            <option value="0" class="allOption">全部</option>
+          </select>
+        </div>
+        <div class="col-2 col-sm-2 col-lg-2">
+          <select onchange="searchBtn()" class="form-control rounded-sm select_company" style="padding:0px!important;">
+            <option value="0" class="allOption">全部</option>
+          </select>
+        </div> -->
         <input type="text" class="search_input pl-4 col-9 col-sm-10 col-lg-10" placeholder="請輸入要查詢的網點">
       </div>
       <button onsubmit="return false;" class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">
         <span class="iconfont icon-chaxun mr-2"></span>
-        <span class="text searchBtn">查快遞</span>
+        <span class="text searchBtn">查網點</span>
       </button>
     </form>
 
@@ -120,7 +130,7 @@
     <!-- loading begin -->
     <div class="loading_wrap position-fixed">
       <div class="spinner-border text-primary loading position-absolute" role="status">
-        <span class="">Loading...</span>
+        <span class=""></span>
       </div>
     </div>
     <!-- loading end -->
@@ -151,6 +161,8 @@
   <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
   <script src="__JS__/common.min.js"></script>
   <script src="__JS__/init.js"></script>
+  <script rel="text/javascript" src="../__JS__/plugs/layer/layer.js"></script>
+
 
   <script>
     var map = new BMap.Map("map_map", {
@@ -264,7 +276,7 @@ if(is_en()){
     }
     $(".loading_wrap").show();
     $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
-      console.log(res)
+      // console.log(res)
       let list = res;
       let dl = ''
       for(i in list){
@@ -273,7 +285,7 @@ if(is_en()){
           dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.nameEn+'</span><a href="javascript:void(0)">'+list[i].area.areaEn+'<font color="red">Service Department</font></a></dt><dd>Company address：'+list[i].addressEn+'</dd><dd>Contact number：'+tel+'</dd></dl>';
         }else{
           let tel = list[i].phone?list[i].phone:'无'
-          dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
+          dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">自提點</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>聯繫電話：'+tel+'</dd></dl>';
         }
       }
       if(list.length > 0){
@@ -306,25 +318,7 @@ if(is_en()){
   
 $('.search_btn').click(function(){
   searchBtn();
-  // request('outlets/getOutletsList.do', {
-  //   "pageNum" : 1,
-  //   "pageSize" : 50,
-  //   "area" : area,
-  //   "express_name" : express_name
-  // },function(res){
-
-  //   let list = res.data.list
-  //   let dl = ''
-  //   for(i in list){
-  //     let tel = list[i].company_tel?list[i].company_tel:'无'
-  //     dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].express_name+'</span><a href="javascript:void(0)">'+list[i].area_name+'<font color="red">服务部</font></a></dt><dd>公司地址：'+list[i].company_address+'</dd><dd>联系电话：'+tel+'</dd></dl>';
-  //   }
-  //   $('#queryResult').html(dl)
-  //   clickShowMap()
-
-  // })
 })
-// getAll()
 </script>
 </body>
 </html>

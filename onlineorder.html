@@ -22,7 +22,7 @@
 <body>
     <!-- nav beigin -->
     <nav class="navbar navbar-expand-lg navbar-dark ">
-      <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+      <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -44,7 +44,7 @@
               </li>
               <li class="lan_li">
                 <a href="javascript:void(0);" class="set-lang lang_ch" data-lang="ch">繁體</a>
-              </li>
+              </li> 
             </ul>
           </div> -->
 
@@ -57,7 +57,7 @@
             <a href="javascript:void(0);" onclick="logout()" class="login">登出</a>
           </div> -->
           <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
-            <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+            <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登入</a>
           </div>
           <!-- logined -->
           <div class="login_register justify-content-between" id="username_logout" style="display: none;">
@@ -75,7 +75,7 @@
 
   <!-- display theme image begin -->
   <div class="theme_image position-relative">
-    <img src="__IMG__/online_order.png" class="img-fluid" alt="theme image">
+    <img src="__IMG__/online_order.jpg" class="img-fluid" alt="theme image">
   </div>
   <!-- display theme image end -->
 
@@ -113,8 +113,18 @@
         </div>
         <div class=" col-12 col-md-6">
           <div class="row">
-            <label for="send_phone" class="col-form-label send_phone col-5 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
-            <input type="text" name="send_phone" class="form-control col-7 col-md-9 mb-form-standard" placeholder="請輸入區號加電話號碼,如:85212341234" maxlength="11" onchange="checkNum(this)">
+            <label for="send_phone" class="col-form-label send_phone col-12 col-md-3 mb-form-standard">聯繫電話<span class="badge  text-danger">*</span></label>
+            <div class="col-4 col-md-3 flagBox form-control" tabindex="0">
+              <p class="flagBlock mb-0"><a data-value="852" class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span><span class="arrow"></span></p>
+              <div class="flagSelect">
+                <ul class="flagList mb-0">
+                  <li class="active" data-value="852"><a  class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span></li>
+                  <li  data-value="86" ><a class="flagIcon cn" onclick="javascript:void(0);"></a><span class="code_num">+86</span></li>
+                </ul>
+              </div>
+              <input class="send_phone_code phone_code" name="send_phone_code" value="852" type="hidden"/> 
+            </div>
+            <input type="text" name="send_phone" class="form-control col-8 col-md-6 mb-form-standard" placeholder="請輸入電話號碼" maxlength="11" onchange="checkNum(this)">
           </div>
         </div>
       </div>
@@ -143,8 +153,22 @@
           </div>
           <div class=" col-12 col-md-6">
             <div class="row">
-              <label for="get_phone" class="col-form-label get_phone col-5 col-md-3">聯繫電話<span class="badge  text-danger">*</span></label>
-              <input type="text" name="get_phone" class="form-control col-7 col-md-9" maxlength="11" placeholder="請輸入區號加電話號碼,如:85212341234" onchange="checkNum(this)">
+              <label for="get_phone" class="col-form-label get_phone col-12 col-md-3">聯繫電話<span class="badge  text-danger">*</span></label>
+              <!-- <select name="get_phone_code" class="col-md-3 col-4 form-control get_phone_code">
+                <option value="852">+852</option>
+                <option value="86">+86</option>
+              </select> -->
+              <div class="col-4 col-md-3 flagBox form-control" tabindex="0">
+                <p class="flagBlock mb-0"><a data-value="852" class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span><span class="arrow"></span></p>
+                <div class="flagSelect">
+                  <ul class="flagList mb-0">
+                    <li class="active" data-value="852"><a  class="flagIcon hk" onclick="javascript:void(0);"></a><span class="code_num">+852</span></li>
+                    <li data-value="86"><a class="flagIcon cn" onclick="javascript:void(0);"></a><span class="code_num">+86</span></li>
+                  </ul>
+                </div>
+                <input class="get_phone_code phone_code" name="get_phone_code" value="852" type="hidden"/> 
+              </div>
+              <input type="text" name="get_phone" class="form-control col-8 col-md-6" maxlength="11" placeholder="請輸入電話號碼" onchange="checkNum(this)">
             </div>
           </div>
       </div>
@@ -188,7 +212,7 @@
                 </select>
                 <div class="col-2"></div>
                 <select class="form-control rounded-sm mb-3 col-5 areaSelect" name="get_area_id">
-          
+                  
                 </select>
               </div>
             </div>
@@ -230,7 +254,7 @@
         <div class="mb-form-standard col-12">
           <div class="mr-0 row">
             <label for="volume" class="col-form-label col-md-3 col-8">包裹內是否包含電池<span class="badge  text-danger">*</span></label>
-            <input type="checkbox" name="isHaveBattery" class="form-control rounded-sm col-md-1 col-2" />
+            <input type="checkbox" name="isHasBettery" class="form-control rounded-sm col-md-1 col-2" />
           </div>
         </div>
         <!-- <div class="mb-3 col-12 col-md-6">
@@ -247,22 +271,33 @@
       </div>
       <div class="row">
 
-        <div class="mb-form-standard col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-5">
           <div class="row mr-0">
-            <label for="goods" class="col-form-label goods col-4 col-md-2">名稱<span class="badge  text-danger">*</span></label>
-            <input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">
+            <label for="goods" class="col-form-label goods col-4 col-md-3">名稱<span class="badge  text-danger">*</span></label>
+            <input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-9">
           </div>
         </div>
-        <div class="mb-form-standard col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-5">
           <div class="row mr-0">
-            <label for="num" class="col-form-label num col-4 col-md-2">數量<span class="badge  text-danger">*</span></label>
-            <input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10" onchange="checkNum(this)">
+            <label for="num" class="col-form-label num col-4 col-md-3">數量<span class="badge  text-danger">*</span></label>
+            <input type="number" name="amount" class="form-control rounded-sm col-8 col-md-9" onchange="checkNum(this)">
+          </div>
+        </div>
+        <div class="mb-form-standard col-12 col-md-2">
+          <div class="row ml-3">
+            <a class="addItem" id="addItem" onclick="javascript:void(0);"></a>
+          </div>
+        </div>
+        <div class="mb-form-standard col-12 col-md-5">
+          <div class="row mr-0">
+            <label for="num" class="col-form-label num col-4 col-md-3">單價<span class="badge  text-danger">*</span>$</label>
+            <input type="number" name="productUnitPrice" class="form-control rounded-sm col-8 col-md-9" onchange="checkPrice(this)">
           </div>
         </div>
         <div class="elseItem col-12">
           
         </div>
-        <div class="mb-form-standard col-12 col-md-6">
+        <div class="mb-form-standard col-12 col-md-5">
           <div class="row mr-0">
             <label for="price" class="col-form-label price col-4 col-md-3">運費<span class="badge  text-danger">*</span>$</label>
             <input type="text" id="Total" name="price" class="form-control rounded-sm col-8 col-md-9" value="0" readonly>
@@ -273,7 +308,9 @@
       <div class="row mb-form-standard">
         <label  class="col-form-label col-12"><span class="badge  text-danger">*</span>溫馨提示：如包裹中物品種類多於一種,請點擊添加物品進行操作！</label>
       </div>
-      <div class="button_group row justify-content-between align-items-center mb-3">
+
+      <!-- add item and remove item -->
+      <!-- <div class="button_group row justify-content-between align-items-center mb-3">
         <button onsubmit="return false;" class="col-12 col-sm-4 mt-2 d-flex justify-content-center" id="addItem">
           <div class="btn_wrap">
             添加物品
@@ -284,7 +321,7 @@
             刪除物品
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- btn group -->
       <div class="button_group row justify-content-between align-items-center button_group_order">
@@ -313,7 +350,7 @@
   <!-- loading begin -->
   <div class="loading_wrap position-fixed">
     <div class="spinner-border text-primary loading position-absolute" role="status">
-      <span class="">Loading...</span>
+      <span class=""></span>
     </div>
   </div>
   <!-- loading end -->
@@ -337,7 +374,8 @@
   </div>
 </footer>
 <!-- footer end -->
-
+<!-- for download excel -->
+<a style="display: none;" class="downloadResult" id="downloadResult" href="" download="result.xlsx"></a>
 
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -345,11 +383,15 @@
   <script src="__JS__/common.min.js"></script>
   <script src="__JS__/plugs/layer/layer.js"></script>
   <script src="__JS__/init.js"></script>
+  <!-- websocket -->
+  <script src="./__JS__/plugs/sockJs.min.js"></script>
+  <script src="./__JS__/plugs/stomp.min.js"></script>
+
 <script>
   let url = getBaseUrl();
 
   $.get(url + 'area/areaAll',function(res){
-    console.log(res)
+    // console.log(res)
     let str = ''; 
     if(is_en()){
       str+='<option value="0">please select a district</option>'
@@ -362,14 +404,14 @@
         str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
       }
     }
-    console.log(str)
+    // console.log(str)
     $('select[name="get_area_id"]').html(str);
     $('select[name="send_area_id"]').html(str);
     $('select[name="place"]').html(str);
   })
 
   $.get(url + 'logisticStore/logisticStoreAll',function(res){
-    console.log(res)
+    // console.log(res)
     let str = '';
     if(is_en()){
       str+='<option value="">please select a logistics point</option>';
@@ -382,7 +424,7 @@
         str += '<option value="'+res[i].storeAddress+'">'+res[i].storeAddress + '</option>';
       }
     }
-    console.log(str)
+    // console.log(str)
     $('select[name="send_address"]').html(str);
     if($.cookie("send_address")){
       $("select[name='send_address']").val($.cookie("send_address"));
@@ -423,7 +465,7 @@
 <!-- //calculate dilivery fee -->
   <!-- main -->
   <script>
-
+    var connectId=getRandomKey();
     var token = $.cookie('token');
     // 點擊計算運費
     $('.carriage_btn').click(function () {
@@ -432,7 +474,7 @@
       let weight = $('input[name="weight"]').val();
       if(weight == ''){
         layer.msg('重量為空',{icon:2,time:1500});
-        $('.loading_wrap').hide()
+        $('.loading_wrap').hide();
         return false;
       }
       let num = $('input[name="num"]').val();
@@ -453,10 +495,9 @@
         data: JSON.stringify(send_obj),
         dataType: "json",
         success: function(res){
-          console.log(send_obj);
-          console.log(res);
+          // console.log(send_obj);
+          // console.log(res);
           $('.loading_wrap').hide()
-          console.log(res)
           let total_amount = 0;
           if(res.length > 0){
             if(res[0].firstWeight >= weight){
@@ -483,34 +524,75 @@
     })
 
     $('.importFile').change(function(){
-
-      console.log(this.files[0])
+      console.log(this.files[0]);
+      let checkName= this.files[0].name;
+      let suffix = checkName.substr(checkName.lastIndexOf("."));
+      if(this.files[0]==""){
+        layer.msg("請上傳excel文件！",{icon:2,time:1000});
+        $(this).val("");
+        return;
+      }
+      if(".xls" != suffix && ".xlsx" != suffix ){    
+            layer.msg("所上傳文件非excel格式的文件！",{icon:2,time:1000});
+           $(this).val("");
+           return;
+      }
       var formData = new FormData();
       formData.append('file',this.files[0]);
       formData.append('token', token);
-
+      formData.append('sessionId', connectId);
+      //for inform customers know it's working
+      let contentStr='<div class="spinner-border text-primary loading" role="status"><span class=""></span></div>';
+      contentStr+='<p style="text-align:center"><span>正在導入中,請耐心等候！</span></p><p  class="detail">已上傳</p>'
+      layer.open({
+            type: 1,
+            skin: 'layui-layer importCountdown', 
+            closeBtn:0,
+            area: ['320px', '215px'],
+            content:contentStr,
+      });
+      //try connect websocket
+      connect();
+      // timer=setInterval(function(){
+      //   $(".importCountdown .detail").text('已耗時'+time+'s!');
+      //   time+=1;
+      // },1000);
+      
       $.ajax({
-　　   url: url + '/export/readExcel',
-              type: 'POST',
-              cache: false,    //上传文件不需要缓存
-              data: formData,
-              processData: false, // 告诉jQuery不要去处理发送的数据
-              contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-              success: function (res) {
-                    console.log(res)
-                    if(res == 1){
-                        layer.msg('导入成功',{icon:1,time:1000},function(){
-                          location.href=location.href
-                        });
-                    }else{
-                      layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
-                    }
-                },
-                error: function (err) {
-                    console.log(err)
-                    layer.msg('导入失败，请稍后重试！',{icon:2,time:1500})
-                }
-            })
+　　    url: url + 'export/readExcel',
+        type: 'POST',
+        cache: false,    //上传文件不需要缓存
+        data: formData,
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+        success: function (res) {
+            // console.log(res);
+            // clearInterval(timer);
+            layer.closeAll();
+            if(res.code == 200){
+                layer.msg(res.msg,{icon:1,time:1500},function(){
+                  // location.href=location.href
+                  let urlDownload="/result/result"+$.cookie("username")+".xlsx";
+                  $(".downloadResult").attr("href",urlDownload);
+                  document.getElementById("downloadResult").click();
+                });
+            }else{
+              layer.msg(res.msg,{icon:2,time:1500})
+            }
+            disconnect();
+            $('.importFile').val("");
+        },
+        error: function (err) {
+            // console.log(err);
+            // clearInterval(timer);
+            disconnect();
+            layer.closeAll();
+            layer.msg('导入失败，请稍后重试！',{icon:2,time:1500});
+            $('.importFile').val("");
+        }
+      });
+
+      //websocket for progress bar
     })
     $(document).ready(function(){
       let token = $.cookie('token');
@@ -543,7 +625,7 @@
           dataType:'json',
           contentType:"application/json; charset=utf-8",
           success: function(res){
-            console.log(res)
+            // console.log(res)
             if(res.code == 200){
               isSubmitFirst=true;
               layer.open({
@@ -561,27 +643,52 @@
           }
         });
       });
+      //add item
       $("#addItem").click(function(){
-        let strForm=""
-        strForm+='<div class="row items"><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-2">名稱';
-        strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-10">';
-        strForm+='</div></div><div class="mb-form-standard col-12 col-md-6"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-2">';
-        strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-10">';
-        strForm+='</div></div></div>';
+        let strForm="";
+        strForm+='<div class="row items"><div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="goods" class="col-form-label goods col-4 col-md-3">名稱';
+        strForm+='<span class="badge  text-danger">*</span></label><input type="text" name="product_name" class="form-control rounded-sm col-8 col-md-9">';
+        strForm+='</div></div><div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-3">';
+        strForm+='數量<span class="badge  text-danger">*</span></label><input type="number" name="amount" class="form-control rounded-sm col-8 col-md-9">';
+        strForm+='</div></div>';
+        strForm+='<div class="mb-form-standard col-12 col-md-2"><div class="row ml-3"><a class="reduceItem" id="reduceItem" onclick="removeItem(this)"></a></div></div>';
+        strForm+='<div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-3">';
+        strForm+='<span class="badge  text-danger">*</span>$</label><input type="number" name="productUnitPrice" class="form-control rounded-sm col-8 col-md-9" onblur="checkPrice(this)">';
+        strForm+='</div></div>';
+        strForm+='</div>';
         $(".elseItem").append(strForm);
       });
-      $("#reduceItem").click(function(){
-        if($("input[name='product_name']").length<2){
-          layer.msg('至少填寫一項物品，不能繼續刪除該選項！',{icon:2})
-          return;
+      //select flag show
+      $(".flagBox").click(function(){
+        $(this).find(".flagSelect").toggle();
+      });
+      //simulate select onblur effect
+      $(".flagBox").blur(function(){
+        $(this).find(".flagSelect").hide();
+      });
+      //change flag
+      $(".flagList li").click(function(){
+        event.stopPropagation();
+        $(this).addClass("active").siblings("li").removeClass("active");
+        $(this).closest(".flagSelect").hide();
+        $(this).closest(".flagSelect").siblings(".phone_code").val($(this).attr("data-value"));
+        $(this).closest(".flagSelect").siblings(".flagBlock").find(".code_num").text("+"+$(this).attr("data-value"));
+        //switch different flag icon
+        switch($(this).attr("data-value")){
+          case "852":
+            $(this).closest(".flagSelect").siblings(".flagBlock").find(".flagIcon").removeClass().addClass("flagIcon").addClass("hk");
+            break;
+          case "86":
+            $(this).closest(".flagSelect").siblings(".flagBlock").find(".flagIcon").removeClass().addClass("flagIcon").addClass("cn");
+            break;
+          default:break;
         }
-        $(".elseItem .items").last().remove();
       });
     });
-
-
-
-
+    //remove item
+      function removeItem(e){
+        $(e).closest(".items").remove();
+      }
       function getDate()
       {
         let type=$('select[name="type"]').val();
@@ -622,22 +729,22 @@
         }
         if(sendAddress==""){
           layer.msg("寄件地址不能為空！",{icon:2});
-          return ;
+          return false;
         }
         if(getAreaId==""){
           layer.msg("收件地區不能為空",{icon:2});
-          return ;
+          return false;
         }
         if(getAddress==""){
           layer.msg("收件地址不能為空",{icon:2});
-          return ;
+          return false;
         }
         let product_list=[];
         let item;
         for(var i=0;i<$("input[name='product_name']").length;i++){
           item={
             "productName":$("input[name='product_name']").eq(i).val(),
-            "productUnitPrice": "50",
+            "productUnitPrice": $("input[name='productUnitPrice']").eq(i).val(),
             "currency": "HKD",
             "qty": $("input[name='amount']").eq(i).val(),
           }
@@ -646,7 +753,7 @@
 
         let sender_info={
           "sendName":$('input[name="send_name"]').val(),
-          "sendPhone":$('input[name="send_phone"]').val(),
+          "sendPhone":$('input[name=send_phone_code]').val()+$('input[name="send_phone"]').val(),
           "sendAreaId":sendAreaId,
           "sendStreet":sendStreet,
           "sendBuilding":sendBuilding,
@@ -654,7 +761,7 @@
         };
         let recipient_info={
           "getName":$('input[name="get_name"]').val(),
-          "getPhone":$('input[name="get_phone"]').val(),
+          "getPhone":$('input[name="get_phone_code"]').val()+$('input[name="get_phone"]').val(),
           "getAreaId":getAresId,
           "getStreet":getStreet,
           "getBuilding":getBuilding,
@@ -699,6 +806,18 @@
         if($("input[name='get_phone']").val()==""){
           layer.msg('請填寫收件人號碼！',{icon:2});
           return false;
+        }
+        if($('input[name=get_phone_code]').val()=="852"){
+          if($("input[name='get_phone']").val().length>8){
+            layer.msg('收件人電話號碼格式不正確！',{icon:2});
+            return false;
+          }
+        }
+        if($('input[name=send_phone_code]').val()=="852"){
+          if($("input[name='send_phone']").val().length>8){
+            layer.msg('寄件人電話號碼格式不正確！',{icon:2});
+            return false;
+          }
         }
         if($("input[name='weight']").val()==""){
           layer.msg('請填寫包裹重量！',{icon:2});
@@ -820,7 +939,7 @@
         }
         let urls=getBaseUrl();
         $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
-          console.log(res);
+          // console.log(res);
           let str;
           if(res.length<1){
             layer.msg('暫無該地區的自提點，請重新選擇地區！',{icon:2,time:1500});
@@ -839,10 +958,41 @@
               }
             }
             
-            console.log(str)
+            // console.log(str);
             $("select[name='get_pickupPoint']").html(str);
         });
       }
+      var stompClient = null;
+
+      //for websocket connection!
+      function setConnected(connected) {
+        console.log("successful");
+      }
+
+      function connect() {
+          var socket = new SockJS(getBaseUrl()+'progressBar');
+          stompClient = Stomp.over(socket);
+          stompClient.connect({}, function (frame) {
+              setConnected(true);
+              console.log('Connected: ' + frame);
+              stompClient.subscribe('/topic/progressBar'+'/'+connectId, function (res) {
+              $(".importCountdown .detail").text('已上傳('+JSON.parse(res.body).current+'/'+JSON.parse(res.body).total+')');
+              });
+          });
+      }
+
+      function disconnect() {
+          if (stompClient !== null) {
+              stompClient.disconnect();
+          }
+          setConnected(false);
+          console.log("Disconnected");
+      }
+
+      function sendName() {
+        stompClient.send(getBaseUrl()+'topic/progressBar',{},formData)
+      }
+
   </script>
 </body>
 

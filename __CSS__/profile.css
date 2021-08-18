@@ -11,3 +11,14 @@
 .table .childTr .childTd{
     padding: 0;
 }
+@media screen and (min-width:768px) {
+    .btn_group{
+        padding-right: 15px;
+    }
+}
+.card-footer .pagination-sm .page-block{
+    padding-left: 0;
+    padding-right: 0;
+    width: 36px;
+    
+}

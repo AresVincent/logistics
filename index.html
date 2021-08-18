@@ -22,7 +22,7 @@
 <body>
   <!-- nav beigin -->
   <nav class="navbar navbar-expand-lg navbar-dark ">
-    <a class="navbar-brand" href="#"><img src="__IMG__/logo.png" alt=""></a>
+    <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -52,7 +52,7 @@
           <a href="login.html" class="login">登錄</a>
         </div> -->
         <div class="login_register justify-content-between" id="login_register" style="display: none;border-radius: 15px;width: 100px;border:none;">
-          <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登錄</a>
+          <a href="login.html" class="login" style="width:100%; border-radius: 15px;">登入</a>
         </div>
         <div class="login_register justify-content-between" id="username_logout" style="display: none;">
           <a class="logined text-decoration-none" href="/user.html"><img src="./__IMG__/info.png" style="margin-left: 5px;" alt="">
@@ -74,7 +74,7 @@
     <span class="theme_text position-absolute bannerText">
       Ares物流系統
     </span>
-    <img src="__IMG__/index.png" class="img-fluid" alt="theme image">
+    <img src="__IMG__/index.jpg" class="img-fluid" alt="theme image">
   </div>
   <!-- display theme image end -->
 
@@ -144,20 +144,20 @@
     } else {
       let url=getBaseUrl();
       orderNumber = $('.search_input').val();
-      console.log($('.search_input').val());
+      // console.log($('.search_input').val());
       $.ajax({
         type: 'GET',
         url: url+'event/queryEventByOrderNo?orderNo=' + orderNumber,
         success : function(result){
-          console.log(result);
+          // console.log(result);
           if(result.data == ''){
             document.getElementById("search_content").innerHTML = '';
             layer.alert('該包裹查詢不到軌跡，請核實單號是否正確',{icon:2,time:2000});
             return;
           }
           if(result.code == 200){
-            console.warn(result.data);
-            console.log(result.data.length);
+            // console.warn(result.data);
+            // console.log(result.data.length);
             document.getElementById("search_content").innerHTML = '';
             var length = result.data.length-1
             document.getElementById("search_content").innerHTML +=
