@@ -169,8 +169,8 @@ $.widget.bridge('uibutton', $.ui.button);
           console.log(res);
             if(res.code == 1){
                 layer.msg('登录成功',{icon:1,time:1000},function(){
-                  $.cookie('admin_token', res.adminToken);
-                    location.href="/admin/index.html"
+                  $.cookie('admin_token', res.token,{expires:1,path:'/'});
+                  location.href="/admin/index.html";
                 })
             }else{
                 layer.msg('账号或密码错误',{icon:2,time:1500})

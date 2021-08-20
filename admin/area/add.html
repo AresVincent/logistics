@@ -77,19 +77,19 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="/admin/__IMG__/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="../__IMG__/info.png" class="user-image" alt="User Image">
               <span class="hidden-xs">admin</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header" style="height: 210px;">
-                <img src="/admin/__IMG__/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="../__IMG__/info.png" class="img-circle" alt="User Image">
 
                 <p>
                  管理員
                   <small>admin</small>
                   <p></p>
-                  <a href="#" class="btn btn-default btn-flat logoutBtn">退出登录</a>
+                  <a href="#" class="btn btn-default btn-flat logoutBtn" onclick="logout()">退出登录</a>
                 </p>
               </li>
             
@@ -110,7 +110,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="/admin/__IMG__/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../__IMG__/info.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>管理員</p>
@@ -203,6 +203,15 @@
         <li>
           <a href="/admin/user/index.html">
             <i class="fa fa-user-o"></i> <span>用戶管理</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/admin/user/order.html">
+            <i class="fa fa-user-o"></i> <span>訂單記錄</span>
             <span class="pull-right-container">
               <!-- <small class="label pull-right bg-green">new</small> -->
             </span>
@@ -402,23 +411,11 @@
 <script src="/admin/__JS__/demo.js"></script><script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="/admin/__ADMIN__/plugins/layer/layer.js"></script>
 <script src="/admin/__ADMIN__/auth.js"></script>
-<script>
-  $('.ReloadButton').click(function(){
-    location.href = location.href
-  })
-  $('.logoutBtn').click(function(){
-    layer.msg('退出成功',{icon:1,time:1000},function(){
-        $.cookie('admin_token', null);
-          location.href = '/admin/auth/login.html'
-      })
-  })
-</script>
-
-
-
+<script src="../__JS__/common.js"></script>
 
 
 <script>
+    hasToken();
   $(function () {
     $('#example1').DataTable({
       'paging'      : true,
@@ -427,6 +424,9 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
+    });
+    $('.ReloadButton').click(function(){
+      location.href = location.href
     })
   })
 </script>
