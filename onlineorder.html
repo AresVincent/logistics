@@ -759,7 +759,7 @@
       {
         let type=$('select[name="type"]').val();
         let isHasBettery=$('input[name="isHasBettery"]').prop("checked");
-        if(isHasBettery=true){
+        if(isHasBettery==true){
           isHasBettery="Y";
         }else{
           isHasBettery="N";
@@ -836,7 +836,7 @@
         };
         let parcel_list={
           "width":$('input[name="width"]').val(),
-          "length":$('input[name="width"]').val(),
+          "length":$('input[name="length"]').val(),
           "height":$('input[name="height"]').val(),
           "weight":$('input[name="weight"]').val(),
           "volume":$('input[name="width"]').val()*$('input[name="width"]').val()*$('input[name="height"]').val(),

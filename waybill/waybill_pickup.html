@@ -119,8 +119,8 @@ function initialLabel(){
     for(let i=0;i<arrayOrder.length;i++){
         if(arrayOrder[i].type=="SELF_PICKUP_STATION"){
             type="自提點";
-        }else if(value=="HOME_DELIVERY"){
-            type="送貨上門"
+        }else if(arrayOrder[i].type=="HOME_DELIVERY"){
+            type="派送上門"
         }else{
             type="自提櫃";
         }
@@ -130,7 +130,7 @@ function initialLabel(){
         printHtml+='<img src="img/logo.png" style="height: auto;width:100px; margin-top:20px;margin-left:10px;"></div><div class="col-8">';
         printHtml+='<svg height="60" id="barcode'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
         printHtml+='<div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;"><p><span>收件人: <span class="getName">'+arrayOrder[i].getName+'</span></span> <br>';
-        printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br><span>地址:<span class="getAddress"></span></span> <br><span>備注:</span><br>';    
+        printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br><span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:</span><br>';    
         printHtml+='<span>注: 免收附加費</span></p></div><div class="col-4" style="padding:0px;"><div class="transport_method container center" style="padding:0px;">';
         printHtml+='<div class="col-12" style="border-bottom: solid 2px #000000"><b class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b></div><div class="col-12" style="border-bottom: solid 2px #000000">';
         printHtml+='<b class="type">'+type+'</b></div><div class="col-12"><b class="getAreaId"></b></div></div></div></div>';       
@@ -150,7 +150,7 @@ function initialLabel(){
         printHtml+='<svg height="60" id="barcode2'+i+'"></svg></div></div></div>';
         printHtml+='<div class="col-8"><div class="row center"><div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 15px;" class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b>'
         printHtml+='</div></div><div class="row" style="padding-top:3px;padding-bottom:3px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
-        printHtml+='地址:<span class="getAddress"></span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
+        printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
         printHtml+='<p style="line-height: 20px;font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
         // 
         printHtml+='<div class="col-6" style="padding: 0px 3px 0px 0px;"><div class="container center" style="padding: 0px;">';
@@ -176,17 +176,25 @@ function initialLabel(){
     // switch($.cookie("username")){
         
     // }
-
     $.post(urls+'outlets/getOutletsLikeAll',Outlets,function(res){
         for(let i=0;i<arrayOrder.length;i++){
-            for(let index=0;index<res.length;index++){
-                if(res[index].storeCode==arrayOrder[i].getPickUpPoint){
-                    $(".print").eq(i).find(".getAddress").text(res[index].area.area+res[index].shortAddress);
-                    $(".print").eq(i).find(".getPickUpPoint").text((res[index].storeName).split(' ')[0]);
-                    $(".print").eq(i).find(".getAreaId").text(res[index].area.area);
-                    break;
+            if(arrayOrder[i].type=="HOME_DELIVERY"){
+                for(let j=0;j<res.length;j++){
+                    if(res[j].area.id==arrayOrder[i].getAreaId){
+                        $(".print").eq(i).find(".getPickUpPoint").text("Ares物流");
+                        $(".print").eq(i).find(".getAreaId").text(res[j].area.area);
+                    }
+                }
+            }else{
+                for(let index=0;index<res.length;index++){
+                    if(res[index].storeCode==arrayOrder[i].getPickUpPoint){
+                        $(".print").eq(i).find(".getAddress").text(res[index].area.area+res[index].shortAddress);
+                        $(".print").eq(i).find(".getPickUpPoint").text((res[index].storeName).split(' ')[0]);
+                        $(".print").eq(i).find(".getAreaId").text(res[index].area.area);
+                    }
                 }
             }
+            
         }
     $(".loading_wrap").hide();
     });
