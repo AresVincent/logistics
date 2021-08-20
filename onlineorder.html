@@ -92,7 +92,7 @@
               <div class="row ml-0 mr-0">
                 <select name="type" class="form-control rounded-sm modeSelect col-12" onchange="changeWay()">
                   <option value="0">請選擇</option>
-                  <!-- <option value="HOME_DELIVERY">送貨上門</option> -->
+                  <option value="HOME_DELIVERY">送貨上門</option>
                   <option value="SELF_PICKUP_STATION">自提點</option>
                   <!-- <option value="SELF_SERVICE_STATION">自提櫃</option> -->
                 </select>
@@ -198,13 +198,13 @@
       <!-- receive address -->
       <div class="mb-form-standard addressBox row"  style="display: none;">
             <label for="get_area_id" class="col-form-label col-5 col-md-2 get_area_id">地址<span class="badge  text-danger">*</span></label>
-            <label class="send_province col-form-label gudingdizhi col-7 col-md-2">中國香港</label>
+            <!-- <label class="send_province col-form-label gudingdizhi col-7 col-md-2">中國香港</label> -->
             <!-- <select class="form-control rounded-sm ml-3 areaSelect" name="get_area_id">
             </select> -->
             <!-- detail address -->
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-10">
               <div class="row ml-0 mr-0">
-                <select class="form-control rounded-sm mb-3 col-5 regionSelect" name="get_region">
+                <select class="form-control rounded-sm mb-3 col-5 regionSelect" name="get_region"  onchange="filterRegion(this)">
                   <option value="0">請選擇</option>
                   <option value="1">九龍</option>
                   <option value="2">港島</option>
@@ -221,7 +221,7 @@
                 <input type="text" class="form-control mb-3 col-12 col-md-5"  placeholder="請填寫所在街道" name="get_street_id">
                 <div class="col-1 col-md-2"></div>
                 <!-- detail address -->
-                <input type="text" class="form-control mb-3 col-12 col-md-5"  placeholder="請填寫所在大廈及樓層單位" name="get_address">
+                <input type="text" class="form-control mb-3 col-12 col-md-5"  placeholder="請填寫所在大廈及樓層單位" name="get_building">
               </div>
             </div>
             <!-- <input type="text" class="form-control ml-2 get_address" name="get_address" placeholder="詳細地址" style="width: 300px;"> -->
@@ -389,7 +389,8 @@
 
 <script>
   let url = getBaseUrl();
-
+  var listAddress=[];
+  $(".loading_wrap").show();
   $.get(url + 'area/areaAll',function(res){
     // console.log(res)
     let str = ''; 
@@ -402,12 +403,14 @@
       str+='<option value="0">請選擇地區</option>'
       for(i in res){
         str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
+        listAddress.push({"id":res[i].id,"area":res[i].area});
       }
     }
     // console.log(str)
     $('select[name="get_area_id"]').html(str);
     $('select[name="send_area_id"]').html(str);
     $('select[name="place"]').html(str);
+    $(".loading_wrap").hide();
   })
 
   $.get(url + 'logisticStore/logisticStoreAll',function(res){
@@ -431,7 +434,70 @@
     }
   })
 
-
+  function filterRegion(e){
+        switch ($(e).val()){
+          case "0":
+            $(".loading_wrap").show();
+          $.get(url + 'area/areaAll',function(res){
+            // console.log(res)
+            let str = ''; 
+            if(is_en()){
+              str+='<option value="0">please select a district</option>'
+              for(i in res){
+                str += '<option value="'+res[i].id+'">'+res[i].areaEn + '</option>';
+              }
+            }else{
+              str+='<option value="0">請選擇地區</option>'
+              for(i in res){
+                str += '<option value="'+res[i].id+'">'+res[i].area + '</option>';
+                listAddress.push({"id":res[i].id,"area":res[i].area});
+              }
+            }
+            // console.log(str)
+            $('select[name="get_area_id"]').html(str);
+            $('select[name="send_area_id"]').html(str);
+            $('select[name="place"]').html(str);
+            $(".loading_wrap").hide();
+          });
+          console.log(0);
+          break;
+          case "1":
+            let str1="";
+            str1+='<option value="0">請選擇地區</option>'
+            str1 += '<option value="9">油尖旺區</option>';
+            str1 += '<option value="8">黃大仙區</option>';
+            str1 += '<option value="6">深水埗區</option>';
+            str1 += '<option value="4">觀塘區</option>';
+            str1 += '<option value="3">九龍城區</option>';
+            $('select[name="get_area_id"]').html(str1);
+          break;
+          case "2":
+          let str2="";
+            str2+='<option value="0">請選擇地區</option>'
+            str2 += '<option value="7">灣仔區</option>';
+            str2 += '<option value="39">中西區</option>';
+            str2 += '<option value="27">港島東區</option>';
+            str2 += '<option value="5">港島南區</option>';
+            $('select[name="get_area_id"]').html(str2);
+            break;
+          case "3":
+          let str3="";
+            str3+='<option value="0">請選擇地區</option>'
+            str3 += '<option value="40">元朗區</option>';
+            str3 += '<option value="17">荃灣區</option>';
+            str3 += '<option value="16">大埔區</option>';
+            str3 += '<option value="15">屯門區</option>';
+            str3 += '<option value="14">沙田區</option>';
+            str3 += '<option value="13">西貢區</option>';
+            str3 += '<option value="11">葵青區</option>';
+            str3 += '<option value="10">離島區</option>';
+            str3 += '<option value="12">北區</option>';
+            $('select[name="get_area_id"]').html(str3);            
+            break;
+          default:
+            break;
+        }
+      }
 </script>
 
 
@@ -653,7 +719,7 @@
         strForm+='</div></div>';
         strForm+='<div class="mb-form-standard col-12 col-md-2"><div class="row ml-3"><a class="reduceItem" id="reduceItem" onclick="removeItem(this)"></a></div></div>';
         strForm+='<div class="mb-form-standard col-12 col-md-5"><div class="row mr-0"><label for="num" class="col-form-label num col-4 col-md-3">';
-        strForm+='<span class="badge  text-danger">*</span>$</label><input type="number" name="productUnitPrice" class="form-control rounded-sm col-8 col-md-9" onblur="checkPrice(this)">';
+        strForm+='單價<span class="badge  text-danger">*</span>$</label><input type="number" name="productUnitPrice" class="form-control rounded-sm col-8 col-md-9" onblur="checkPrice(this)">';
         strForm+='</div></div>';
         strForm+='</div>';
         $(".elseItem").append(strForm);
@@ -710,12 +776,12 @@
           sendAreaId=$('select[name="send_area_id"]').val();
           sendStreet=$('input[name="send_street"]').val();
           sendBuilding=$('input[name="send_building"]').val();
-          sendAddress=sendStreet+sendBuilding;
+          sendAddress=$('select[name="send_address"]').val();;
           getAreaId=$('.addressBox select[name="get_area_id"]').val();
           getBuilding=$('input[name="get_building"]').val();
-          getStreet=$('input[name="get_street"]').val();
+          getStreet=$('input[name="get_street_id"]').val();
           getAddress=$(".addressBox select[name='get_area_id'] option:selected").text()+getStreet+getBuilding;
-          getAreaId=$(".addressBox select[name='get_area_id']").val();
+          // getAreaId=$(".addressBox select[name='get_area_id']").val();
         }else{
           sendAreaId=null;
           sendStreet=null;
@@ -725,7 +791,7 @@
           getBuilding=null;
           // getAddress= $(".pickupBox select[name='get_area_id'] option:selected").text()+$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
           getAddress=$(".pickupBox select[name='get_pickupPoint'] option:selected").text();
-          getAresId=$(".pickupBox select[name='get_area_id']").val();
+          getAreaId=$(".pickupBox select[name='get_area_id']").val();
         }
         if(sendAddress==""){
           layer.msg("寄件地址不能為空！",{icon:2});
@@ -762,7 +828,7 @@
         let recipient_info={
           "getName":$('input[name="get_name"]').val(),
           "getPhone":$('input[name="get_phone_code"]').val()+$('input[name="get_phone"]').val(),
-          "getAreaId":getAresId,
+          "getAreaId":getAreaId,
           "getStreet":getStreet,
           "getBuilding":getBuilding,
           "getAddress":getAddress,    
@@ -992,7 +1058,7 @@
       function sendName() {
         stompClient.send(getBaseUrl()+'topic/progressBar',{},formData)
       }
-
+      
   </script>
 </body>
 
