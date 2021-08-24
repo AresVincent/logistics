@@ -511,6 +511,8 @@ function getOrderList()
     $('.btn_search').click(function(){
         let search = $('#search').val();
         Data.orderNo = search;
+        Data.excEndTime="";
+        Data.excStartTime="";
         Data.status = '';
         getOrderList();
     })
@@ -565,7 +567,11 @@ function printWayBill(e){
         arrayOrder.push(item);
         arrayOrder=JSON.stringify(arrayOrder);
         localStorage.setItem("arrayOrder",arrayOrder);
-        window.open(printUrl,'_blank');
+        if($.cookie("username").includes("lalamove")){
+              window.open("/waybill/lalamovewaybill_pickup.html",'_blank');
+        }else{
+          window.open("/waybill/waybill_pickup.html",'_blank');
+        }
       }else{
         layer.msg('查詢失敗',{icon:2,time:1000});
       }
@@ -695,7 +701,11 @@ function itemIndex(){
             }
             arrayOrder=JSON.stringify(arrayOrder);
             localStorage.setItem("arrayOrder",arrayOrder);
-            window.open("/waybill/waybill_pickup.html",'_blank');
+            if($.cookie("username").includes("lalamove")){
+              window.open("/waybill/lalamovewaybill_pickup.html",'_blank');
+            }else{
+              window.open("/waybill/waybill_pickup.html",'_blank');
+            }
           }else{
             layer.msg('查詢失敗',{icon:2,time:1000});
           }

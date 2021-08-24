@@ -3,10 +3,7 @@
 <head type="text/css" media="print">
     <meta charset="UTF-8">
     <title>Print Order Test</title>
-    <script rel="text/javascript" src="js/JsBarcode.code128.min.js"></script>
-    <script rel="text/javascript" src="js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script rel="text/javascript" src="js/bootstrap.js"></script>
     <style>
         @page {
             size: A6;
@@ -59,195 +56,161 @@
             padding-top:2px;
             padding-bottom:2px;
         }
+        .loading_wrap {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: hsla(0,0%,100%,.6);
+            z-index: 999;
+        }
+        .loading_wrap .loading{z-index:1;top:50%;left:50%}
     </style>
 </head>
-<body>
-    <div class="print">
-        <div class="container print_upper">
-            <div class="row" style="border-bottom: solid 2px #000000">
-                <div class="col-4">
-                        <img src="img/logo.svg" style="height: auto;width:115px;margin-top:15px;">
-<!--                    <img src="img/logo.png" style="height: auto;width:100px; margin-top:20px;margin-left:10px;">-->
-                </div>
-                <div class="col-8">
-                    <svg height="60" id="barcode" style="position: absolute;"></svg>
-                </div>
-            </div>
-            <div class="row" style="border-bottom: solid 2px #000000">
-                <div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;">
-                    <p>
-                        <span>收件人: ABC</span> <br>
-                        <span>電話:+85224581456</span> <br>
-                        <span>地址:九龍黃大仙蒲崗村道61-87號富祐商場27-28號地舖</span> <br>
-                        <span>備注:</span><br>
-                        <span>注: 免收附加費</span>
-                    </p>
-                </div>
-                <div class="col-4" style="padding:0px;">
-                    <div class="transport_method container center" style="padding:0px;">
-                        <div class="col-12" style="border-bottom: solid 2px #000000">
-                            <b>4PX-黃大仙富佑 HK059點</b>
-                        </div>
-                        <div class="col-12" style="border-bottom: solid 2px #000000">
-                            <b>自提點</b>
-                        </div>
-                        <div class="col-12">
-                            <b>黃大仙區</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="border-bottom: solid 2px #000000">
-                <div class="col-4" style="padding-top: 10px;padding-bottom: 5px;border-right:solid 2px #000000">
-                    <p>
-                        付款方式:寄付<br>
-                        運費:HKD$25<br>
-                        代收貨款:<br>
-                    </p>
-                </div>
-                <div class="col-4" style="border-right:solid 2px #000000">
-                    <div class="container" style="padding:0px;">
-                        <div class="col-12" style="padding-top: 10px">
-                            <p>件數: 1</p>
-                        </div>
-                        <div class="col-12" style="padding-top: 10px">
-                            <p>重量: 5 kg</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4" style="padding: 0px 3px 0px 0px;">
-                    <div class="container center" style="padding: 0px;">
-                        <div class="col-12" style="padding-top: 6px;border-bottom: solid 2px #000000">
-                            <b>四方格</b>
-                        </div>
-                        <div class="col-12" style="padding-top: 6px">
-                            <b>LOCAL_ARES</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">
-                    <p>2021-07-19 18:51:09</p>
-                </div>
-                <div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">
-                    <p>
-                        簽名:<br>
-                        日期:
-                    </p>
-                </div>
-                <div class="col-4 center" style="font-size:24px;padding-top: 5px;">
-                    <b>825395</b>
-                </div>
-            </div>
-        </div>
-        <div class="container print_lower">
-            <div class="row">
-                <div class="col-4" style="padding: 0px;border-right:solid 2px #000000">
-                    <div class="container" style="padding:0px;">
-                        <img src="img/logo.svg" style="height: 60px;width:auto;padding-top:0px;padding-left: 5px;">
-<!--                        <img src="img/logo.png" style="height: 50px;width:auto;padding-left: 20px;padding-top:10px;">-->
-                        <div class="col-12" style="transform:rotate(90deg);margin-left:-5px;margin-top: 10px;">
-                            <svg height="60" id="barcode2"></svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="row center">
-                        <div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;">
-                            <b style="font-size: 15px;">4PX-黃大仙富佑 HK059點</b>
-                        </div>
-<!--                        <div class="col-6 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;border-right: solid 2px #000000;">-->
-<!--                            <b style="font-size: 15px;">4PX-黃大仙富佑</b>-->
-<!--                        </div>-->
-<!--                        <div class="col-6" style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000">-->
-<!--                            <b style="font-size: 15px;">黃大仙區</b>-->
-<!--                        </div>-->
-                    </div>
-                    <div class="row" style="padding-top:5px;border-bottom: solid 2px #000000">
-                        <p>
-                            收件人: ABC<br>
-                            電話:+85224581456<br>
-                            地址:九龍黃大仙蒲崗村道61-87號富祐商場27-28號地舖<br>
-                            備注:<br>
-                            注: 免收附加費
-                        </p>
-                    </div>
-                    <div class="row">
-                        <div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">
-                            <p style="line-height: 20px;">
-                                付款方式:寄付<br>
-                                運費:HKD$25<br>
-                                代收貨款:<br>
-                            </p>
-                        </div>
-                        <div class="col-6" style="padding: 0px 3px 0px 0px;">
-                            <div class="container center" style="padding: 0px;">
-                                <div class="col-12" style="padding-top: 6px;padding-bottom: 6px;border-bottom: solid 2px #000000">
-                                    <b>四方格</b>
-                                </div>
-                                <div class="col-12" style="padding-top: 6px">
-                                    <b>件數:1</b>
-                                </div>
-                            </div>
-                        </div>
-<!--                        <div class="col-6">-->
-<!--                            <div class="container">-->
-<!--                                <div class="col-12" style="border-bottom: solid 2px #000000">-->
-<!--                                    <b style="font-size: 15px;">四方格</b>-->
-<!--                                </div>-->
-<!--                                <div class="col-12" style="border-bottom: solid 2px #000000">-->
-<!--                                    <b style="font-size: 15px;">件數:1</b>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                    </div>
-                </div>
-            </div>
-        </div>
+<body class="body">
+      <!-- loading begin -->
+  <div class="loading_wrap position-fixed">
+    <div class="spinner-border text-primary loading position-absolute" role="status">
+      <span class=""></span>
     </div>
+  </div>
+  <script rel="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script rel="text/javascript" src="js/JsBarcode.code128.min.js"></script>
+  <script rel="text/javascript" src="js/bootstrap.js"></script>
 </body>
+
 <script>
-    $.fn.extend({
-        print: function() {
-            var frameName = 'printIframe';
-            var doc = window.frames[frameName];
-            if (!doc) {
-                $('<iframe>').hide().attr('name', frameName).appendTo(document.body);
-                doc = window.frames[frameName];
-            }
-            doc.document.body.innerHTML = this.html();
-            doc.window.print();
-            return this;
+$.fn.extend({
+    print: function() {
+        var frameName = 'printIframe';
+        var doc = window.frames[frameName];
+        if (!doc) {
+            $('<iframe>').hide().attr('name', frameName).appendTo(document.body);
+            doc = window.frames[frameName];
         }
-    });
-    $(document).ready(function(){
-        SetQueryToText();
-        //generate barcode
-        JsBarcode("#barcode", "100229825395",{
+        doc.document.body.innerHTML = this.html();
+        doc.window.print();
+        return this;
+    }
+});
+var barcode;
+$(document).ready(function(){
+    if(!localStorage.getItem("arrayOrder")){
+        window.location.reload(true);
+    }
+    initialLabel();
+});        
+
+function initialLabel(){
+    $(".loading_wrap").show();
+    let printHtml="";
+    // let barcode=[];
+    let arrayOrder=JSON.parse(localStorage.getItem("arrayOrder"));
+    let barcodeEnd;
+    let type;
+    let urls=getBaseUrl();
+    let Outlets = {
+        areaId : 0,
+        address : '',
+        addressEn : ''
+    };
+
+    for(let i=0;i<arrayOrder.length;i++){
+        if(arrayOrder[i].type=="SELF_PICKUP_STATION"){
+            type="自提點";
+        }else if(arrayOrder[i].type=="HOME_DELIVERY"){
+            type="派送上門"
+        }else{
+            type="自提櫃";
+        }
+        // barcode.push(arrayOrder[i].barcode);
+        barcodeEnd=arrayOrder[i].barcode.slice(arrayOrder[i].barcode.length-6,arrayOrder[i].barcode.length);
+        printHtml+='<div class="print"><div class="container print_upper"><div class="row" style="border-bottom: solid 2px #000000"><div class="col-4">';
+        printHtml+='<img src="img/logo.svg" style="height: auto;width:100px; margin-top:20px;margin-left:10px;"></div><div class="col-8">';
+        printHtml+='<svg height="60" id="barcode'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
+        printHtml+='<div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;"><p><span>收件人: <span class="getName">'+arrayOrder[i].getName+'</span></span> <br>';
+        printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br><span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:</span><br>';    
+        printHtml+='<span>注: 免收附加費</span></p></div><div class="col-4" style="padding:0px;"><div class="transport_method container center" style="padding:0px;">';
+        printHtml+='<div class="col-12" style="border-bottom: solid 2px #000000"><b class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b></div><div class="col-12" style="border-bottom: solid 2px #000000">';
+        printHtml+='<b class="type">'+type+'</b></div><div class="col-12"><b class="getAreaId"></b></div></div></div></div>';       
+        printHtml+='<div class="row" style="border-bottom: solid 2px #000000"><div class="col-4" style="padding-top: 10px;padding-bottom: 5px;border-right:solid 2px #000000">';
+        printHtml+='<p style="font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
+        // 
+        printHtml+='<div class="col-4" style="border-right:solid 2px #000000"><div class="container" style="padding:0px;"><div class="col-12" style="padding-top: 10px"><p>件數: 1</p>';
+        printHtml+='</div><div class="col-12" style="padding-top: 10px"><p>重量:<span class="weight">'+arrayOrder[i].weight+'</span> kg</p></div></div></div><div class="col-4" style="padding: 0px 3px 0px 0px;">';
+        printHtml+='<div class="container center" style="padding: 0px;"><div class="col-12" style="padding: 5px;border-bottom: solid 2px #000000"><b>四方格</b></div>';
+        printHtml+='<div class="col-12" style="padding: 5px"><b>LOCAL_ARES</b></div></div></div></div>';
+        printHtml+='<div class="row"><div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">';
+        printHtml+='<p class="sendTime">'+arrayOrder[i].sendTime+'</p></div><div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">';
+        printHtml+='<p>簽名:<br>日期:</p></div><div class="col-4 center" style="font-size:24px;padding-top: 5px;"><b class="barcodeEnd">'+barcodeEnd+'</b></div></div></div>';
+        //lower part                
+        printHtml+='<div class="container print_lower"><div class="row"><div class="col-4" style="padding: 0px;border-right:solid 2px #000000"><div class="container" style="padding:0px;">';
+        printHtml+='<img src="img/logo.svg" style="height: 50px;width:auto;padding-left: 20px;padding-top:10px;"><div class="col-12" style="transform:rotate(90deg);margin-left:-10px;margin-top: 20px;">';
+        printHtml+='<svg height="60" id="barcode2'+i+'"></svg></div></div></div>';
+        printHtml+='<div class="col-8"><div class="row center">';
+        if(arrayOrder[i].type=="HOME_DELIVERY"){
+            printHtml+='<div class="col-4" style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;border-right: solid 2px #000;"><b style="font-size: 18px">派送</b></div>'
+            printHtml+='<div class="col-8" style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 18px;" class="getAreaId"></b></div>'
+        }else{
+            printHtml+='<div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 18px;" class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b></div>'
+        }
+        printHtml+='</div>';
+        printHtml+='<div class="row" style="padding-top:3px;padding-bottom:3px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
+        printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
+        printHtml+='<p style="line-height: 20px;font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
+        // 
+        printHtml+='<div class="col-6" style="padding: 0px 3px 0px 0px;"><div class="container center" style="padding: 0px;">';
+        printHtml+='<div class="col-12" style="padding-top: 6px;padding-bottom: 6px;border-bottom: solid 2px #000000"><b>四方格</b></div><div class="col-12" style="padding-top: 6px">';
+        printHtml+='<b>件數:1</b></div></div></div></div></div></div></div></div>';
+    }
+    $("body").prepend(printHtml);
+    // Outlets.areaId=arrayOrder[i].getAreaId;
+    for(let i=0;i<arrayOrder.length;i++){
+        JsBarcode("#barcode"+i, arrayOrder[i].barcode,{
             height: 60,
             fontSize: 12,
         });
-        JsBarcode("#barcode2", "100229825395",{
+        JsBarcode("#barcode2"+i, arrayOrder[i].barcode,{
             height: 60,
             width:1.4,
             fontSize: 12,
         });
-    });        
-
-    //set queryString value to table cell 
-    function SetQueryToText(){
-        let queryString=window.location.search;
-        let search=new URLSearchParams(queryString);
-        search.forEach(function(value,key){
-            if($("."+key).length>0){
-                $("."+key).text(value);
-            }else{
-                console.log("doesn't exist class"+ key+"element");
-            }
-        });
     }
 
-
+    
+    //different company,differnt logo
+    // switch($.cookie("username")){
+        
+    // }
+    $.post(urls+'outlets/getOutletsLikeAll',Outlets,function(res){
+        for(let i=0;i<arrayOrder.length;i++){
+            if(arrayOrder[i].type=="HOME_DELIVERY"){
+                for(let j=0;j<res.length;j++){
+                    if(res[j].area.id==arrayOrder[i].getAreaId){
+                        $(".print").eq(i).find(".getPickUpPoint").text("Ares物流");
+                        $(".print").eq(i).find(".getAreaId").text(res[j].area.area);
+                    }
+                }
+            }else{
+                for(let index=0;index<res.length;index++){
+                    if(res[index].storeCode==arrayOrder[i].getPickUpPoint){
+                        $(".print").eq(i).find(".getAddress").text(res[index].area.area+res[index].shortAddress);
+                        $(".print").eq(i).find(".getPickUpPoint").text((res[index].storeName).split(' ')[0]);
+                        $(".print").eq(i).find(".getAreaId").text(res[index].area.area);
+                    }
+                }
+            }
+            
+        }
+    $(".loading_wrap").hide();
+    });
+}
+function getBaseUrl(){
+//   return 'http://192.168.100.103:8083/';
+    //return 'http://192.168.100.252:8083/';
+    //production
+    return 'http://122.10.80.32:8888/';
+}
 </script>
 </html>

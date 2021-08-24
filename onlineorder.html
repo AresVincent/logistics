@@ -81,7 +81,7 @@
 
   <!-- form begin -->
   <div class="form_wrap container shadow-lg mt-4 p-5">
-    <form action=""  onsubmit="return false;">
+    <form action=""  onsubmit="return false;"  autocomplete="off" >
       <div class=" mb-form-standard row">
         <h4 class="col-md-3 col-12"><b>派送方式:</b></h4>
         <div class="col-12">
@@ -476,8 +476,8 @@
             str2+='<option value="0">請選擇地區</option>'
             str2 += '<option value="7">灣仔區</option>';
             str2 += '<option value="39">中西區</option>';
-            str2 += '<option value="27">港島東區</option>';
-            str2 += '<option value="5">港島南區</option>';
+            str2 += '<option value="27">東區</option>';
+            str2 += '<option value="5">南區</option>';
             $('select[name="get_area_id"]').html(str2);
             break;
           case "3":
@@ -853,7 +853,22 @@
           layer.msg('請選擇派送方式！',{icon:2})
           return false;
         }else if(type=="HOME_DELIVERY"){
-          //todo,when home delivery checking
+          if($(".addressBox .regionSelect")=="0"){
+            layer.msg('請選擇區域！',{icon:2});
+            return false;
+          }
+          if($(".addressBox .areaSelect").val()=="0"){
+            layer.msg('請選擇地區！',{icon:2});
+            return false;
+          }
+          if(getBuilding==""){
+            layer.msg('請填寫大廈及樓層信息！',{icon:2});
+            return false;
+          }
+          if(getStreet==""){
+            layer.msg('請填寫街道信息！',{icon:2});
+            return false;
+          }
         }else{
 
         }

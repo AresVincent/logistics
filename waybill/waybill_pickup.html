@@ -148,8 +148,15 @@ function initialLabel(){
         printHtml+='<div class="container print_lower"><div class="row"><div class="col-4" style="padding: 0px;border-right:solid 2px #000000"><div class="container" style="padding:0px;">';
         printHtml+='<img src="img/logo.png" style="height: 50px;width:auto;padding-left: 20px;padding-top:10px;"><div class="col-12" style="transform:rotate(90deg);margin-left:-10px;margin-top: 20px;">';
         printHtml+='<svg height="60" id="barcode2'+i+'"></svg></div></div></div>';
-        printHtml+='<div class="col-8"><div class="row center"><div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 15px;" class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b>'
-        printHtml+='</div></div><div class="row" style="padding-top:3px;padding-bottom:3px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
+        printHtml+='<div class="col-8"><div class="row center">';
+        if(arrayOrder[i].type=="HOME_DELIVERY"){
+            printHtml+='<div class="col-4" style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;border-right: solid 2px #000;"><b style="font-size: 18px">派送</b></div>'
+            printHtml+='<div class="col-8" style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 18px;" class="getAreaId"></b></div>'
+        }else{
+            printHtml+='<div class="col-12 " style="padding:3px 0px 5px 0px;border-bottom: solid 2px #000000;"><b style="font-size: 18px;" class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b></div>'
+        }
+        printHtml+='</div>';
+        printHtml+='<div class="row" style="padding-top:3px;padding-bottom:3px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
         printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
         printHtml+='<p style="line-height: 20px;font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
         // 

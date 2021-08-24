@@ -266,9 +266,9 @@ function connect() {
                 //header part
                 itemHtml+='<div class="row"><div class="col-6 no-padding"><div class="row"><b class="col-4">日期：</b>';
                 itemHtml+='<span class="col-8 date" id="date"></span>';
-                itemHtml+='</div><div class="row"><b class="col-4">寄貨公司：</b><span class="col-8">Ares Solution Limited</span></div>';
-                itemHtml+='<div class="row"><b class="col-4">聯絡人：</b><span class="col-8">Oscar Lau</span></div><div class="row">';
-                itemHtml+='<b class="col-4">電話號碼：</b><span class="col-8">85260155854</span></div></div><div class="col-6 no-padding">';
+                itemHtml+='</div><div class="row"><b class="col-4">寄貨公司：</b><span class="col-8">'+res[i].name+'</span></div>';
+                // itemHtml+='<div class="row"><b class="col-4">聯絡人：</b><span class="col-8">Oscar Lau</span></div>';
+                itemHtml+='<div class="row"><b class="col-4">電話號碼：</b><span class="col-8">'+res[i].phone+'</span></div></div><div class="col-6 no-padding">';
                 itemHtml+='<div class="row"><b class="col-4">收貨公司：</b><span class="col-8">4PX 遞四方</span></div><div class="row">';
                 itemHtml+='<b class="col-4">收貨倉：</b><span class="col-8">'+warehouse+'</span></div><div class="row"><b class="col-4">倉地址：</b>';
                 itemHtml+='<span class="col-8">'+res[i].sendAddress+'</span></div></div></div>';
@@ -292,7 +292,7 @@ function connect() {
                 itemHtml+='</table></div>';
                 //bottom part
                 itemHtml+='<div class="row" style="margin-bottom: 60px;"><h6><b>如上述資料數目無誤，雙方於下方簽署及蓋上公司印作實。</b></h6></div>';
-                itemHtml+='<div class="row"><div class="col-4" style="border-top:solid 1px #000000"><b >Ares Solution Limited</b></div>';
+                itemHtml+='<div class="row"><div class="col-4" style="border-top:solid 1px #000000"><b >'+res[i].name+'</b></div>';
                 itemHtml+='<div class="col-2"></div><div class="col-5" style="border-top:solid 1px #000000"><b style="font-size:8px;">4PX Worldwide Express Co., Ltd.</b>';
                 itemHtml+='</div></div>';
                 itemHtml+='</div>';
