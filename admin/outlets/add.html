@@ -209,7 +209,14 @@
             </span>
           </a>
         </li>
-        
+        <li>
+          <a href="/admin/order/index.html">
+            <i class="fa fa-user-o"></i> <span>訂單記錄</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
         <li>
           <a href="/admin/api/index.html">
             <i class="fa fa-user-o"></i> <span>API文檔</span>
@@ -303,14 +310,34 @@
                                         <input type="text" name="address" class="form-control" id="company_address" placeholder="请点击地图选择地址或手动填写">
                                     </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="display: none;">
                                     <label for="company_address" class="col-sm-4 control-label">公司地址英文</label>
                     
                                     <div class="col-sm-8">
-                                        <input type="text" name="addressEn" class="form-control" id="company_address_en" placeholder="请点击地图选择地址或手动填写">
+                                        <input type="hidden" name="addressEn" class="form-control" id="company_address_en" placeholder="请点击地图选择地址或手动填写" value="en"/>
                                     </div>
                                     </div>
-                                   
+                                    <div class="form-group">
+                                      <label for="company_address" class="col-sm-4 control-label">簡略地址</label>
+
+                                      <div class="col-sm-8">
+                                          <input type="text" name="shortAddress" class="form-control" id="shortAddress" placeholder="请点击地图选择地址或手动填写">
+                                      </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="company_address" class="col-sm-4 control-label">物流點名稱</label>
+  
+                                        <div class="col-sm-8">
+                                            <input type="text" name="storeName" class="form-control" id="storeName" placeholder="請填寫物流點名稱">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="company_address" class="col-sm-4 control-label">物流點代號</label>
+  
+                                        <div class="col-sm-8">
+                                            <input type="text" name="storeCode" class="form-control" id="storeCode" placeholder="請填寫物流點代號">
+                                        </div>
+                                      </div>
                                     <div class="form-group">
                                     <label for="longitude" class="col-sm-4 control-label">经度</label>
                     
@@ -499,7 +526,6 @@ $.get(url + 'company/companyAll', function(res){
 
 
 </script>
-
 
 <script>
     $('.submitBtn').click(function(){

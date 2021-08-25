@@ -210,7 +210,7 @@
         </li>
         
         <li>
-          <a href="/admin/user/order.html">
+          <a href="/admin/order/index.html">
             <i class="fa fa-user-o"></i> <span>訂單記錄</span>
             <span class="pull-right-container">
               <!-- <small class="label pull-right bg-green">new</small> -->
@@ -272,10 +272,10 @@
                 <form onsubmit="return false;" class="form-horizontal form">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="name" class="col-sm-2 control-label">姓名</label>
+                      <label for="name" class="col-sm-2 control-label">公司名</label>
     
                       <div class="col-sm-4">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="请输入姓名">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="请输入公司名稱">
                       </div>
                     </div>
                     <div class="form-group">
@@ -300,10 +300,10 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="phone_num" class="col-sm-2 control-label">电话</label>
+                      <label for="phone" class="col-sm-2 control-label">电话</label>
     
                       <div class="col-sm-4">
-                        <input type="number" name="phone_num" class="form-control" id="phone_num" placeholder="请输入电话">
+                        <input type="number" name="phone" class="form-control" id="phone" placeholder="请输入电话">
                       </div>
                     </div>
                   </div>
@@ -446,10 +446,10 @@
 <script>
   $('.submitBtn').click(function(){
       console.log($('form').serialize());
-      $.post('/admin/user/add.html', $('form').serialize(), function(res){
+      $.post(getBaseUrl()+'user/register', $('form').serialize(), function(res){
           console.log(res)
-          if(res.success){
-              layer.msg('添加成功',{icon:1,time:1000})
+          if(res==1){
+              layer.msg('添加成功',{icon:1,time:1000}) 
           }
       })
   })

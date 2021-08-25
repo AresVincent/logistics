@@ -130,7 +130,24 @@ function initialLabel(){
         printHtml+='<img src="img/logo.svg" style="height: auto;width:100px; margin-top:20px;margin-left:10px;"></div><div class="col-8">';
         printHtml+='<svg height="60" id="barcode'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
         printHtml+='<div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;"><p><span>收件人: <span class="getName">'+arrayOrder[i].getName+'</span></span> <br>';
-        printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br><span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:</span><br>';    
+        printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br>';
+        //Chinese is length 2,English and num is length 1
+        let addressLen=0;
+        for(var strIndex=0;strIndex<arrayOrder[i].getAddress.length;strIndex++){
+            if(arrayOrder[i].getAddress.charCodeAt(strIndex)>127|| arrayOrder[i].getAddress.charCodeAt(strIndex)==94){
+                addressLen+=2;
+            }else{
+                addressLen+=1;
+            }
+        }
+        console.log(addressLen);
+        //if address is too long
+        if(addressLen>50){
+            printHtml+='<span>地址:<span class="getAddress" style="font-size:12px;word-break:break-all">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:</span><br>';    
+        }else{
+            printHtml+='<span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:</span><br>';    
+
+        }
         printHtml+='<span>注: 免收附加費</span></p></div><div class="col-4" style="padding:0px;"><div class="transport_method container center" style="padding:0px;">';
         printHtml+='<div class="col-12" style="border-bottom: solid 2px #000000"><b class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b></div><div class="col-12" style="border-bottom: solid 2px #000000">';
         printHtml+='<b class="type">'+type+'</b></div><div class="col-12"><b class="getAreaId"></b></div></div></div></div>';       
@@ -146,7 +163,7 @@ function initialLabel(){
         printHtml+='<p>簽名:<br>日期:</p></div><div class="col-4 center" style="font-size:24px;padding-top: 5px;"><b class="barcodeEnd">'+barcodeEnd+'</b></div></div></div>';
         //lower part                
         printHtml+='<div class="container print_lower"><div class="row"><div class="col-4" style="padding: 0px;border-right:solid 2px #000000"><div class="container" style="padding:0px;">';
-        printHtml+='<img src="img/logo.svg" style="height: 50px;width:auto;padding-left: 20px;padding-top:10px;"><div class="col-12" style="transform:rotate(90deg);margin-left:-10px;margin-top: 20px;">';
+        printHtml+='<img src="img/logo.svg" style="height: 60px;width:auto;padding-left: 15px;padding-top:10px;"><div class="col-12" style="transform:rotate(90deg);margin-left:-10px;margin-top: 15px;">';
         printHtml+='<svg height="60" id="barcode2'+i+'"></svg></div></div></div>';
         printHtml+='<div class="col-8"><div class="row center">';
         if(arrayOrder[i].type=="HOME_DELIVERY"){
@@ -157,7 +174,12 @@ function initialLabel(){
         }
         printHtml+='</div>';
         printHtml+='<div class="row" style="padding-top:3px;padding-bottom:3px;border-bottom: solid 2px #000000"><p>收件人: <span class="getName">'+arrayOrder[i].getName+'</span><br>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span><br>';
-        printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
+                //if address is too long
+        if(addressLen>50){
+            printHtml+='地址:<span class="getAddress" style="font-size:12px;word-break:break-all">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
+        }else{
+            printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
+        }
         printHtml+='<p style="line-height: 20px;font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
         // 
         printHtml+='<div class="col-6" style="padding: 0px 3px 0px 0px;"><div class="container center" style="padding: 0px;">';

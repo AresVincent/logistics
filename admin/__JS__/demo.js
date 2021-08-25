@@ -353,4 +353,7 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
-function getBaseUrl(){return 'http://192.168.100.103:8083/';}
+function getBaseUrl(){
+    // return 'http://192.168.100.103:8083/';
+      return 'http://122.10.80.32:8888/'; 
+}

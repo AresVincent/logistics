@@ -209,7 +209,7 @@
           </a>
         </li>
         <li>
-          <a href="/admin/user/order.html">
+          <a href="/admin/order/order.html">
             <i class="fa fa-user-o"></i> <span>訂單記錄</span>
             <span class="pull-right-container">
               <!-- <small class="label pull-right bg-green">new</small> -->
@@ -309,14 +309,34 @@
                                         <input type="text" name="address" class="form-control" id="company_address" value="" placeholder="请点击地图选择地址或手动填写">
                                     </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="display: none;">
                                     <label for="company_address" class="col-sm-4 control-label">公司英文地址</label>
                     
                                     <div class="col-sm-8">
-                                        <input type="text" name="addressEn" class="form-control" id="company_address_en" value="" placeholder="请点击地图选择地址或手动填写">
+                                        <input type="hidden" name="addressEn" class="form-control" id="company_address_en" value="en" placeholder="请点击地图选择地址或手动填写">
                                     </div>
                                     </div>
-                                   
+                                    <div class="form-group">
+                                      <label for="company_address" class="col-sm-4 control-label">簡略地址</label>
+
+                                      <div class="col-sm-8">
+                                          <input type="text" name="shortAddress" class="form-control" id="shortAddress" placeholder="请点击地图选择地址或手动填写">
+                                      </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="company_address" class="col-sm-4 control-label">物流點名稱</label>
+  
+                                        <div class="col-sm-8">
+                                            <input type="text" name="storeName" class="form-control" id="storeName" placeholder="請填寫物流點名稱">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="company_address" class="col-sm-4 control-label">物流點代號</label>
+  
+                                        <div class="col-sm-8">
+                                            <input type="text" name="storeCode" class="form-control" id="storeCode" placeholder="請填寫物流點代號">
+                                        </div>
+                                      </div>
                                     <div class="form-group">
                                     <label for="longitude" class="col-sm-4 control-label">经度</label>
                     
@@ -485,8 +505,14 @@ $.post(url + 'outlets/outletsId', {id:id}, function(res){
   $('#company_tel').val(res.phone);
   $('#company_address').val(res.address);
   $('#company_address_en').val(res.addressEn);
+  
+  $('#shortAddress').val(res.shortAddress);
+  $('#storeName').val(res.storeName);
+  $('#storeCode').val(res.storeCode);
+
   $('#longitude').val(res.longitude);
   $('#latitude').val(res.latitude);
+  
 })
 
 

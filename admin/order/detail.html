@@ -121,7 +121,6 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">導航菜單</li>
-
         <li>
           <a href="/admin/index.html">
             <i class="fa fa-map-marker"></i> <span>區域</span>
@@ -147,7 +146,7 @@
           </a>
         </li>
 
-        <li class="active">
+        <li>
           <a href="/admin/news/index.html">
             <i class="fa fa-newspaper-o"></i> <span>行業新聞</span>
             <span class="pull-right-container">
@@ -172,8 +171,7 @@
             </span>
           </a>
         </li>
-
-        <li>
+        <li  class="active">
           <a href="/admin/order/index.html">
             <i class="fa fa-user-o"></i> <span>訂單記錄</span>
             <span class="pull-right-container">
@@ -181,7 +179,6 @@
             </span>
           </a>
         </li>
-        
         <li>
           <a href="/admin/api/index.html">
             <i class="fa fa-user-o"></i> <span>API文檔</span>
@@ -213,16 +210,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
@@ -232,15 +219,20 @@
 
 <div class="box">
   <div class="box-header">
-
     <div>
-        <a title="" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/news/add.html" data-original-title="添加">
+        <!-- <a title="" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/area/add.html" data-original-title="添加">
             <i class="fa fa-plus"></i> 添加
-        </a>
+        </a> -->
+        <!-- <a title="" data-toggle="tooltip" class="btn btn-default btn-sm " href="javascript:history.back();" data-original-title="返回">
+            <i class="fa fa-arrow-left"></i> 返回
+        </a> -->
+
+      
 
         <a class="btn btn-success btn-sm ReloadButton" data-toggle="tooltip" title="" data-id="checked" data-original-title="刷新">
             <i class="fa fa-refresh"></i> 刷新
         </a>
+        
     </div>
 
 
@@ -254,17 +246,17 @@
 
             <thead>
             <tr>
-              <th>新聞編號</th>
-              <th>標題</th>
-              <th>英文標題</th>
-              <th>發佈時間</th>
-              <th>操作</th>
+              <th>序號</th>
+              <th>4px跟蹤號</th>
+              <th>運單操作</th>
+              <th>操作時間</th>
+              <th>備註</th>
             </tr>
             </thead>
             <tbody id="tableTbody">
-       
-            
 
+            
+  
 
             </tbody>
 
@@ -281,6 +273,8 @@
         </div>
         <!-- /.row -->
         </section>
+
+
 
 
 
@@ -348,80 +342,59 @@
 <script src="/admin/__ADMIN__/auth.js"></script>
 <script src="../__JS__/common.js"></script>
 
-
-
 <script>
-  // $(function () {
-  //   $('#example1').DataTable({
-  //     'paging'      : true,
-  //     'lengthChange': true,
-  //     'searching'   : true,
-  //     'ordering'    : true,
-  //     'info'        : true,
-  //     'autoWidth'   : false
-  //   })
-  // })
   //check if has admin token,else back to login page
   hasToken();
   $('.ReloadButton').click(function(){
     location.href = location.href
   })
-  
-function editDel(){
-  let url = getBaseUrl()
-  $('.editBtn').click(function(){
-    let id = $(this).attr('data-id');
-    location.href = '/admin/News/edit.html?id='+id;
-  })
-  $('.deleteBtn').click(function(){
-      let that = $(this);
-        layer.confirm('确定要删除吗？', {
-            btn: ['确定','取消'] //按钮
-            ,title: '提示'
-        }, function(){
-            let id = that.attr('data-id');
-            
-            $.post(url + 'news/delNews', {id : id}, function(res){
-                layer.msg('删除成功',{icon:1,time:1000},function(){
-                    location.href = location.href
-                })
-            })
-
-
-        }, function(){
-        });
-  })
-}
-  
+ 
 </script>
+
+
 <script>
 
-let url = getBaseUrl()
-console.log(url)//news/newsAll
-
-$.get(url + 'news/newsAll', {'pageNum':1,'pageSize':10000}, function(res){
-  console.log(res)
-  let str = '';
-  let list = res.list;
-  for(i in list){
-     str += '<tr><td>'+list[i].id+'</td><td>'+list[i].title+'</td><td>'+list[i].titleEn+'</td><td style="width: 150px;">'+list[i].time+'</td><td style="width: 100px;"><button type="button" class="btn btn-primary btn-xs editBtn" data-id="'+list[i].id+'"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs deleteBtn" data-id="'+list[i].id+'"><i class="fa fa-trash"></i></button></td></tr>';
-  }
 
 
+  var url = getBaseUrl()
 
-  $('#tableTbody').html(str)
+  $.get(url + 'event/queryEventByOrderNo?orderNo='+searchNo(), function(res){
+    console.log(res)
+
+    let list = res.data;
+    let str = '';
+    for(i in list){
+      let markdown;
+      if(list[i].location==null){
+        markdown=""
+      }else{
+        markdown=list[i].location;
+      }
+      str += '<tr><td>'+(parseInt(i)+1)+'</td> <td>'+list[i].waybillNo+'</td><td>'+list[i].eventName+'</td><td>'+list[i].createTime+'</td><td>'+markdown+'</td></tr>';
+    }
+
+    $('#tableTbody').html(str)
     $('#example1').DataTable({
-      'paging'      : true,
+      'paging'      : false,
       'lengthChange': true,
-      'searching'   : true,
+      'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
     })
-    editDel()     
-})
+  })
+  function searchNo(){
+    let queryString=window.location.search;
+    let search=new URLSearchParams(queryString);
+    console.log(search.get("waybillNo"))
+    return search.get("waybillNo");
+  }
 
+  
 </script>
+
+
+
 
 
 </body>

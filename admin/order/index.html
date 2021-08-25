@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>OMS后台管理</title>
+
+
+ 
+
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/Ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/admin/__CSS__/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/admin/__CSS__/skins/_all-skins.min.css">
+  <!-- Morris chart -->
+  <!-- <link rel="stylesheet" href="/admin/__ADMIN__/lib/morris.js/morris.css"> -->
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/jvectormap/jquery-jvectormap.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/bootstrap-daterangepicker/daterangepicker.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="/admin/__ADMIN__/plugins/iCheck/all.css">
+      <!-- Select2 -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/lib/select2/dist/css/select2.min.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="/admin/__ADMIN__/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <style>
+    .loading_wrap {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background-color: hsla(0,0%,100%,.6);
+      z-index: 999;
+    }
+    .loading_wrap .loading{z-index:1;top:50%;left:50%}
+    .position-fixed{
+      position: fixed !important;
+    }
+    .text-primary {
+      color: #007bff!important;
+    }
+    .position-absolute {
+      position: absolute!important;
+    }
+    @keyframes spinner-border {
+      to { transform: rotate(360deg); }
+    }
+    .spinner-border {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      vertical-align: text-bottom;
+      border: .25em solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      -webkit-animation: spinner-border .75s linear infinite;
+      animation: spinner-border .75s linear infinite;
+    }
+    .box-body{
+      max-width: 100%;
+      overflow: auto;
+    }
+    tr.red{
+      background-color: red !important;
+    }
+  </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="/" target="_bland" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>OMS后台管理</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+
+
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="../__IMG__/info.png" class="user-image" alt="User Image">
+              <span class="hidden-xs">admin</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header" style="height: 210px;">
+                <img src="../__IMG__/info.png" class="img-circle" alt="User Image">
+
+                <p>
+                 管理員
+                  <small>admin</small>
+                  <p></p>
+                  <a href="#" class="btn btn-default btn-flat logoutBtn" onclick="logout()">退出登录</a>
+                </p>
+              </li>
+            
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../__IMG__/info.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>管理員</p>
+          <a href="javascript:void(0)"><i class="fa fa-circle text-success"></i> 在线</a>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">導航菜單</li>
+        <li>
+          <a href="/admin/index.html">
+            <i class="fa fa-map-marker"></i> <span>區域</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/charging/index.html">
+            <i class="fa fa-dollar"></i> <span>計費標準</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/outlets/index.html">
+            <i class="fa fa-map-o"></i> <span>快遞網點</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/news/index.html">
+            <i class="fa fa-newspaper-o"></i> <span>行業新聞</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/company/index.html">
+            <i class="fa fa-align-justify"></i> <span>公司簡介</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/user/index.html">
+            <i class="fa fa-user-o"></i> <span>用戶管理</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li  class="active">
+          <a href="/admin/order/index.html">
+            <i class="fa fa-user-o"></i> <span>訂單記錄</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/api/index.html">
+            <i class="fa fa-user-o"></i> <span>API文檔</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+      
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+
+
+    <section class="content-header">
+      <h1>
+          admin
+      </h1>
+      <ol class="breadcrumb">
+          <li><a href="/admin/index.html"><i class="fa fa-dashboard"></i> 主页</a></li>
+          <li class="active"> admin</li>
+      </ol>
+  </section>
+   <!-- Main content -->
+
+
+
+<section class="content">
+  <div class="row">
+    <div class="date_search col-md-3 col-6">
+      <div>
+        <label for="date_range" class="riqidate col-4 mb-0">日期：</label>
+        <input type="text" class="date_picker pl-2 col-8" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+      </div>
+    </div>
+    <div class="input-group col-md-9 col-6">
+      <input type="text" class="form_input rounded-sm col-md-6 col-8" id="search" placeholder="請輸入包裹號" />
+      <div class="input-group-append col-md-3 col-4 ">
+        <button onsubmit="return false;" class="input-group-text btn_search"  style="width: 100%;justify-content: center;">賬單查詢</button>
+      </div>
+      <div class="input-group-append col-md-3 col-4 ">
+        <button onsubmit="return false;" class="input-group-text btn_export" id="generate-excel"  style="width: 100%;justify-content: center;">批量導出</button>
+      </div>
+    </div>
+    <div class="col-sm-12" style="padding-top: 10px;">
+      <label>顯示<select class=" input-sm selectRecord" id="record_select">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>條記錄</label>
+    </div>
+    <div class="col-xs-12"  style="margin-top:15px;">
+    <div class="box">
+      <div class="box-header">
+        <!-- <h3 class="box-title"></h3> -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>包裹號</th>
+            <th>狀態</th>
+            <th>派送方式</th>
+            <th>寄件人姓名</th>
+            <th>寄件人電話</th>
+            <th>收件人姓名</th>
+            <th>收件人電話</th>
+            <th style="min-width: 150px;">收件地址</th>
+            <th  style="min-width: 150px;">攬收點</th>
+            <th>下單時間</th>
+            <th>入倉時間1</th>
+            <th>出倉時間1</th>
+            <th>入倉時間2</th>
+            <th>到點時間</th>
+            <th>簽收時間</th>
+            <th>運費金額</th>
+            <th>包裹重量</th>
+            <th>物品名稱</th>
+            <th>數量</th>
+            <th class="price">單價</th>
+          </tr>
+          </thead>
+          <tbody id="tableTbody">
+          </tbody>
+        </table>
+        <div class="card-footer clearfix" style="display: flex;align-items: center;">
+          <div class="col-sm-5"><div class="dataTables_info table_info" id="example_info" style="padding-left:0 ;">顯示从0到0，共0条記錄</div></div>
+          <ul class="pagination pagination-sm m-0" style="text-align: center;">
+     
+          </ul>
+         </div>
+      </div>
+      <!-- /.box-body -->
+    </div>
+  <!-- /.box -->
+  </div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+<!-- for export excel -->
+<table id="itemTable" class="itemTable" style="display: none;width: 100%;">
+  <thead class="">
+    <tr class="itemHead">
+      <th>包裹號</th>
+      <th>狀態</th>
+      <th>派送方式</th>
+      <th>寄件人姓名</th>
+      <th>寄件人電話</th>
+      <th>收件人姓名</th>
+      <th>收件人電話</th>
+      <th>收件地址</th>
+      <th>攬收點</th>
+      <th>下單時間</th>
+      <th>入倉時間1</th>
+      <th>出倉時間1</th>
+      <th>入倉時間2</th>
+      <th>到點時間</th>
+      <th>簽收時間</th>
+      <th>運費金額</th>
+      <th>包裹重量</th>
+    </tr>
+  </thead>
+  <tbody class="tbody" id="showItem" style="word-break: keep-all;">
+   
+  </tbody>
+</table>
+  <!-- loading begin -->
+  <div class="loading_wrap position-fixed">
+    <div class="spinner-border text-primary loading position-absolute" role="status">
+      <span class=""></span>
+    </div>
+  </div>
+  <!-- loading end -->
+
+<!-- jQuery 3 -->
+<script src="/admin/__ADMIN__/lib/jquery/dist/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/admin/__ADMIN__/lib/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/admin/__ADMIN__/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="/admin/__ADMIN__/lib/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="/admin/__ADMIN__/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="/admin/__ADMIN__/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="/admin/__ADMIN__/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+<!-- DataTables -->
+<script src="/admin/__ADMIN__/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/admin/__ADMIN__/lib/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Morris.js charts -->
+<script src="/admin/__ADMIN__/lib/raphael/raphael.min.js"></script>
+<!-- <script src="/admin/__ADMIN__/lib/morris.js/morris.min.js"></script> -->
+<!-- Sparkline -->
+<script src="/admin/__ADMIN__/lib/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="/admin/__ADMIN__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="/admin/__ADMIN__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/admin/__ADMIN__/lib/jquery-knob/dist/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="/admin/__ADMIN__/lib/moment/min/moment.min.js"></script>
+<script src="/admin/__ADMIN__/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="/admin/__ADMIN__/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="/admin/__ADMIN__/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="/admin/__ADMIN__/lib/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="/admin/__ADMIN__/plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script src="/admin/__ADMIN__/lib/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/admin/__JS__/adminlte.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<!-- <script src="/admin/__JS__/pages/dashboard.js"></script> -->
+<!-- AdminLTE for demo purposes -->
+<script src="/admin/__JS__/demo.js"></script><script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/admin/__ADMIN__/plugins/layer/layer.js"></script>
+<script src="/admin/__ADMIN__/auth.js"></script>
+<script src="../__JS__/common.js"></script>
+<!-- excel export -->
+<script type="text/javascript" src="/admin/__ADMIN__/plugins/table/jszip.min.js"></script>
+<script type="text/javascript" src="/admin/__ADMIN__/plugins/table/FileSaver.js"></script>
+<script type="text/javascript" src="/admin/__ADMIN__/plugins/table/excel-gen.js"></script>
+
+
+<script>
+//check if has admin token,else back to login page
+hasToken();
+  var Data = {
+      token : $.cookie("admin_token"),
+      orderNo : '',
+      sn : '',
+      status : '',
+      excStartTime : YMD(new Date()),
+      excEndTime : YMD(new Date()),
+      pageNum : 1,
+      pageSize:10
+  };
+  var printData={
+    token : $.cookie("admin_token"),
+    orderNo : '',
+    sn : '',
+    status : '',
+    excStartTime : '',
+    excEndTime : '',
+    pageNum : 1,
+    pageSize:999999
+  };
+
+  $(function(){    
+    $('.ReloadButton').click(function(){
+      location.href = location.href
+    });
+
+    $('#example1').DataTable({
+      'paging'      : false,
+      'lengthChange': true,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : true
+    });
+    
+    //datepicker
+    $('input[name="dates"]').daterangepicker({
+      opens: 'center'
+    }, function (start, end, label) {
+      // console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      Data.excStartTime = start.format('YYYY-MM-DD')
+      Data.excEndTime = end.format('YYYY-MM-DD')
+      // $.cookie("startTime",start.format('YYYY-MM-DD'));
+      // $.cookie("endTime",end.format('YYYY-MM-DD'));
+      // localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
+      // localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
+      printData.excStartTime=start.format('YYYY-MM-DD');
+      printData.excEndTime=end.format('YYYY-MM-DD');
+      checkOrderAll()
+    });
+    
+    //first loading
+    checkOrderAll();
+    //bind the export function
+    $("#generate-excel").off("click").on("click",function(){
+      let itemHtml='';
+      if(printData.excStartTime==""||printData.excEndTime==""){
+        printData.excStartTime=YMD(new Date());
+        printData.excEndTime=YMD(new Date());
+      }
+    $(".loading_wrap").show();
+    $.post(getBaseUrl() + 'order/likeOrderUserById',printData,function(res){
+        let list=res.list;
+        
+        for(let i=0;i<list.length;i++){
+          switch(list[i].status){
+                case "1" :
+                    status = '已下單';
+                    break;
+                case "2" :
+                    status = '倉庫簽入'
+                    break;
+                case "3" :
+                    status = '倉庫簽出'
+                    break;
+                case "4" :
+                    status = '派送中'
+                    break;
+                case "5" :
+                    status = '自提件已上架'
+                    break;
+                case "6" :
+                    status = '已簽收'
+                    break;
+                case "7" :
+                    status= '自提件已超時'
+            }
+            let status2,status3,status4,status5,status6;
+            if(list[i].status2Time==null){
+              status2=" ";
+            }else{
+              status2=list[i].status2Time
+            }
+            if(list[i].status3Time==null){
+              status3=" ";
+            }else{
+              status3=list[i].status3Time
+            }
+            if(list[i].status4Time==null){
+              status4=" ";
+            }else{
+              status4=list[i].status4Time
+            }
+            if(list[i].status5Time==null){
+              status5=" ";
+            }else{
+              status5=list[i].status5Time
+            }
+            if(list[i].status6Time==null){
+              status6=" ";
+            }else{
+              status6=list[i].status6Time
+            }
+          let type="";
+          switch(list[i].type){
+            case "SELF_PICKUP_STATION": 
+              type="自提點";
+            break;
+            case "HOME_DELIVERY":
+              type="派送上門";
+            break;
+            case "SELF_SERVICE_STATION":
+              type="自提櫃";
+              break;
+            default:
+              break;
+          }
+          itemHtml+= '<tr><td>'+list[i].waybillNo+'</td><td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>';
+          itemHtml+='<td>'+list[i].sendAddress+'</td><td>'+list[i].sendTime+'</td><td>'+status2+'</td>';
+          itemHtml+='<td>'+status3+'</td><td>'+status4+'</td><td>'+status5+'</td><td>'+status6+'</td>';
+          itemHtml+='<td>$'+list[i].price+'</td><td>'+list[i].weight+'kg</td>';
+          for(let index=0;index<list[i].product_list.length;index++){
+            if(list[i].product_list.length>$(".itemName").length){
+              $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th><th>單價</th>")
+            }
+            itemHtml+="<td>"+list[i].product_list[index].productName+"</td><td>"+list[i].product_list[index].qty+"</td><td>"+list[i].product_list[index].productUnitPrice+"</td>";
+          }
+        itemHtml+='</tr>';
+        } 
+        $('#showItem').html(itemHtml); 
+        let excel = new ExcelGen({
+          "src_id": "itemTable",
+          "show_header": true
+        });
+        $(".loading_wrap").hide();
+        excel.generate();
+      });
+    });
+    //search
+    $('.btn_search').click(function(){
+        let search = $('#search').val();
+        Data.orderNo = search;
+        Data.excStartTime="";
+        Data.excEndTime="";
+        Data.status = '';
+        checkOrderAll();
+    });
+    $("#record_select").change(function(){
+      Data.pageSize=$(this).find("option:selected").val();
+      checkOrderAll();
+    });
+  });
+
+  //format date
+function YMD(date) {
+  var date = new Date(date);
+  var YY = date.getFullYear() + '-';
+  var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+  var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+  var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+  var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+  return YY + MM + DD;
+}
+
+  //check order record
+function checkOrderAll(){ 
+    var url = getBaseUrl();
+    $(".loading_wrap").show();
+    $.post(url + 'order/likeOrderUserById', Data,function(res){
+    console.log(res);
+    Data.pageNum = res.pageNum;
+    Data.lastPage = res.pages;
+    Data.isLastPage = res.isLastPage;
+    Data.isFirstPage = res.isFirstPage;
+    Data.nextPage = res.nextPage;
+    Data.prePage = res.prePage;
+    $(".table_info").html("顯示从"+res.startRow+"到"+res.endRow+"，共"+res.total+"条記錄");
+    let list = res.list;
+    let str = '';
+    // 分页
+    //if list is emoty,don't generate pagination
+    if(list.length>=1){
+      let pagestr = '<li class="page-item  page-block"><a class="page-link prev" href="javascript:void(0)"><</a></li>';
+      
+      if(res.pageNum>=30){
+        pagestr+='<li class="page-item  page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+1+')">...</a></li>';
+      }
+      for(let i = 1; i <= res.pages; i++){  
+          if(res.pageNum == i){
+              pagestr += '<li class="page-item active page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
+          }else{
+            if(res.pages<30){
+              pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+            }else{
+              //when page count >30
+              if(i<(Math.min(res.pageNum+30,res.pages)) && i>res.pageNum){
+                pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+              }
+            }
+          }
+      }
+      if(res.pageNum>=30){
+        pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
+      }
+      pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">></a></li>';
+      $('.pagination-sm').html(pagestr)
+    }else{
+      $('.pagination-sm').html('');
+    }
+    for(i in list){
+      
+      let status='';
+      switch(list[i].status){
+          case "1" :
+              status = '已下單';
+              if(getTime(new Date())-getTime(list[i].status1Time)>3600*24*1000*2){
+                str+='<tr class="red">';
+                break;
+              }else{
+                str += '<tr>';
+                break;
+              }
+              break;
+          case "2" :
+              status = '倉庫簽入';
+              if(getTime(new Date())-getTime(list[i].status2Time)>3600*24*1000*2){
+                str+='<tr class="red">';
+                break;
+              }else{
+                str += '<tr>';
+                break;
+              }
+              break;
+          case "3" :
+              status = '倉庫簽出';
+              if(getTime(new Date())-getTime(list[i].status3Time)>3600*24*1000*2){
+                str+='<tr class="red">';
+                break;
+              }else{
+                str += '<tr>';
+                break;
+              }
+              break;
+          case "4" :
+              status = '派送中';
+              if(getTime(new Date())-getTime(list[i].status4Time)>3600*24*1000*2){
+                str+='<tr class="red">';
+                break;
+              }else{
+                str += '<tr>';
+                break;
+              }
+              break;
+          case "5" :
+              status = '自提件已上架';
+              if(getTime(new Date())-getTime(list[i].status5Time)>3600*24*1000*2){
+                str+='<tr class="red">';
+                break;
+              }else if(getTime(list[i].status5Time)-getTime(list[i].status1Time)>3600*24*1000*15){
+                str+='<tr class="red">';
+                break;
+              }else{
+                str += '<tr>';
+                break;
+              }
+              break;
+          case "6" :
+              status = '已簽收'
+              str+='<tr>'
+              break;
+          case "7" :
+              status= '自提件已超時';
+              str+='<tr class="red">';
+      }
+      let status2,status3,status4,status5,status6;
+
+        if(list[i].status2Time==null){
+          status2=" ";
+        }else{
+              status2=list[i].status2Time;
+        }
+        if(list[i].status3Time==null){
+          status3=" ";
+        }else{
+              status3=list[i].status3Time;
+        }
+        if(list[i].status4Time==null){
+          status4=" ";
+        }else{
+              status4=list[i].status4Time;
+        }
+        if(list[i].status5Time==null){
+          status5=" ";
+        }else{
+          status5=list[i].status5Time;
+        }
+        if(list[i].status6Time==null){
+          status6=" ";
+        }else{
+              status6=list[i].status6Time;
+        }
+        switch(list[i].type){
+            case "SELF_PICKUP_STATION": 
+              type="自提點";
+            break;
+            case "HOME_DELIVERY":
+              type="派送上門";
+            break;
+            case "SELF_SERVICE_STATION":
+              type="自提櫃";
+              break;
+            default:
+              break;
+          }
+        str+='<td><a href="javascript:void(0);" onclick="goToDetail('+list[i].waybillNo+')">'+list[i].waybillNo+'</a></td> <td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td>'+list[i].sendAddress+'</td>';
+        str+='<td>'+list[i].sendTime+'</td><td>'+status2+'</td><td>'+status3+'</td><td>'+status4;
+        str+='</td><td>'+status5+'</td><td>'+status6+'</td><td>$'+list[i].price+'</td><td class="weight">'+list[i].weight+'kg</td>';
+        //add product item;
+
+        for(var j=0;j<list[i].product_list.length;j++){
+          if($(".price").length<list[i].product_list.length){
+            $(".price").last().after('<th>物品名稱</th><th>數量</th><th class="price">單價</th>');
+          }
+          str+='<td>'+list[i].product_list[j].productName+'</td><td>'+list[i].product_list[j].qty+'</td><td class="unitPrice'+i+'">'+list[i].product_list[j].productUnitPrice+"</td>"
+        }
+        str+='</tr>'
+    }
+    $('#tableTbody').html(str);
+    for(item in list){
+      for(var unit=0;unit<$(".price").length;unit++){
+        if($((".unitPrice"+item)).length<$(".price").length){
+          $(".unitPrice"+item).last().after("<td></td><td></td><td class='unitPrice"+item+"'></td>");
+        }
+      }
+    }
+    btnShow();
+    $(".loading_wrap").hide();
+  });
+}
+
+//jump page
+function jump(i=0){   
+    if(i != 0){
+        Data.pageNum = i;
+    }
+    checkOrderAll();
+}
+
+//page navigator
+function btnShow(){
+  $('.prev').click(function(){
+        if(Data.isFirstPage){
+            return false;
+        }
+        Data.pageNum = Data.prePage;
+        jump();
+    })
+    $('.next').click(function(){
+        if(Data.isLastPage){
+            return false;
+        }
+        Data.pageNum = Data.nextPage;
+        jump();
+    })
+}
+//getTimestamp
+function getTime(time){
+  return new Date(time).getTime();
+}
+function goToDetail(url){
+  window.open("/admin/order/detail.html?waybillNo="+url,'_blank')
+
+}
+
+</script>
+
+
+
+
+
+</body>
+</html>
