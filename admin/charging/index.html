@@ -347,7 +347,7 @@ $('.ReloadButton').click(function(){
   })
 
 function getList(){
-  $.get(url + 'money/MoneyAll', function(res){
+  $.get(url + 'money/MoneyAll',{"token":$.cookie("admin_token")}, function(res){
     
     
     let list = res;
