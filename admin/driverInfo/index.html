@@ -143,14 +143,6 @@
 
 
 
-
-
-
-
-
-
-
-
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
@@ -162,7 +154,7 @@
   <div class="box-header">
 
     <div>
-        <a title="" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/user/add.html" data-original-title="添加">
+        <a title="" data-toggle="tooltip" class="btn btn-primary btn-sm " href="/admin/dirveInfo/add.html" data-original-title="添加">
             <i class="fa fa-plus"></i> 添加
         </a>
 
@@ -183,17 +175,17 @@
             <thead>
             <tr>
               <th>编号</th>
-              <th>用户名</th> 
-              <th>公司名稱</th> 
-              <th>邮箱</th> 
+              <th>姓名</th>
+              <th>首重重量(kg)</th>
+              <th>月費</th>
+              <th>車牌</th>
+              <th>操作</th>
             </tr>
             </thead>
             <tbody id="tableTbody">
-       
-            </tbody>
-   
             
 
+            </tbody>
 
 
 
@@ -211,15 +203,8 @@
 
 
 
+
         
-
-
-
-
-
-
-
-
 
 
 
@@ -277,24 +262,41 @@
 <script src="/admin/__ADMIN__/auth.js"></script>
 <script src="../__JS__/common.js"></script>
 
-
 <script>
-//check if has admin token,else back to login page
-hasToken();
-let url = getBaseUrl();
+  hasToken();
+
+var url = getBaseUrl()
+let Area = {};
+$.get(url + 'area/areaAll', function(res){
+    console.log(res)
+    for(i in res){
+      Area[res[i].id] = res[i].area
+    }
+    getList();
+})
 $('.ReloadButton').click(function(){
     location.href = location.href
   })
-$.get(url + 'user/userAll', function(res){
-  console.log(res)
-  let list = res;
+  // getLeftMenu(menuName)
+    //menuName:"area","charging","outlets","user","order",when equal li will add active class
+    getLeftMenu("driveInfo");
+
+function getList(){
+  $.get(url + 'money/MoneyAll',{"token":$.cookie("admin_token")}, function(res){
+    
+    
+    let list = res;
     let str = '';
     for(i in list){
-      str += '<tr><td>'+list[i].id+'</td> <td>'+list[i].username+'</td><td>'+list[i].name+'</td><td>'+list[i].email+'</td></tr>';
+      str += '<tr><td>'+list[i].id+'</td><td>'+list[i].userName+'</td><td>'+list[i].firstWeight+'</td><td>'+list[i].firstMoney+'</td><td>'+list[i].money+'</td><td> <button type="button" class="btn btn-primary btn-xs editBtn" data-id="'+list[i].id+'"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs deleteBtn" data-id="'+list[i].id+'"><i class="fa fa-trash"></i></button></td></tr>';
+
     }
 
     $('#tableTbody').html(str)
+    
     delEdit()
+
+
     $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': true,
@@ -303,25 +305,21 @@ $.get(url + 'user/userAll', function(res){
       'info'        : true,
       'autoWidth'   : false
     })
-})
+  })
+}
 
-// getLeftMenu(menuName)
-    //menuName:"area","charging","outlets","user","order",when equal li will add active class
-    getLeftMenu("user");
 
- 
-    
 function delEdit(){
-
+ 
   $('.deleteBtn').click(function(){
       let that = $(this);
         layer.confirm('确定要删除吗？', {
             btn: ['确定','取消'] //按钮
             ,title: '提示'
         }, function(){
-            let code = that.attr('data-code');
-            
-            $.post('/admin/user/del.html', {code : code}, function(res){
+            let id = that.attr('data-id');
+
+            $.post(url + 'money/deleteMoneyId', {id : id}, function(res){
                 layer.msg('删除成功',{icon:1,time:1000},function(){
                     location.href = location.href
                 })
@@ -333,44 +331,12 @@ function delEdit(){
   })
 
   $('.editBtn').click(function(){
-    // let id = $(this).attr('data-id');
-    // location.href = '/admin/user/edit.html?id='+id;
-  })
-  $('.editPassBtn').click(function(){
-      
-    let username = $(this).attr('data-username');
-
-
-    layer.prompt({title: '请输入旧密码', formType: 1}, function(password, index){
-        layer.close(index);
-        layer.prompt({title: '请输入新密码', formType: 1}, function(newpass, index1){
-
-            if(newpass.length >= 6){
-                
-                $.post('/admin/user/editPassword',{username:username,password:password,newpass:newpass},function(res){
-                    console.log(res)
-                    if(res.success == true){
-                        layer.close(index1);
-                        layer.msg('修改成功',{icon:1,time:1000},function(){
-                            
-                        })
-                    }else{
-                        layer.msg(res.errorMsg,{icon:2})
-                    }
-                })
-            }else{
-                layer.msg('密码最少6位',{icon:2})
-            }
-        })
-
-
-        
-    })
+    let id = $(this).attr('data-id');
+    location.href = '/admin/driveInfo/edit.html?id='+id;
   })
 }
+ 
 </script>
-
-
 
 
 

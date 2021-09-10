@@ -96,17 +96,19 @@
             <option value="0" class="allOption">全部</option>
           </select>
         </div>
-        <!-- <div class="col-2 col-sm-2 col-lg-2">
+        <div class="col-2 col-sm-2 col-lg-2">
           <select onchange="searchBtn()" class="form-control rounded-sm select_type" style="padding:0px!important;">
-            <option value="0" class="allOption">全部</option>
+            <option value="" class="allOption">全部</option>
+            <option value="SELF_PICKUP_STATION">自提點</option>
+            <option value="SELF_SERVICE_STATION">自提櫃</option>
           </select>
         </div>
         <div class="col-2 col-sm-2 col-lg-2">
           <select onchange="searchBtn()" class="form-control rounded-sm select_company" style="padding:0px!important;">
-            <option value="0" class="allOption">全部</option>
+            <option value="" class="allOption">全部</option>
           </select>
-        </div> -->
-        <input type="text" class="search_input pl-4 col-9 col-sm-10 col-lg-10" placeholder="請輸入要查詢的網點">
+        </div>
+        <input type="text" class="search_input pl-4 col-6 col-sm-6 col-lg-6" placeholder="請輸入要查詢的網點">
       </div>
       <button onsubmit="return false;" class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">
         <span class="iconfont icon-chaxun mr-2"></span>
@@ -248,7 +250,9 @@ if(is_en()){
   let Outlets = {
     areaId : 0,
     address : '',
-    addressEn : ''
+    addressEn : '',
+    type:'',
+    companyId:'',
   }
   let isFirstTime=true;
   $(document).ready(function(){
@@ -259,6 +263,7 @@ if(is_en()){
   function getAll(){
     let url = getBaseUrl();
     if(isFirstTime){
+      //get all area
       $.get(url + 'area/areaAll',function(res){
         let str = '';
         if(is_en()){
@@ -271,21 +276,43 @@ if(is_en()){
           }
         }
         $('.select_city').append(str);
-        isFirstTime=!isFirstTime;
+        // isFirstTime=!isFirstTime;
       });
+      //get all company
+      $.get(url + 'company/companyAll',function(res){
+        let str = '';
+        if(is_en()){
+          for(i in res){
+            str += '<option value="'+res[i].id+'">'+res[i].nameEn + '</option>';
+          }
+        }else{
+          for(i in res){
+            str += '<option value="'+res[i].id+'">'+res[i].name + '</option>';
+          }
+        }
+        $('.select_company').append(str);
+        // isFirstTime=!isFirstTime;
+      });
+      isFirstTime=!isFirstTime;
     }
     $(".loading_wrap").show();
     $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
       // console.log(res)
       let list = res;
       let dl = ''
+      let type='';
       for(i in list){
+        if(list[i].type=="SELF_PICKUP_STATION"){
+          type='自提點';
+        }else{
+          type='自提櫃';
+        }
         if(is_en()){
           let tel = list[i].phone?list[i].phone:'null'
           dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.nameEn+'</span><a href="javascript:void(0)">'+list[i].area.areaEn+'<font color="red">Service Department</font></a></dt><dd>Company address：'+list[i].addressEn+'</dd><dd>Contact number：'+tel+'</dd></dl>';
         }else{
-          let tel = list[i].phone?list[i].phone:'无'
-          dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">自提點</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>聯繫電話：'+tel+'</dd></dl>';
+          let tel = list[i].phone?list[i].phone:'无';
+          dl += '<dl class="show_map" data-J="'+list[i].longitude+'" data-W="'+list[i].latitude+'"><dt><span class="mr-3">'+list[i].company.name+'</span><a href="javascript:void(0)">'+list[i].area.area+'<font color="red">'+type+'</font></a></dt><dd>公司地址：'+list[i].address+'</dd><dd>聯繫電話：'+tel+'</dd></dl>';
         }
       }
       if(list.length > 0){
@@ -304,9 +331,13 @@ if(is_en()){
   
   function searchBtn(){
     let area = $('.select_city').val();
+    let type = $('.select_type').val();
+    let company = $('.select_company').val();
     let express_name = $('.search_input').val();
 
     Outlets.areaId = area;
+    Outlets.type=type;
+    Outlets.companyId=company;
     if(is_en()){
       Outlets.addressEn = express_name;
     }else{

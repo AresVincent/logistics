@@ -244,11 +244,11 @@
         <div class="mb-form-standard col-12 col-md-6">
           <div class="row mr-0">
             <label for="length" class="col-form-label  col-md-2 col-3 mb-form-standard">長<span class="badge  text-danger">*</span></label>
-            <input type="text" name="length" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="checkFloat(this)" />
+            <input type="text" name="length" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="CalculateFee()" />
             <label for="width" class="col-form-label  col-md-2 col-3">寬<span class="badge  text-danger">*</span></label>
-            <input type="text" name="width" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="checkFloat(this)" />
+            <input type="text" name="width" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="CalculateFee()" />
             <label for="height" class="col-form-label  col-md-2 col-3">高<span class="badge  text-danger">*</span></label>
-            <input type="text" name="height" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="checkFloat(this)" />
+            <input type="text" name="height" class="form-control rounded-sm col-md-2 col-3" placeholder="cm" onchange="CalculateFee()" />
           </div>
         </div>
         <div class="mb-form-standard col-12">
@@ -954,6 +954,11 @@
           $('.addressBox input[name="get_address"]').val("");
           $('.selfieBox select[name="get_area_id"] option:first').prop('selected',true);
           $('.selfieBox select[name="get_pickupPoint"] option:first').prop('selected',true);
+          if($(".modeSelect").val()=="SELF_PICKUP_STATION"){
+            $(".pickupBox .place").text("自提點");
+          }else if($(".modeSelect").val()=="SELF_SERVICE_STATION"){
+            $(".pickupBox .place").text("自提櫃");
+          }
           $(".pickupBox").show();
          }
       }
@@ -963,10 +968,16 @@
         let weight = $('input[name="weight"]').val();
         let urls=getBaseUrl();
         let token = $.cookie('token');
+        let width=$('input[name="width"]').val();
+        let height=$('input[name="height"]').val();
+        let length=$('input[name="length"]').val();
         let data={
           token:token,
           type:$("select[name='type']").val(),
-          weight:weight
+          weight:weight,
+          width:width,
+          height:height,
+          length:length
         };
         if(weight == ''){
           layer.msg('重量為空',{icon:2,time:1500});
@@ -983,6 +994,38 @@
           $('input[name="weight"]').val("")
           $('.loading_wrap').hide();
           return;
+        }
+        //check spec format
+        let reg=/^(([1-9][0-9]*)|(([0]\.\d{0,2}|[1-9][0-9]*\.\d{1,2})))$/;
+        if(length==""){
+          $('.loading_wrap').hide();
+          return;
+        }
+        if(!reg.test(length)){
+          $('.loading_wrap').hide();
+          $('input[name="length"]').val("");
+          layer.msg('長度格式不正確',{icon:2,time:1500});
+          return
+        }
+        if(width==""){
+          $('.loading_wrap').hide();
+          return;
+        }
+        if(!reg.test(width)){
+          $('.loading_wrap').hide();
+          $('input[name="width"]').val("");
+          layer.msg('寬度格式不正確',{icon:2,time:1500});
+          return
+        }
+        if(height==""){
+          $('.loading_wrap').hide();
+          return;
+        }
+        if(!reg.test(height)){
+          $('.loading_wrap').hide();
+          $('input[name="height"]').val("");
+          layer.msg('高度格式不正確',{icon:2,time:1500});
+          return
         }
         if(token=="null"||token==null){
           location.href="/login.html";
@@ -1003,7 +1046,6 @@
           },
           error:function(){
             $('.loading_wrap').hide();
-
           }
         });
       }
@@ -1012,19 +1054,30 @@
         let Outlets = {
           areaId : $(".pickupBox select[name='get_area_id']").val(),
           address : '',
-          addressEn : ''
+          addressEn : '',
+          type:$(".modeSelect").val()
         }
         if(Outlets.areaId=="0"){
-          $("select[name='get_pickupPoint']").html('<option value="">請選擇自提點</option>');
-          return ;      
+          //SELF_PICKUP_STATION自提點，SELF_SERVICE_STATION自提櫃
+          if(Outlets.type=="SELF_PICKUP_STATION"){
+            $("select[name='get_pickupPoint']").html('<option value="">請選擇自提點</option>');
+          }else if(Outlets.type=="SELF_SERVICE_STATION"){
+            $("select[name='get_pickupPoint']").html('<option value="">請選擇自提櫃</option>');
+          }
+          return;      
         }
         let urls=getBaseUrl();
         $.post(url+'outlets/getOutletsLikeAll',Outlets,function(res){
           // console.log(res);
           let str;
           if(res.length<1){
-            layer.msg('暫無該地區的自提點，請重新選擇地區！',{icon:2,time:1500});
-            $("select[name='get_pickupPoint']").html('<option value="">請選擇自提點</option>');
+            if(Outlets.type=="SELF_PICKUP_STATION"){
+              layer.msg('暫無該地區的自提點，請重新選擇地區！',{icon:2,time:1500});
+              $("select[name='get_pickupPoint']").html('<option value="">請選擇自提點</option>');
+            }else if(Outlets.type=="SELF_SERVICE_STATION"){
+              layer.msg('暫無該地區的自提櫃，請重新選擇地區！',{icon:2,time:1500});
+              $("select[name='get_pickupPoint']").html('<option value="">請選擇自提櫃</option>');
+            }
             return;
           }
           if(is_en()){
@@ -1033,7 +1086,11 @@
                 str += '<option value="'+res[i]. storeCode+'">'+res[i].addressEn+ '</option>';
               }
             }else{
-              str+='<option value="">請選擇自提點</option>';
+              if(Outlets.type=="SELF_PICKUP_STATION"){
+                str+='<option value="">請選擇自提點</option>';
+              }else if(Outlets.type=="SELF_SERVICE_STATION"){
+                str+='<option value="">請選擇自提櫃</option>';
+              }
               for(i in res){
                 str += '<option value="'+res[i].storeCode+'">'+res[i].address + '</option>';
               }

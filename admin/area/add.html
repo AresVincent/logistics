@@ -130,103 +130,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">導航菜單</li>
-        <!-- <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-circle-o"></i> <span>區域</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-          </ul>
-        </li> -->
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout </span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li> -->
-        <li class="active">
-          <a href="/admin/index.html">
-            <i class="fa fa-map-marker"></i> <span>區域</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/charging/index.html">
-            <i class="fa fa-dollar"></i> <span>計費標準</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/outlets/index.html">
-            <i class="fa fa-map-o"></i> <span>快遞網點</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-
-        <li>
-          <a href="/admin/news/index.html">
-            <i class="fa fa-newspaper-o"></i> <span>行業新聞</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/company/index.html">
-            <i class="fa fa-align-justify"></i> <span>公司簡介</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-
-        <li>
-          <a href="/admin/user/index.html">
-            <i class="fa fa-user-o"></i> <span>用戶管理</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-        
-        <li>
-          <a href="/admin/order/index.html">
-            <i class="fa fa-user-o"></i> <span>訂單記錄</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-        
-        <li>
-          <a href="/admin/api/index.html">
-            <i class="fa fa-user-o"></i> <span>API文檔</span>
-            <span class="pull-right-container">
-              <!-- <small class="label pull-right bg-green">new</small> -->
-            </span>
-          </a>
-        </li>
-      
+          <!-- generate by getLeftMenu -->
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -417,6 +321,7 @@
 <script>
     hasToken();
   $(function () {
+    
     $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': true,
@@ -428,6 +333,9 @@
     $('.ReloadButton').click(function(){
       location.href = location.href
     })
+    // getLeftMenu(menuName)
+    //menuName:"area","charging","outlets","user","order",when equal li will add active class
+    getLeftMenu("area");
   })
 </script>
 

@@ -354,6 +354,60 @@ $(function () {
 })
 
 function getBaseUrl(){
+    // return 'http://192.168.100.104:8777/'; 
     // return 'http://192.168.100.103:8083/';
       return 'http://122.10.80.32:8888/'; 
+}
+function getLeftMenu(menuName){
+    var menu=["area","charging","outlets","user","order","driveInfo"]
+    var menuStr="";
+    menuStr+='<li class="header">導航菜單</li>';
+    for(item in menu){
+        switch(menu[item]){
+            case "area":
+                if(menuName==menu[item]){
+                    menuStr+='<li class="active"><a href="/admin/index.html"><i class="fa fa-map-marker"></i><span>區域</span><span class="pull-right-container"></span></a></li>';
+                }else{
+                    menuStr+='<li><a href="/admin/index.html"><i class="fa fa-map-marker"></i><span>區域</span><span class="pull-right-container"></span></a></li>';
+                }
+            break;
+            case "charging":
+                if(menuName==menu[item]){
+                    menuStr+='<li class="active"><a href="/admin/charging/index.html"><i class="fa fa-dollar"></i><span>計費標準</span><span class="pull-right-container"></span></a></li>';
+                }else{
+                    menuStr+='<li><a href="/admin/charging/index.html"><i class="fa fa-dollar"></i><span>計費標準</span><span class="pull-right-container"></span></a></li>';
+                }
+            break;
+            case "outlets":
+                if(menuName==menu[item]){
+                    menuStr+='<li class="active"><a href="/admin/outlets/index.html"><i class="fa fa-map-o"></i><span>快遞網點</span><span class="pull-right-container"></span></a></li>';
+                }else{
+                    menuStr+='<li><a href="/admin/outlets/index.html"><i class="fa fa-map-o"></i><span>快遞網點</span><span class="pull-right-container"></span></a></li>';
+                }
+            break;
+            case "user":
+                if(menuName==menu[item]){
+                    menuStr+='<li class="active"><a href="/admin/user/index.html"><i class="fa fa-user-o"></i><span>用戶管理</span><span class="pull-right-container"></span></a></li>';
+                }else{
+                    menuStr+='<li><a href="/admin/user/index.html"><i class="fa fa-user-o"></i><span>用戶管理</span><span class="pull-right-container"></span></a></li>';
+                }
+            break;
+            case "order":
+                if(menuName==menu[item]){
+                    menuStr+='<li class="active"><a href="/admin/order/index.html"><i class="fa fa-sitemap"></i><span>訂單記錄</span><span class="pull-right-container"></span></a></li>';
+                }else{
+                    menuStr+='<li><a href="/admin/order/index.html"><i class="fa fa-sitemap"></i><span>訂單記錄</span><span class="pull-right-container"></span></a></li>';
+                }
+            break;
+            case "driveInfo":
+                if(menuName==menu[item]){
+                    menuStr+='<li class="active"><a href="/admin/drivernfo/index.html"><i class="fa fa-sitemap"></i><span>司機列表</span><span class="pull-right-container"></span></a></li>';
+                }else{
+                    menuStr+='<li><a href="/admin/driverInfo/index.html"><i class="fa fa-sitemap"></i><span>司機列表</span><span class="pull-right-container"></span></a></li>';
+                }
+            break;
+            default:break;
+        }
+    }
+    $(".sidebar-menu").html(menuStr);
 }
