@@ -4,5 +4,25 @@
         height: 400px;
         margin-bottom: 20px;
     }
+    .search_wrap .search_wrap_input .input_wrap{
+        height: 100%;
+    }
+    .search_wrap .search_wrap_input .input_wrap input{
+        border: none;
+    }
 
 }
+.search_wrap .search_wrap_input .input_wrap .select_company {
+    width: 100px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+}
+.search_wrap .search_wrap_input .input_wrap .select_type {
+    width: 100px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+}
+
+

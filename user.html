@@ -144,7 +144,7 @@
               <div class="input-group row ml-0">
                 <input type="text" class="form_input rounded-sm pl-2 col-md-9 col-8" id="search" placeholder="賬單查詢">
                 <div class="input-group-append col-md-3 col-4 pl-0 pr-0">
-                  <button onsubmit="return false;" class="input-group-text btn_search"  style="width: 100%;justify-content: center;">賬單查詢</button>
+                  <button onsubmit="return false;" class="input-group-text btn_search"  style="width: 100%;justify-content: center;">訂單查詢</button>
                 </div>
               </div>
             </form>
@@ -162,14 +162,14 @@
             <div class="col-md-7">
               <div class="row justify-content-between btn_group">
                 <div class="import_data_btn col-md-3 col-12 mb-3" id="generate-excel">
-                  <span>導出</span>
+                  <span>導出訂單詳情</span>
                 </div>
                 <input name="file" type="file" hidden>
-                <div class="col-md-3 col-12 batch_print mb-3" id="batch_print" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
-                  <span>批量列印</span>
+                <div class="col-md-3 col-12 batch_print mb-3" id="batch_print" onclick="batchPrint()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
+                  <span>批量列印快遞單</span>
                 </div>
                 <div class="col-md-3 col-12 trade_print" id="trade_print" onclick="itemIndex()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
-                  <span>交收表詳情</span>
+                  <span>列印交收表</span>
                 </div>
               </div>
             </div>
@@ -636,30 +636,9 @@ function selectAll(e){
 function itemIndex(){
   window.open("/itemList/index.html",'_blank');
 }
-
-</script>
-<script>
-  if(is_en()){
-    $('.myOrder').text('My order');
-    $('.delivered').text('Delivered');
-    $('.toBedelivered').text('To be delivered');
-    $('.inTransit').text('In transit');
-    $('.signedIn').text('Signed in');
-    $('.toBeSigned').text('To be signed');
-    $('.signOneHalfOf').text('Sign on behalf of');
-    
-    $('#search').attr('placeholder', 'Bill inquiry');
-    $('.btn_search').text('Bill inquiry');
-    $('.import_data_btn').text('Export');
-    $('.riqidate').text('Date:');
-    $('.thth').html('<th>Package number</th><th>Delivery time</th><th>Package status</th><th>Package weight</th><th>Freight amount</th><th>Name of consignee</th><th>Receiver\'s telephone number</th><th>Receiving address</th>');
-
-
-  }
-  $(document).ready(function(){
-    //for batch print
-    $(".batch_print").click(function(){
-      let orderList=[];
+//batch print
+function batchPrint(){
+  let orderList=[];
        for(let i=0;i<$(".isPrint").length;i++){
         if($(".isPrint").eq(i).prop("checked")){
          orderList.push($(".isPrint").eq(i).closest(".upperTr").attr("data-orderno"));
@@ -711,7 +690,82 @@ function itemIndex(){
           }
         }
       });
-    });
+}
+</script>
+<script>
+  if(is_en()){
+    $('.myOrder').text('My order');
+    $('.delivered').text('Delivered');
+    $('.toBedelivered').text('To be delivered');
+    $('.inTransit').text('In transit');
+    $('.signedIn').text('Signed in');
+    $('.toBeSigned').text('To be signed');
+    $('.signOneHalfOf').text('Sign on behalf of');
+    
+    $('#search').attr('placeholder', 'Bill inquiry');
+    $('.btn_search').text('Bill inquiry');
+    $('.import_data_btn').text('Export');
+    $('.riqidate').text('Date:');
+    $('.thth').html('<th>Package number</th><th>Delivery time</th><th>Package status</th><th>Package weight</th><th>Freight amount</th><th>Name of consignee</th><th>Receiver\'s telephone number</th><th>Receiving address</th>');
+
+
+  }
+  $(document).ready(function(){
+    //for batch print
+    // $(".batch_print").click(function(){
+    //   let orderList=[];
+    //    for(let i=0;i<$(".isPrint").length;i++){
+    //     if($(".isPrint").eq(i).prop("checked")){
+    //      orderList.push($(".isPrint").eq(i).closest(".upperTr").attr("data-orderno"));
+    //     }
+    //    }
+    //    if(orderList.length<1){
+    //      layer.msg("至少勾選一項才能執行該功能",{icon:2,time:1000});
+    //      return;
+    //    }
+    //    let token=$.cookie("token");
+    //    let baseUrl=getBaseUrl();
+    //    let data={token:token,orderNo:orderList};
+    //    $.ajax({
+    //     url:baseUrl+'order/getOrderByOrderNoAndToken',
+    //     data:JSON.stringify(data),
+    //     type:'POST',
+    //     dataType:'json',
+    //     contentType:"application/json;charset=utf-8",
+    //     success: function(res){
+    //       // console.log(res)
+    //       if(res.code == 200){
+    //         let arrayOrder=[];
+    //         let item;
+    //         for(let i=0;i<res.data.length;i++){
+    //           item={
+    //             "getName":res.data[i].getName,
+    //             "getPhone":res.data[i].getPhone,
+    //             "getAddress":res.data[i].getAddress,
+    //             "getPickUpPoint":res.data[i].getPickUpPoint,
+    //             "type":res.data[i].type,
+    //             "getAreaId":res.data[i].getAreaId,
+    //             "price":res.data[i].price,
+    //             "weight":res.data[i].weight,
+    //             "sendTime":res.data[i].sendTime,
+    //             "barcode":res.data[i].waybillNo,
+    //             "orderNo":res.data[i].orderNo
+    //           };
+    //           arrayOrder.push(item);
+    //         }
+    //         arrayOrder=JSON.stringify(arrayOrder);
+    //         localStorage.setItem("arrayOrder",arrayOrder);
+    //         if($.cookie("username").includes("lalamove")){
+    //           window.open("/waybill/lalamovewaybill_pickup.html",'_blank');
+    //         }else{
+    //           window.open("/waybill/waybill_pickup.html",'_blank');
+    //         }
+    //       }else{
+    //         layer.msg('查詢失敗',{icon:2,time:1000});
+    //       }
+    //     }
+    //   });
+    // });
 
     //export excel 
         $("#generate-excel").off("click").on("click",function(){
