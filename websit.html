@@ -91,23 +91,23 @@
     <!-- search input -->
     <form onsubmit="return false;" class="search_wrap_input justify-content-between row p-0 ml-0 mr-0">
       <div class="input_wrap d-flex align-items-center justify-content-between p-3 col-md-10 mt-2 row ml-0 mr-0">
-        <div class="col-4 col-sm-2 col-lg-2">
+        <div class="col-6 col-sm-2 col-lg-2">
           <select onchange="searchBtn()" class="form-control rounded-sm select_city" style="padding:0px!important;">
-            <option value="0" class="allOption">全部</option>
+            <option value="0" class="allOption">區域</option>
           </select>
         </div>
-        <div class="col-4 col-sm-2 col-lg-2">
+        <div class="col-6 col-sm-3 col-lg-3">
           <select onchange="searchBtn()" class="form-control rounded-sm select_type" style="padding:0px!important;">
-            <option value="" class="allOption">全部</option>
+            <option value="" class="allOption">自提點/櫃</option>
             <option value="SELF_PICKUP_STATION">自提點</option>
             <option value="SELF_SERVICE_STATION">自提櫃</option>
           </select>
         </div>
-        <div class="col-4 col-sm-2 col-lg-2">
+        <!-- <div class="col-4 col-sm-2 col-lg-2">
           <select onchange="searchBtn()" class="form-control rounded-sm select_company" style="padding:0px!important;">
-            <option value="" class="allOption">全部</option>
+            <option value="" class="allOption">公司</option>
           </select>
-        </div>
+        </div> -->
         <input type="text" class="search_input pl-4 col-12 col-sm-6 col-lg-6" placeholder="請輸入要查詢的網點">
       </div>
       <button onsubmit="return false;" class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">

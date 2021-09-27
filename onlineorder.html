@@ -102,12 +102,29 @@
             </div>
           </div>
         </div>
-        <div class="mb-form-standard col-12 mt-3">
-          <div class="mr-0 row">
+        <!-- <div class="mb-form-standard col-12 mt-3">
+          <div class="mr-0 row mb-3">
             <label for="homeTakeItem" class="col-form-label col-md-3 col-8">上門收件<span class="badge  text-danger">*</span></label>
             <input type="checkbox" name="isHomeTake" class="form-control rounded-sm isHomeTake col-md-1 col-2" />
           </div>
-        </div>
+          <div class="mr-0 row homeTimeBox" style="display: none;">
+            <div class="date_search col-md-6">
+              <div class="row mb-3 mr-0">
+                <label for="date_range" class="riqidate col-4 mb-0" style="line-height: 38px;">日期：</label>
+                <input type="text" class="date_picker pl-2 col-8" name="takeDate" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row mb-3 mr-0">
+                <label for="send_area_id" class="col-form-label  takeProductTime col-5 col-md-4">上門收貨時間<span class="badge  text-danger">*</span></label>
+                <select class="form-control rounded-sm col-7 col-md-8 regionSelect" name="takeProductTime">
+                  <option>請選擇</option>
+                  <option>14:00~18:00</option>
+                </select>   
+              </div>
+            </div>
+          </div>
+        </div> -->
       </div>
       <div class="mb-form-standard row">
         <h4 class="col-md-3 col-12"><b>寄件人資料:</b></h4>
@@ -178,19 +195,7 @@
             </div>
           </div>
           <!-- home take time -->
-          <div class="date_search col-md-6">
-            <div class="row mb-3 mr-0">
-              <label for="date_range" class="riqidate col-4 mb-0" style="line-height: 38px;">日期：</label>
-              <input type="text" class="date_picker pl-2 col-8" name="takeDate" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row mb-3 mr-0">
-              <label for="send_area_id" class="col-form-label  takeProductTime col-5 col-md-4">上門收貨時間<span class="badge  text-danger">*</span></label>
-              <select class="form-control rounded-sm col-7 col-md-8 regionSelect" name="takeProductTime">
-              </select>   
-            </div>
-          </div>
+          
         </div>
       </div>
       <div class="mb-form-standard row">
@@ -809,11 +814,15 @@
         if($(this).prop("checked")){
           $(".stockAddress").hide();
           $(".homeTakeBox").show();
+          $(".homeTimeBox").show();
+          $(".homeTimeBox select").prop("selectedIndex",0);
           $(".homeTakeBox select").prop("selectedIndex",0);
+          $(".homeTimeBox input").val("");
           $(".homeTakeBox input").val("");
         }else{
           $(".stockAddress").show();
           $(".homeTakeBox").hide();
+          $(".homeTimeBox").hide();
           $(".regionSelect").prop("selectedIndex",0);
         }
       })
@@ -975,6 +984,10 @@
             return false;
           }
         }
+        if($('select[name="get_pickupPoint"]').val()==""){
+          layer.msg($('select[name="get_pickupPoint"] option:selected').text(),{icon:2});
+          return false;
+        }
         if($("input[name='weight']").val()==""){
           layer.msg('請填寫包裹重量！',{icon:2});
           return false;
@@ -1053,7 +1066,8 @@
           width:width,
           height:height,
           length:length,
-          pickUp:$("input[name='isHomeTake']").prop("checked"),
+          // pickUp:$("input[name='isHomeTake']").prop("checked"),
+          pickUp:false
         };
         if(weight == ''){
           layer.msg('重量為空',{icon:2,time:1500});

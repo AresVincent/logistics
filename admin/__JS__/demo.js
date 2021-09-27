@@ -360,7 +360,8 @@ function getBaseUrl(){
       return 'http://122.10.80.32:8888/'; 
 }
 function getLeftMenu(menuName){
-    var menu=["area","charging","outlets","user","order","driveInfo"]
+    var menu=["area","charging","outlets","user","order"]
+    // "driveInfo"
     var menuStr="";
     menuStr+='<li class="header">導航菜單</li>';
     for(item in menu){

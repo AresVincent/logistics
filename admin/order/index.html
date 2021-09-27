@@ -213,7 +213,6 @@
             <th>包裹號</th>
             <th>狀態</th>
             <th>派送方式</th>
-            <th>公司名稱</th>
             <th>寄件人姓名</th>
             <th>寄件人電話</th>
             <th>收件人姓名</th>
@@ -258,7 +257,6 @@
       <th>包裹號</th>
       <th>狀態</th>
       <th>派送方式</th>
-      <th>公司名稱</th>
       <th>寄件人姓名</th>
       <th>寄件人電話</th>
       <th>收件人姓名</th>
@@ -635,6 +633,8 @@ function checkOrderAll(){
           case "7" :
               status= '自提件已超時';
               str+='<tr class="red">';
+              break;
+          default:break;
       }
       let status2,status3,status4,status5,status6;
 

@@ -283,13 +283,10 @@ $('.ReloadButton').click(function(){
 
 function getList(){
   $.get(url + 'money/MoneyAll',{"token":$.cookie("admin_token")}, function(res){
-    
-    
     let list = res;
     let str = '';
     for(i in list){
       str += '<tr><td>'+list[i].id+'</td><td>'+list[i].userName+'</td><td>'+list[i].firstWeight+'</td><td>'+list[i].firstMoney+'</td><td>'+list[i].money+'</td><td> <button type="button" class="btn btn-primary btn-xs editBtn" data-id="'+list[i].id+'"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs deleteBtn" data-id="'+list[i].id+'"><i class="fa fa-trash"></i></button></td></tr>';
-
     }
 
     $('#tableTbody').html(str)
