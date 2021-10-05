@@ -584,7 +584,7 @@ function checkOrderAll(){
       switch(list[i].status){
           case "1" :
               status = '已下單';
-              if(getTime(new Date())-getTime(list[i].status1Time)>3600*24*1000*2){
+              if(getTime(new Date())-getTime(list[i].pickupDate)>3600*24*1000*2){
                 str+='<tr class="red">';
                 break;
               }else{
@@ -627,7 +627,7 @@ function checkOrderAll(){
               if(getTime(new Date())-getTime(list[i].status5Time)>3600*24*1000*2){
                 str+='<tr class="red">';
                 break;
-              }else if(getTime(list[i].status5Time)-getTime(list[i].status1Time)>3600*24*1000*15){
+              }else if(getTime(list[i].status5Time)-getTime(list[i].pickupDate)>3600*24*1000*15){
                 str+='<tr class="red">';
                 break;
               }else{
