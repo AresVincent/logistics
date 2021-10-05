@@ -7,6 +7,27 @@
         margin-top: 60px;
     }
 }
+
+.download{
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    background: url(../__IMG__/download.png) no-repeat;
+    transition: all 0.5s;
+}
+.upload{
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    background: url(../__IMG__/upload.png) no-repeat;
+    transition: all 0.5s;
+}
 .addItem{
     width: 32px;
     height: 32px;

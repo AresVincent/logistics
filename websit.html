@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
   <link rel="stylesheet" href="__CSS__/layout/header.css">
   <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <link rel="stylesheet" href="__CSS__/layout/rightNav.css">
   <!-- common end -->
   <link rel="stylesheet" href="__CSS__/websit.css">
   <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=3.0&ak=j2iUMQMq7Ye6N6k08rQmBogRvsyydr3F&services=&t=20210512114808"></script>
@@ -156,6 +157,8 @@
   </footer>
   <!-- footer end -->
 
+  <!-- rightNav -->
+  <div class="rightNav" id="rightNav"></div>
 
 
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
@@ -258,6 +261,9 @@ if(is_en()){
   $(document).ready(function(){
     searchBtn();
     initialHeader();
+    $.get('rightNav.html',(data)=>{
+        $('#rightNav').html(data);
+    });
   });
 
   function getAll(){

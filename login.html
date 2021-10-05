@@ -60,7 +60,6 @@
       <!-- login end -->
     </div>
   </div>
-
   <script src="__JS__/login.min.js"></script>
   <script src="__JS__/common.min.js"></script>
   <script src="__JS__/plugs/layer/layer.js"></script>
@@ -145,7 +144,7 @@ return ""
       if($.cookie("token")){
         layer.msg('賬號已登入',{icon:1,time:500},function(){
         location.href="/index.html";
-      });
+        });
       }
     })
   </script>

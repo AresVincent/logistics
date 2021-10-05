@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
   <link rel="stylesheet" href="__CSS__/layout/header.css">
   <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <link rel="stylesheet" href="__CSS__/layout/rightNav.css">
   <!-- common end -->
   <link rel="stylesheet" href="__CSS__/index.css">
   <title>首頁</title>
@@ -88,7 +89,7 @@
       </div>
       <button class="search_btn d-flex align-items-center justify-content-center col-md-2 mt-2">
         <span class="iconfont icon-chaxun mr-2"></span>
-        <span class="text searchBtn">查快遞</span>
+        <span class="text searchBtn">查詢</span>
       </button>
     </form>
 
@@ -119,6 +120,10 @@
   </footer>
   <!-- footer end -->
 
+
+  <!-- rightNav -->
+  <div class="rightNav" id="rightNav"></div>
+  
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
@@ -191,8 +196,10 @@
 
   });
   $(function(){
-   initialHeader();
-
+    initialHeader();
+    $.get('rightNav.html',(data)=>{
+      $('#rightNav').html(data);
+    });
   });
 
 </script>

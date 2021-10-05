@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="__JS__/plugs/bootstrap4/css/bootstrap.min.css">
   <link rel="stylesheet" href="__CSS__/layout/header.css">
   <link rel="stylesheet" href="__CSS__/layout/footer.css">
+  <!-- <link rel="stylesheet" href="__CSS__/layout/rightNav.css"> -->
   <!-- common end -->
   <link rel="stylesheet" href="__CSS__/profile.css">
   <link rel="stylesheet" href="__JS__/plugs/daterangepicker/daterangepicker.css">
@@ -151,10 +152,10 @@
            
           </div>
         </div>
-        <div class="date_search col-md-4">
+        <div class="date_search col-md-5">
           <div class="row mb-3 mr-0">
-            <label for="date_range" class="riqidate col-4 mb-0" style="line-height: 38px;">日期：</label>
-            <input type="text" class="date_picker pl-2 col-8" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+            <label for="date_range" class="riqidate col-md-4 col-12 mb-0" style="line-height: 38px;">上門收件日期：</label>
+            <input type="text" class="date_picker pl-2 col-md-8 col-12" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
           </div>
         </div>
         <div class="batch_print_box col-12 name_search">
@@ -195,6 +196,7 @@
             <th style="width: 1%;min-width: 50px;"><input type="checkbox" class="select_all" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
             <th style="width: 5%;min-width:50px;">包裹號</th>
             <th style="width: 9%;min-width:120px;">下單時間</th>
+            <th style="width: 9%;min-width:150px;">上門收件日期</th>
             <th style="width: 7%;min-width:100px;">包裹狀態</th>
             <th style="width: 2%;min-width:100px;">包裹重量</th>
             <th style="width: 2%;min-width:100px;">運費金額</th>
@@ -252,7 +254,8 @@
         <th>包裹號</th>
         <th>運單號</th>
         <th>發貨地址</th>
-        <th>發貨時間</th>
+        <th>下單時間</th>
+        <th>上門收件時間</th>
         <th>包裹狀態</th>
         <th>包裹重量</th>
         <th>運費金額</th>
@@ -265,7 +268,8 @@
      
     </tbody>
   </table>
-
+  <!-- rightNav -->
+  <!-- <div class="rightNav" id="rightNav"></div> -->
   <script src="__JS__/plugs/jquery/jquery.min.js"></script>
   <script src="__JS__/plugs/bootstrap4/js/bootstrap.bundle.min.js"></script>
   <script src="__JS__/plugs/daterangepicker/moment.min.js"></script>
@@ -486,7 +490,7 @@ function getOrderList()
             }
             html += '<tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false">'
             html += '<td onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td>' ;
-            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
+            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+YMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
             html += '</tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
@@ -563,6 +567,7 @@ function printWayBill(e){
           "sendTime":res.data[0].sendTime,
           "barcode":res.data[0].waybillNo,
           "orderNo":res.data[0].orderNo,
+          "remarks":res.data[0].remarks
         };
         arrayOrder.push(item);
         arrayOrder=JSON.stringify(arrayOrder);
@@ -600,7 +605,7 @@ function toggleTable(e){
       contentType:"application/json; charset=utf-8",
       success: function(res){
         if(res.code==200){
-          let htmlStr='<td colspan="10" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%">';
+          let htmlStr='<td colspan="999" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%">';
           htmlStr+='<thead><tr><td>名稱</td><td>數量</td><td>單價</td></tr></thead><tbody>';
           let data=res.data;
           for(var i=0;i<data.length;i++){
@@ -674,7 +679,8 @@ function batchPrint(){
                 "weight":res.data[i].weight,
                 "sendTime":res.data[i].sendTime,
                 "barcode":res.data[i].waybillNo,
-                "orderNo":res.data[i].orderNo
+                "orderNo":res.data[i].orderNo,
+                "remarks":res.data[0].remarks
               };
               arrayOrder.push(item);
             }
@@ -827,7 +833,7 @@ function batchPrint(){
                 }
 
               itemHtml+= ' <tr class="upperTr"><td>'+list[i].orderNo+'</td><td>'+list[i].waybillNo+'</td><td>'+list[i].sendAddress+'</td>';
-              itemHtml+='<td>'+list[i].sendTime+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>' ;
+              itemHtml+='<td>'+list[i].sendTime+'</td><td>'+YMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>' ;
               for(let index=0;index<list[i].product_list.length;index++){
                 if(list[i].product_list.length>$(".itemName").length){
                   $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th><th>單價</th>")
@@ -845,12 +851,15 @@ function batchPrint(){
             excel.generate();
           });
         });
-
+      //渲染菜单
+      showMenu(3);
+      initialHeader();
+      // $.get('rightNav.html',(data)=>{
+      //   $('#rightNav').html(data);
+      // });
   });
 
-  //渲染菜单
- showMenu(3);
- initialHeader();
+
 </script>
 </body>
 

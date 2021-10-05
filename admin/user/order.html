@@ -152,7 +152,74 @@
       </div>
 
       <ul class="sidebar-menu" data-widget="tree">
-        <!-- generate by getLeftMenu -->
+        <li class="header">導航菜單</li>
+        <li>
+          <a href="/admin/index.html">
+            <i class="fa fa-map-marker"></i> <span>區域</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/charging/index.html">
+            <i class="fa fa-dollar"></i> <span>計費標準</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/outlets/index.html">
+            <i class="fa fa-map-o"></i> <span>快遞網點</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/news/index.html">
+            <i class="fa fa-newspaper-o"></i> <span>行業新聞</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/company/index.html">
+            <i class="fa fa-align-justify"></i> <span>公司簡介</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/user/index.html">
+            <i class="fa fa-user-o"></i> <span>用戶管理</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li  class="active">
+          <a href="/admin/user/order.html">
+            <i class="fa fa-user-o"></i> <span>訂單記錄</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/api/index.html">
+            <i class="fa fa-user-o"></i> <span>API文檔</span>
+            <span class="pull-right-container">
+              <!-- <small class="label pull-right bg-green">new</small> -->
+            </span>
+          </a>
+        </li>
+      
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -212,14 +279,10 @@
           <tr>
             <th>包裹號</th>
             <th>狀態</th>
-            <th>派送方式</th>
-            <th>寄件人姓名</th>
-            <th>寄件人電話</th>
             <th>收件人姓名</th>
             <th>收件人電話</th>
             <th style="min-width: 150px;">收件地址</th>
             <th  style="min-width: 150px;">攬收點</th>
-            <th>寄件日期</th>
             <th>下單時間</th>
             <th>入倉時間1</th>
             <th>出倉時間1</th>
@@ -228,9 +291,6 @@
             <th>簽收時間</th>
             <th>運費金額</th>
             <th>包裹重量</th>
-            <th>長度</th>
-            <th>寬度</th>
-            <th>高度</th>
             <th>物品名稱</th>
             <th>數量</th>
             <th class="price">單價</th>
@@ -260,14 +320,10 @@
     <tr class="itemHead">
       <th>包裹號</th>
       <th>狀態</th>
-      <th>派送方式</th>
-      <th>寄件人姓名</th>
-      <th>寄件人電話</th>
       <th>收件人姓名</th>
       <th>收件人電話</th>
       <th>收件地址</th>
       <th>攬收點</th>
-      <th>寄件日期</th>
       <th>下單時間</th>
       <th>入倉時間1</th>
       <th>出倉時間1</th>
@@ -276,9 +332,6 @@
       <th>簽收時間</th>
       <th>運費金額</th>
       <th>包裹重量</th>
-      <th>長度</th>
-      <th>寬度</th>
-      <th>高度</th>
     </tr>
   </thead>
   <tbody class="tbody" id="showItem" style="word-break: keep-all;">
@@ -381,12 +434,12 @@ hasToken();
     });
 
     $('#example1').DataTable({
-      'paging'      : false,
+      'paging'      : true,
       'lengthChange': true,
-      'searching'   : false,
-      'ordering'    : false,
-      'info'        : false,
-      'autoWidth'   : false
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
     });
     
     //datepicker
@@ -467,25 +520,10 @@ hasToken();
             }else{
               status6=list[i].status6Time
             }
-          let type="";
-          switch(list[i].type){
-            case "SELF_PICKUP_STATION": 
-              type="自提點";
-            break;
-            case "HOME_DELIVERY":
-              type="派送上門";
-            break;
-            case "SELF_SERVICE_STATION":
-              type="自提櫃";
-              break;
-            default:
-              break;
-          }
-          itemHtml+= '<tr><td>'+list[i].waybillNo+'</td><td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>';
-          itemHtml+='<td>'+list[i].sendAddress+'</td><td>'+YMD(list[i].pickupDate)+'</td><td>'+list[i].sendTime+'</td><td>'+status2+'</td>';
+          itemHtml+= '<tr><td>'+list[i].waybillNo+'</td><td>'+status+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>';
+          itemHtml+='<td>'+list[i].sendAddress+'</td><td>'+list[i].sendTime+'</td><td>'+status2+'</td>';
           itemHtml+='<td>'+status3+'</td><td>'+status4+'</td><td>'+status5+'</td><td>'+status6+'</td>';
           itemHtml+='<td>$'+list[i].price+'</td><td>'+list[i].weight+'kg</td>';
-          itemHtml+='<td>'+list[i].length+'cm</td><td>'+list[i].width+'cm</td><td>'+list[i].height+'cm</td>';
           for(let index=0;index<list[i].product_list.length;index++){
             if(list[i].product_list.length>$(".itemName").length){
               $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th><th>單價</th>")
@@ -507,8 +545,6 @@ hasToken();
     $('.btn_search').click(function(){
         let search = $('#search').val();
         Data.orderNo = search;
-        Data.excStartTime="";
-        Data.excEndTime="";
         Data.status = '';
         checkOrderAll();
     });
@@ -516,9 +552,6 @@ hasToken();
       Data.pageSize=$(this).find("option:selected").val();
       checkOrderAll();
     });
-    // getLeftMenu(menuName)
-    //menuName:"area","charging","outlets","user","order",when equal li will add active class
-    getLeftMenu("order");
   });
 
   //format date
@@ -642,8 +675,6 @@ function checkOrderAll(){
           case "7" :
               status= '自提件已超時';
               str+='<tr class="red">';
-              break;
-          default:break;
       }
       let status2,status3,status4,status5,status6;
 
@@ -672,23 +703,10 @@ function checkOrderAll(){
         }else{
               status6=list[i].status6Time;
         }
-        switch(list[i].type){
-            case "SELF_PICKUP_STATION": 
-              type="自提點";
-            break;
-            case "HOME_DELIVERY":
-              type="派送上門";
-            break;
-            case "SELF_SERVICE_STATION":
-              type="自提櫃";
-              break;
-            default:
-              break;
-          }
-        str+='<td><a href="javascript:void(0);" onclick="goToDetail('+list[i].waybillNo+')">'+list[i].waybillNo+'</a></td> <td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td>'+list[i].sendAddress+'</td>';
-        str+='<td>'+YMD(list[i].pickupDate)+'</td>'+'<td>'+list[i].sendTime+'</td><td>'+status2+'</td><td>'+status3+'</td><td>'+status4;
+       
+        str+='<td>'+list[i].waybillNo+'</td> <td>'+status+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td>'+list[i].sendAddress+'</td>';
+        str+='<td>'+list[i].sendTime+'</td><td>'+status2+'</td><td>'+status3+'</td><td>'+status4;
         str+='</td><td>'+status5+'</td><td>'+status6+'</td><td>$'+list[i].price+'</td><td class="weight">'+list[i].weight+'kg</td>';
-        str+='<td>'+list[i].length+'cm</td><td>'+list[i].width+'cm</td><td>'+list[i].height+'cm</td>';
         //add product item;
 
         for(var j=0;j<list[i].product_list.length;j++){
@@ -741,10 +759,7 @@ function btnShow(){
 function getTime(time){
   return new Date(time).getTime();
 }
-function goToDetail(url){
-  window.open("/admin/order/detail.html?waybillNo="+url,'_blank')
 
-}
 
 </script>
 

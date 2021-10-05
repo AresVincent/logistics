@@ -124,6 +124,10 @@ function initialLabel(){
         }else{
             type="自提櫃";
         }
+        let remarks=arrayOrder[i].remarks;
+        if(remarks==null){
+            remarks="";
+        }
         // barcode.push(arrayOrder[i].barcode);
         barcodeEnd=arrayOrder[i].barcode.slice(arrayOrder[i].barcode.length-6,arrayOrder[i].barcode.length);
         printHtml+='<div class="print"><div class="container print_upper"><div class="row" style="border-bottom: solid 2px #000000"><div class="col-4">';
@@ -131,7 +135,7 @@ function initialLabel(){
         printHtml+='<svg height="60" id="barcode'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
         printHtml+='<div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;padding-bottom:5px;"><p class="upperP"><span>收件人: <span class="getName">'+arrayOrder[i].getName+'</span></span> <br>';
         printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br>';
-        printHtml+='<span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:</span><br>';    
+        printHtml+='<span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:'+remarks+'</span><br>';    
         printHtml+='<span>注: 免收附加費</span></p></div><div class="col-4" style="padding:0px;"><div class="transport_method container center" style="padding:0px;">';
         printHtml+='<div class="col-12" style="border-bottom: solid 2px #000000"><b class="getPickUpPoint">'+arrayOrder[i].getPickUpPoint+'</b></div><div class="col-12" style="border-bottom: solid 2px #000000">';
         printHtml+='<b class="type">'+type+'</b></div><div class="col-12"><b class="getAreaId"></b></div></div></div></div>';       
@@ -161,7 +165,7 @@ function initialLabel(){
         // if(addressLen>50){
         //     printHtml+='地址:<span class="getAddress" style="font-size:12px;word-break:break-all">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
         // }else{
-            printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
+            printHtml+='地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span><br>備注:'+remarks+'<br>注: 免收附加費</p></div><div class="row"><div class="col-6" style="padding-top:8px;padding-bottom: 9px;border-right: solid 2px #000000">';
         // }
 
         printHtml+='<p style="line-height: 20px;font-size: 14px;"><span style="visibility:hidden;">付款方式:寄付</span><br><span>付款方式:寄付</span><br><span style="visibility:hidden;">代收貨款:</span><br></p></div>';
@@ -211,9 +215,9 @@ function initialLabel(){
         }
         $(".loading_wrap").hide();
         let size=106.667;
-        let currentSize=$(".upperP").innerHeight();
         //make block responsive
         for(let i=0;i<arrayOrder.length;i++){
+            let currentSize=$(".upperP").eq(i).innerHeight();
             if(arrayOrder[i].type=="HOME_DELIVERY"){
                 $(".upperP").eq(i).css("font-size",15*size/currentSize+"px");
                 $(".lowerP").eq(i).css("font-size",15*size/currentSize+"px");
@@ -228,9 +232,9 @@ function initialLabel(){
 function getBaseUrl(){
     // return 'http://192.168.100.104:8777/'; 
     //return 'http://192.168.100.252:8083/';
-    // return 'http://8.210.123.128:8888/';     
+    return 'http://8.210.123.128:8888/';     
     //production
-    return 'http://122.10.80.32:8888/';
+    // return 'http://122.10.80.32:8888/';
 }
 </script>
 </html>
