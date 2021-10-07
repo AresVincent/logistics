@@ -368,7 +368,7 @@ hasToken();
     token : $.cookie("admin_token"),
     orderNo : '',
     sn : '',
-    status : '',
+    status : '1',
     excStartTime : '',
     excEndTime : '',
     pageNum : 1,
@@ -482,7 +482,7 @@ hasToken();
               break;
           }
           itemHtml+= '<tr><td>'+list[i].waybillNo+'</td><td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>';
-          itemHtml+='<td>'+list[i].sendAddress+'</td><td>'+YMD(list[i].pickupDate)+'</td><td>'+list[i].sendTime+'</td><td>'+status2+'</td>';
+          itemHtml+='<td>'+list[i].sendAddress+'</td><td>'+newYMD(list[i].pickupDate)+'</td><td>'+list[i].sendTime+'</td><td>'+status2+'</td>';
           itemHtml+='<td>'+status3+'</td><td>'+status4+'</td><td>'+status5+'</td><td>'+status6+'</td>';
           itemHtml+='<td>$'+list[i].price+'</td><td>'+list[i].weight+'kg</td>';
           itemHtml+='<td>'+list[i].length+'cm</td><td>'+list[i].width+'cm</td><td>'+list[i].height+'cm</td>';
@@ -532,7 +532,18 @@ function YMD(date) {
   var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
   return YY + MM + DD;
 }
-
+//convert date format,safari also can use,fix datetime NaN Format
+function newYMD(date){
+  let strDate=date.replaceAll("-","/");
+  var date = new Date(strDate);
+  var YY = date.getFullYear() + '-';
+  var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+  var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+  var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+  var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+  return YY + MM + DD;
+}
   //check order record
 function checkOrderAll(){ 
     var url = getBaseUrl();
@@ -584,7 +595,7 @@ function checkOrderAll(){
       switch(list[i].status){
           case "1" :
               status = '已下單';
-              if(getTime(new Date())-getTime(list[i].pickupDate)>3600*24*1000*2){
+              if(getTime(new Date())-getTime(list[i].pickupDate.replaceAll("-","/"))>3600*24*1000*2){
                 str+='<tr class="red">';
                 break;
               }else{
@@ -627,7 +638,7 @@ function checkOrderAll(){
               if(getTime(new Date())-getTime(list[i].status5Time)>3600*24*1000*2){
                 str+='<tr class="red">';
                 break;
-              }else if(getTime(list[i].status5Time)-getTime(list[i].pickupDate)>3600*24*1000*15){
+              }else if(getTime(list[i].status5Time)-getTime(list[i].pickupDate.replaceAll("-","/"))>3600*24*1000*15){
                 str+='<tr class="red">';
                 break;
               }else{
@@ -686,7 +697,7 @@ function checkOrderAll(){
               break;
           }
         str+='<td><a href="javascript:void(0);" onclick="goToDetail('+list[i].waybillNo+')">'+list[i].waybillNo+'</a></td> <td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td>'+list[i].sendAddress+'</td>';
-        str+='<td>'+YMD(list[i].pickupDate)+'</td>'+'<td>'+list[i].sendTime+'</td><td>'+status2+'</td><td>'+status3+'</td><td>'+status4;
+        str+='<td>'+newYMD(list[i].pickupDate)+'</td>'+'<td>'+list[i].sendTime+'</td><td>'+status2+'</td><td>'+status3+'</td><td>'+status4;
         str+='</td><td>'+status5+'</td><td>'+status6+'</td><td>$'+list[i].price+'</td><td class="weight">'+list[i].weight+'kg</td>';
         str+='<td>'+list[i].length+'cm</td><td>'+list[i].width+'cm</td><td>'+list[i].height+'cm</td>';
         //add product item;

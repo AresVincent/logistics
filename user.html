@@ -315,18 +315,6 @@
   </script>
 <script type="text/javascript" charset="utf-8">
 
-
-function YMD(date) {
-  var date = new Date(date);
-  var YY = date.getFullYear() + '-';
-  var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-  var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
-  var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-  var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-  var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-  return YY + MM + DD;
-}
-
 function jump(i=0){   
     if(i != 0){
         Data.pageNum = i;
@@ -490,7 +478,7 @@ function getOrderList()
             }
             html += '<tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false">'
             html += '<td onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td>' ;
-            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+YMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
+            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+newYMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
             html += '</tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';
@@ -680,17 +668,19 @@ function batchPrint(){
                 "sendTime":res.data[i].sendTime,
                 "barcode":res.data[i].waybillNo,
                 "orderNo":res.data[i].orderNo,
-                "remarks":res.data[0].remarks
+                "remarks":res.data[i].remarks
               };
               arrayOrder.push(item);
             }
             arrayOrder=JSON.stringify(arrayOrder);
             localStorage.setItem("arrayOrder",arrayOrder);
-            if($.cookie("username").includes("lalamove")){
-              window.open("/waybill/lalamovewaybill_pickup.html",'_blank');
-            }else{
-              window.open("/waybill/waybill_pickup.html",'_blank');
-            }
+            window.open("/waybill/waybill_pickup.html",'_blank');
+
+            // if($.cookie("username").includes("lalamove")){
+            //   window.open("/waybill/lalamovewaybill_pickup.html",'_blank');
+            // }else{
+            //   window.open("/waybill/waybill_pickup.html",'_blank');
+            // }
           }else{
             layer.msg('查詢失敗',{icon:2,time:1000});
           }
@@ -833,7 +823,7 @@ function batchPrint(){
                 }
 
               itemHtml+= ' <tr class="upperTr"><td>'+list[i].orderNo+'</td><td>'+list[i].waybillNo+'</td><td>'+list[i].sendAddress+'</td>';
-              itemHtml+='<td>'+list[i].sendTime+'</td><td>'+YMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>' ;
+              itemHtml+='<td>'+list[i].sendTime+'</td><td>'+newYMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>' ;
               for(let index=0;index<list[i].product_list.length;index++){
                 if(list[i].product_list.length>$(".itemName").length){
                   $(".itemHead").append("<th class='itemName'>物品名稱</th><th>數量</th><th>單價</th>")

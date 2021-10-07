@@ -132,7 +132,7 @@ function initialLabel(){
         barcodeEnd=arrayOrder[i].barcode.slice(arrayOrder[i].barcode.length-6,arrayOrder[i].barcode.length);
         printHtml+='<div class="print"><div class="container print_upper"><div class="row" style="border-bottom: solid 2px #000000"><div class="col-4">';
         printHtml+='<img src="img/logo.png" style="height: auto;width:100px; margin-top:20px;margin-left:10px;"></div><div class="col-8">';
-        printHtml+='<svg height="60" id="barcode'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
+        printHtml+='<svg height="60" id="barcode1'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
         printHtml+='<div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;padding-bottom:5px;"><p class="upperP"><span>收件人: <span class="getName">'+arrayOrder[i].getName+'</span></span> <br>';
         printHtml+='<span>電話:+<span class="getPhone">'+arrayOrder[i].getPhone+'</span></span><br>';
         printHtml+='<span>地址:<span class="getAddress">'+arrayOrder[i].getAddress+'</span></span> <br><span>備注:'+remarks+'</span><br>';    
@@ -177,7 +177,7 @@ function initialLabel(){
     $("body").prepend(printHtml);
     // Outlets.areaId=arrayOrder[i].getAreaId;
     for(let i=0;i<arrayOrder.length;i++){
-        JsBarcode("#barcode"+i, arrayOrder[i].barcode,{
+        JsBarcode("#barcode1"+i, arrayOrder[i].barcode,{
             height: 60,
             fontSize: 12,
         });

@@ -841,6 +841,21 @@
       })
       $('input[name="takeDate"]').datepicker({
         dateFormat:'yy-mm-dd',
+        onSelect:function(){
+          let selectedDate=$(this).val().replaceAll("-","/");
+          let nowDate=YMD(new Date()).replaceAll("-","/");
+          if(new Date(selectedDate).getTime()<new Date(nowDate).getTime()){
+            layer.msg("不能選擇過去的日期,請重新選擇日期!");
+            $(this).val("")
+            return;
+          }
+          if(new Date(selectedDate).getTime()==new Date(nowDate).getTime()&&new Date().getHours()>=12){
+            layer.msg("當日派送需在十二點前落單，請重新選擇日期");
+            $(this).val("")
+            return;
+          }
+            
+        }
       });
     });
     //remove item
@@ -1161,12 +1176,22 @@
         switch(type){
           case "SELF_SERVICE_STATION":
               //自提櫃
-            if(height>=41||width>=10||length>=39){
-              layer.msg('貨物規格超過最大允許規格，請重新填寫或聯繫客服主任！',{icon:2,time:1500});
+              // check which one is longer
+            let specArray=[height,width,length];
+            specArray.sort(function(a,b){
+              return parseFloat(a)-parseFloat(b)
+            });
+            //limit of length,width,height
+            let limitArray=[10,39,41];
+            for(let index=0;index<specArray.length;index++){
+              if(specArray[index]>=limitArray[index]){
+                layer.msg('貨物規格超過最大允許規格，請重新填寫或聯繫客服主任！',{icon:2,time:1500});
               clearSpec();
               $('.loading_wrap').hide();
               return;
-            }else if(weight>3){
+              }
+            }
+            if(weight>3){
               layer.msg("自提櫃最大重量為3kg，請重新填寫！",{icon:2,time:1500});
               $('input[name="weight"]').val("");
               $('.loading_wrap').hide();
