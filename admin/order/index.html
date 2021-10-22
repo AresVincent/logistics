@@ -279,10 +279,10 @@
       <th>簽收時間</th>
       <th>運費金額</th>
       <th>包裹重量</th>
-      <th>備註</th>
       <th>長度</th>
       <th>寬度</th>
       <th>高度</th>
+      <th>備註</th>
     </tr>
   </thead>
   <tbody class="tbody" id="showItem" style="word-break: keep-all;">
@@ -559,48 +559,55 @@ function newYMD(date){
 function checkOrderAll(){ 
     var url = getBaseUrl();
     $(".loading_wrap").show();
-    $.post(url + 'order/likeOrderUserById', Data,function(res){
-    console.log(res);
-    Data.pageNum = res.pageNum;
-    Data.lastPage = res.pages;
-    Data.isLastPage = res.isLastPage;
-    Data.isFirstPage = res.isFirstPage;
-    Data.nextPage = res.nextPage;
-    Data.prePage = res.prePage;
-    $(".table_info").html("顯示从"+res.startRow+"到"+res.endRow+"，共"+res.total+"条記錄");
-    let list = res.list;
-    let str = '';
-    // 分页
-    //if list is emoty,don't generate pagination
-    if(list.length>=1){
-      let pagestr = '<li class="page-item  page-block"><a class="page-link prev" href="javascript:void(0)"><</a></li>';
-      
-      if(res.pageNum>=30){
-        pagestr+='<li class="page-item  page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+1+')">...</a></li>';
-      }
-      for(let i = 1; i <= res.pages; i++){  
-          if(res.pageNum == i){
-              pagestr += '<li class="page-item active page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
-          }else{
-            if(res.pages<30){
-              pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
-            }else{
-              //when page count >30
-              if(i<(Math.min(res.pageNum+30,res.pages)) && i>res.pageNum){
-                pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
-              }
-            }
+    $.ajax({
+      url:url+"order/likeOrderUserById",
+      data:Data,
+      type:'post',
+      dataType:"json",
+      timeout:10000,
+      //超時10s則異常
+      success:function(res){
+        console.log(res);
+        Data.pageNum = res.pageNum;
+        Data.lastPage = res.pages;
+        Data.isLastPage = res.isLastPage;
+        Data.isFirstPage = res.isFirstPage;
+        Data.nextPage = res.nextPage;
+        Data.prePage = res.prePage;
+        $(".table_info").html("顯示从"+res.startRow+"到"+res.endRow+"，共"+res.total+"条記錄");
+        let list = res.list;
+        let str = '';
+        // 分页
+        //if list is emoty,don't generate pagination
+        if(list.length>=1){
+          let pagestr = '<li class="page-item  page-block"><a class="page-link prev" href="javascript:void(0)"><</a></li>';
+          
+          if(res.pageNum>=30){
+            pagestr+='<li class="page-item  page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+1+')">...</a></li>';
           }
-      }
-      if(res.pageNum>=30){
-        pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
-      }
-      pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">></a></li>';
-      $('.pagination-sm').html(pagestr)
-    }else{
-      $('.pagination-sm').html('');
-    }
-    for(i in list){
+          for(let i = 1; i <= res.pages; i++){  
+              if(res.pageNum == i){
+                  pagestr += '<li class="page-item active page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+i+');">'+i+'</a></li>';
+              }else{
+                if(res.pages<30){
+                  pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+                }else{
+                  //when page count >30
+                  if(i<(Math.min(res.pageNum+30,res.pages)) && i>res.pageNum){
+                    pagestr += '<li class="page-item page-block"><a class="page-link" onclick="jump('+i+');" href="javascript:void(0)">'+i+'</a></li>'
+                  }
+                }
+              }
+          }
+          if(res.pageNum>=30){
+            pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
+          }
+          pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">></a></li>';
+          $('.pagination-sm').html(pagestr)
+        }else{
+          $('.pagination-sm').html('');
+        }
+        for(i in list){
       
       let status='';
       switch(list[i].status){
@@ -727,18 +734,28 @@ function checkOrderAll(){
           str+='<td>'+list[i].product_list[j].productName+'</td><td>'+list[i].product_list[j].qty+'</td><td class="unitPrice'+i+'">'+list[i].product_list[j].productUnitPrice+"</td>"
         }
         str+='</tr>'
-    }
-    $('#tableTbody').html(str);
-    for(item in list){
-      for(var unit=0;unit<$(".price").length;unit++){
-        if($((".unitPrice"+item)).length<$(".price").length){
-          $(".unitPrice"+item).last().after("<td></td><td></td><td class='unitPrice"+item+"'></td>");
+      }
+      $('#tableTbody').html(str);
+      for(item in list){
+        for(var unit=0;unit<$(".price").length;unit++){
+          if($((".unitPrice"+item)).length<$(".price").length){
+            $(".unitPrice"+item).last().after("<td></td><td></td><td class='unitPrice"+item+"'></td>");
+          }
         }
       }
-    }
-    btnShow();
-    $(".loading_wrap").hide();
-  });
+      btnShow();
+      $(".loading_wrap").hide();
+      },
+      error:function(res){
+        $(".loading_wrap").hide();
+        if(res.statusText=="timeout"){
+          layer.msg('獲取超時！',{icon:2,time:1500});
+        }else{
+          layer.msg("發生內部錯誤!",{icon:2,time:1500})
+        }
+      }
+
+    });
 }
 
 //jump page
