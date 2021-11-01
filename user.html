@@ -160,7 +160,7 @@
         </div>
         <div class="batch_print_box col-12 name_search">
           <div class="row ml-0 mr-0">
-            <div class="col-md-7">
+            <div class="col-md-8">
               <div class="row justify-content-between btn_group">
                 <div class="import_data_btn col-md-3 col-12 mb-3" id="generate-excel">
                   <span>導出訂單詳情</span>
@@ -169,12 +169,16 @@
                 <div class="col-md-3 col-12 batch_print mb-3" id="batch_print" onclick="batchPrint()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
                   <span>批量列印快遞單</span>
                 </div>
-                <div class="col-md-3 col-12 trade_print" id="trade_print" onclick="itemIndex()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
+                <div class="col-md-3 col-12 trade_print" id="fragile_print" onclick="gotoFragile()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
+                  <span>列印易碎品標籤</span>
+                </div>
+                <div class="col-md-2 col-12 trade_print mb-3" id="trade_print" onclick="itemIndex()" style="background-color: #1890ff;color: #fff;height: 38px;line-height: 38px;text-align: center;border-radius: .25rem;cursor: pointer;">
                   <span>列印交收表</span>
                 </div>
+              
               </div>
             </div>
-            <div class="col-md-5 col-12">
+            <div class="col-md-4 col-12">
               <div class="row">
                 <label for="date_range" class="riqidate col-12 mb-0" style="line-height: 38px;"><span class="badge  text-danger">*</span>溫馨提示:在選擇欄位剔上對應行即可批量列印！</label>
               </div>
@@ -290,52 +294,9 @@
   <script>
 
 
-    if(!$.cookie('token') || $.cookie('token') == '' || $.cookie('token') == null || $.cookie('token').length != 64){
-      location.href = '/login.html';
-    }
 
-
-
-
-    // date picker
-    $('input[name="dates"]').daterangepicker({
-      opens: 'center'
-    }, function (start, end, label) {
-      // console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-      Data.excStartTime = start.format('YYYY-MM-DD')
-      Data.excEndTime = end.format('YYYY-MM-DD')
-      $.cookie("startTime",start.format('YYYY-MM-DD'));
-      $.cookie("endTime",end.format('YYYY-MM-DD'));
-      localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
-      localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
-      printData.excStartTime=start.format('YYYY-MM-DD');
-      printData.excEndTime=end.format('YYYY-MM-DD');
-      getOrderList()
-    });
   </script>
 <script type="text/javascript" charset="utf-8">
-
-function jump(i=0){   
-    if(i != 0){
-        Data.pageNum = i;
-    }
-    getOrderList();
-  }
-
-$('.prev').click(function(){
-    if(Page.isFirstPage){
-        return false;
-    }
-    Page.pageNum = Page.prePage;
-    jump()
-})
-$('.next').click(function(){
-    if(Page.isLastPage){
-        return false;
-    }
-    Page.pageNum = Page.nextPage;
-    jump()
-})
 
 let token = $.cookie('token');
 $.cookie("startTime",YMD(new Date()));
@@ -362,7 +323,39 @@ var printData={
   pageNum : 1,
   pageSize:999999
 };
+  //global variable to save starttime and endtime
+var startTime=YMD(new Date());
+var endTime=YMD(new Date());
 
+if(!$.cookie('token') || $.cookie('token') == '' || $.cookie('token') == null || $.cookie('token').length != 64){
+  location.href = '/login.html';
+}
+
+// date picker
+$('input[name="dates"]').daterangepicker({
+  opens: 'center'
+}, function (start, end, label) {
+  // console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  Data.excStartTime = start.format('YYYY-MM-DD')
+  Data.excEndTime = end.format('YYYY-MM-DD')
+  // save startTime and endTime
+  startTime=start.format('YYYY-MM-DD');
+  endTime=end.format('YYYY-MM-DD');
+  $.cookie("startTime",start.format('YYYY-MM-DD'));
+  $.cookie("endTime",end.format('YYYY-MM-DD'));
+  localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
+  localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
+  printData.excStartTime=start.format('YYYY-MM-DD');
+  printData.excEndTime=end.format('YYYY-MM-DD');
+  getOrderList()
+});
+
+function jump(i=0){   
+    if(i != 0){
+        Data.pageNum = i;
+    }
+    getOrderList();
+  }
 function getOrderList()
 {
  let url = getBaseUrl();
@@ -502,9 +495,14 @@ function getOrderList()
     })
     $('.btn_search').click(function(){
         let search = $('#search').val();
+        if(search!=""){
+          Data.excEndTime="";
+          Data.excStartTime="";
+        }else{
+          Data.excEndTime=endTime;
+          Data.excStartTime=startTime;
+        }
         Data.orderNo = search;
-        Data.excEndTime="";
-        Data.excStartTime="";
         Data.status = '';
         getOrderList();
     })
@@ -686,6 +684,11 @@ function batchPrint(){
           }
         }
       });
+}
+
+//fragile print
+function gotoFragile(){
+  window.open('/waybill/fragile.html','_blank ');
 }
 </script>
 <script>

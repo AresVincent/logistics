@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head type="text/css" media="print">
+    <meta charset="UTF-8">
+    <title>Print Order Test</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        @page {
+            size: A6;
+            margin: 0;
+        }
+        html,body{
+            height:150mm;
+            width:100mm;
+            font-family: 微軟正黑體;
+            font-weight: bold;
+        }
+        @media print {
+            @page {
+                size: 100mm 150mm;
+                /* you can also specify margins here: */
+                margin: 0mm;
+                margin-right: 0mm; /* for compatibility with both A4 and Letter */
+            }
+            .print{
+                page-break-after: always;
+            }
+        }
+        .center{
+            text-align: center;
+        }
+        .print{
+            height:150mm;
+            width:100mm;
+        }
+    </style>
+</head>
+<body class="body">
+    <div class="print">
+        <img style="width: 100%;height: auto;margin-top:20%" src="img/fragile.png" />
+    </div>
+  <script rel="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script rel="text/javascript" src="js/JsBarcode.code128.min.js"></script>
+  <script rel="text/javascript" src="js/bootstrap.js"></script>
+</body>
+
+<script>
+$.fn.extend({
+    print: function() {
+        var frameName = 'printIframe';
+        var doc = window.frames[frameName];
+        if (!doc) {
+            $('<iframe>').hide().attr('name', frameName).appendTo(document.body);
+            doc = window.frames[frameName];
+        }
+        doc.document.body.innerHTML = this.html();
+        doc.window.print();
+        return this;
+    }
+});
+</script>
+</html>

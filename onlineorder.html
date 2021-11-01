@@ -838,6 +838,9 @@
           $(".homeTakeBox select").prop("selectedIndex",0);
           $(".regionSelect").prop("selectedIndex",0);
         }
+        if($('input[name="weight"]').val()!=""&&$('input[name="width"]').val()!=""&&$('input[name="lenghth"]').val()!=""&&$('input[name="height"]').val()!=""){
+          CalculateFee();
+        }
       })
       $('input[name="takeDate"]').datepicker({
         dateFormat:'yy-mm-dd',
@@ -1161,7 +1164,7 @@
         }
         //上門收件
         if($("input[name='isHomeTake']").prop("checked")){
-          if((parseFloat(height)+parseFloat(width)+parseFloat(length))>=300){
+          if(height>=350||width>=350 ||length>=350||(parseFloat(height)+parseFloat(width)+parseFloat(length))>=600){
             layer.msg('貨物規格超過最大允許規格，請重新填寫或聯繫客服主任！',{icon:2,time:1500});
             clearSpec();
             $('.loading_wrap').hide();
@@ -1200,7 +1203,7 @@
           break;
           case "HOME_DELIVERY":
             // 送貨上門
-            if(height>=180||width>=180||length>=180||(parseFloat(height)+parseFloat(width)+parseFloat(length))>=300){
+            if(height>=350||width>=350||length>=350||(parseFloat(height)+parseFloat(width)+parseFloat(length))>=600){
               layer.msg('貨物規格超過最大允許規格，請重新填寫或聯繫客服主任！',{icon:2,time:1500});
               clearSpec();
               $('.loading_wrap').hide();
