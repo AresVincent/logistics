@@ -25,7 +25,7 @@
 <body>
     <!-- nav beigin -->
     <nav class="navbar navbar-expand-lg navbar-dark ">
-      <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
+      <a class="navbar-brand" href="/index.html"><img src="__IMG__/kings_logo_transprent.svg" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -427,7 +427,7 @@
   <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
     <div class="contact">
       客服電話：+852 2353 0188 &nbsp;
-      電子郵件：info@hkares.com
+      電子郵件：info@kings-hk.com
     </div>
     <div class="bottom_text">
       地址: 新蒲崗大有街1號 勤達中心1208室
@@ -534,7 +534,7 @@
             str1 += '<option value="6">深水埗區</option>';
             str1 += '<option value="4">觀塘區</option>';
             str1 += '<option value="3">九龍城區</option>';
-            $('.address select[name="get_area_id"]').html(str1);
+            $('.addressBox select[name="get_area_id"]').html(str1);
           break;
           case "2":
           let str2="";
@@ -543,7 +543,7 @@
             str2 += '<option value="39">中西區</option>';
             str2 += '<option value="27">東區</option>';
             str2 += '<option value="5">南區</option>';
-            $('.address select[name="get_area_id"]').html(str2);
+            $('.addressBox select[name="get_area_id"]').html(str2);
             break;
           case "3":
           let str3="";
@@ -557,7 +557,7 @@
             str3 += '<option value="11">葵青區</option>';
             str3 += '<option value="10">離島區</option>';
             str3 += '<option value="12">北區</option>';
-            $('.address select[name="get_area_id"]').html(str3);            
+            $('.addressBox select[name="get_area_id"]').html(str3);            
             break;
           default:
             break;
@@ -1070,7 +1070,7 @@
           $('.addressBox select[name="get_area_id"] option:first').prop('selected',true);
           $('.addressBox input[name="get_address"]').val("");
           $(".pickupBox").hide();
-          $('.selfieBox select[name="get_ares_id"] option:first').prop('selected',true);
+          $('.selfieBox select[name="get_area_id"] option:first').prop('selected',true);
           $('.selfieBox select[name="get_pickupPoint"] option:first').prop('selected',true);
          }else{
           //generate pickuppoint information

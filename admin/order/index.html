@@ -278,10 +278,10 @@
       <th>到點時間</th>
       <th>簽收時間</th>
       <th>運費金額</th>
-      <th>包裹重量</th>
-      <th>長度</th>
-      <th>寬度</th>
-      <th>高度</th>
+      <th>包裹重量(kg)</th>
+      <th>長度(cm)</th>
+      <th>寬度(cm)</th>
+      <th>高度(cm)</th>
       <th>備註</th>
     </tr>
   </thead>
@@ -378,7 +378,9 @@ hasToken();
     pageNum : 1,
     pageSize:999999
   };
-
+  //global variable to save starttime and endtime
+  var startTime=YMD(new Date());
+  var endTime=YMD(new Date());
   $(function(){    
     $('.ReloadButton').click(function(){
       location.href = location.href
@@ -400,6 +402,9 @@ hasToken();
       // console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
       Data.excStartTime = start.format('YYYY-MM-DD')
       Data.excEndTime = end.format('YYYY-MM-DD')
+      // save startTime and endTime
+      startTime=start.format('YYYY-MM-DD');
+      endTime=end.format('YYYY-MM-DD');
       // $.cookie("startTime",start.format('YYYY-MM-DD'));
       // $.cookie("endTime",end.format('YYYY-MM-DD'));
       // localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
@@ -494,8 +499,8 @@ hasToken();
           itemHtml+= '<tr><td>'+list[i].waybillNo+'</td><td>'+status+'</td><td>'+type+'</td><td>'+list[i].sendName+'</td><td>'+list[i].sendPhone+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td>';
           itemHtml+='<td>'+list[i].sendAddress+'</td><td>'+newYMD(list[i].pickupDate)+'</td><td>'+list[i].sendTime+'</td><td>'+status2+'</td>';
           itemHtml+='<td>'+status3+'</td><td>'+status4+'</td><td>'+status5+'</td><td>'+status6+'</td>';
-          itemHtml+='<td>$'+list[i].price+'</td><td>'+list[i].weight+'kg</td>';
-          itemHtml+='<td>'+list[i].length+'cm</td><td>'+list[i].width+'cm</td><td>'+list[i].height+'cm</td>';
+          itemHtml+='<td>'+list[i].price+'</td><td>'+list[i].weight+'</td>';
+          itemHtml+='<td>'+list[i].length+'</td><td>'+list[i].width+'</td><td>'+list[i].height+'</td>';
           itemHtml+='<td>'+remarks+'</td>';
           for(let index=0;index<list[i].product_list.length;index++){
             if(list[i].product_list.length>$(".itemName").length){
@@ -517,9 +522,14 @@ hasToken();
     //search
     $('.btn_search').click(function(){
         let search = $('#search').val();
+        if(search!=""){
+          Data.excStartTime="";
+          Data.excEndTime="";
+        }else{
+          Data.excStartTime=startTime;
+          Data.excEndTime=endTime;
+        }
         Data.orderNo = search;
-        Data.excStartTime="";
-        Data.excEndTime="";
         Data.status = '';
         checkOrderAll();
     });

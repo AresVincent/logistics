@@ -2,10 +2,12 @@
 <html lang="en">
 <head type="text/css" media="print">
     <meta charset="UTF-8">
-    <title>Print Order Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Order</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../__CSS__/font.css">
     <style>
-        @page {
+         @page {
             size: A6;
             margin: 0;
         }
@@ -15,20 +17,15 @@
             font-family: 微軟正黑體;
             font-weight: bold;
         }
-        @media print {
-            @page {
-                size: 100mm 150mm;
-                /* you can also specify margins here: */
-                margin: 0mm;
-                padding: 0mm;
-                margin-right: 0mm; /* for compatibility with both A4 and Letter */
-            }
-            .print{
-                page-break-after: always;
-            }
-        }
         .center{
+            /* margin: 0 auto; */
             text-align: center;
+        }
+        #orderForm{
+            width: 80%;
+            min-width: 250px;
+            max-width: 1200px;
+            font-size: 2rem;
         }
         .print_upper{
             height:90mm;
@@ -38,12 +35,14 @@
         .print_lower{
             height:60mm;
             width:100mm;
+            
             /*border:dotted 1px #f00;*/
         }
         .print{
             height:150.7mm;
             width:100mm;
             border:solid 2px #000000;
+            visibility: hidden;
         }
         p{
             line-height: 18px;
@@ -67,18 +66,114 @@
             z-index: 999;
         }
         .loading_wrap .loading{z-index:1;top:50%;left:50%}
+        .loginWrapper{
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0,0.3);
+            z-index: 300;
+        }
+        .loginWrapper .loginForm{
+            display: flex;
+            position:absolute;
+            width: 360px;
+            height: 400px;
+            margin:auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+        .loginForm .iconfont{
+            color: #cad1d7;
+            font-size: 21px;
+            cursor: pointer;
+        }
+        .form-standard{
+            height: 40px;
+            line-height: 40px;
+            margin-bottom: 20px;
+            border: none;
+        }
+        .form-standard input{
+            height: 100%;
+            text-align: center;
+        }
+        @media screen and (max-width:576px){
+           
+            .loginWrapper .loginForm{
+                width: 80%;
+                min-width: 300px;
+            }
+        }
+        @media print {
+            @page {
+                size: 100mm 150mm;
+                /* you can also specify margins here: */
+                margin: 0mm;
+                padding: 0mm;
+                margin-right: 0mm; /* for compatibility with both A4 and Letter */
+            }
+            .print{
+                page-break-after: always;
+                visibility: visible;
+            }
+            .orderForm{
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="body">
-      <!-- loading begin -->
-  <div class="loading_wrap position-fixed">
-    <div class="spinner-border text-primary loading position-absolute" role="status">
-      <span class=""></span>
+    <!--login form -->
+    <div class="loginWrapper">
+        <div class="loginForm row">
+            <div class="col-8" style="margin-bottom: 10px;">
+                <img style="width: 100%;" src="./img/KINGS_logo_colour.svg">
+            </div>
+            <h3 class="col-12 center" style="margin-bottom: 10px;">面單生成系統</h3>
+            <form id="loginForm">
+            <label class="col-12 form-standard">
+                <span class="iconfont icon-iconzh1"></span>
+                <input type="text" placeholder="請輸入賬號！" name="username">
+            </label>
+            <label class="col-12 form-standard">
+                <span class="iconfont icon-suo"></span>
+                <input type="password" placeholder="請輸入密碼！" name="password">
+            </label>
+            <button class="col-6 form-standard submitBtn" type="button">登錄</button>
+            </form>
+        </div>
     </div>
-  </div>
+    <!-- search order -->
+    <div >
+        <form id="orderForm" class="orderForm center row" style="margin: 0 auto;" onsubmit="return false;">
+            <input name="orderNo" class="order center col-md-8" placeholder="請輸入訂單號" onfocus="autoSelect(this)" /><button class="col-md-4" type="submit" onsubmit="return false;">搜索訂單</button>
+        </form>
+    </div>
+    <!--label  -->
+    <div class="print">
+
+    </div>
+    <!-- loading-->
+    <div class="loading_wrap position-fixed">
+        <div class="spinner-border text-primary loading position-absolute" role="status">
+          <span class=""></span>
+        </div>
+    </div>
   <script rel="text/javascript" src="js/jquery-3.6.0.min.js"></script>
   <script rel="text/javascript" src="js/JsBarcode.code128.min.js"></script>
   <script rel="text/javascript" src="js/bootstrap.js"></script>
+  <script rel="text/javascript" src="../__JS__/cookie.js"></script>
+  <script rel="text/javascript" src="../__JS__/plugs/layer/layer.js"></script>
 </body>
 
 <script>
@@ -95,29 +190,81 @@ $.fn.extend({
         return this;
     }
 });
-var barcode;
-$(document).ready(function(){
-    if(!localStorage.getItem("arrayOrder")){
-        window.location.reload(true);
-    }
-    initialLabel();
-});        
 
-function initialLabel(){
+
+var barcode;
+var baseUrl=getBaseUrl();
+$(document).ready(function(){
+    if($.cookie("4ptoken")==''||$.cookie("4ptoken")==undefined){
+        $(".loginWrapper").show();
+    }else{
+        $(".loginWrapper").hide();
+    }
+    $("#orderForm").submit(function(){
+        if(!checkStr($("input[name='orderNo']"))){
+           return; 
+        }
+        initialOrder();
+    });
+    $(".submitBtn").click(function(){
+        let formData=$("#loginForm").serialize();
+        console.log(formData);
+        $.ajax({
+            url:baseUrl+'admin/login',
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            timeout:5000,
+            success:function(res){
+                if(res.code==2){
+                    $.cookie("4ptoken",res.token,{expires:1,path:'/'});
+                    layer.msg('登錄成功',{icon:1,time:1000});
+                    $(".loginWrapper").hide();
+                    $("#loginForm")[0].reset();
+                }else{
+                    layer.msg('賬號或密碼錯誤',{icon:2,time:1000})
+                }
+            },
+            error:function(res){
+                layer.msg('網絡錯誤！',{icon:2,time:1000});
+            }
+        });
+    });
+});        
+//initial waybill
+function initialOrder(){
+    if($.cookie("4ptoken")==''||$.cookie("4ptoken")==undefined){
+        layer.msg('請登錄後使用該功能',{icon:2,time:1000});
+        $(".loginWrapper").show();
+        return ;
+    }
     $(".loading_wrap").show();
     let printHtml="";
-    // let barcode=[];
-    let arrayOrder=JSON.parse(localStorage.getItem("arrayOrder"));
     let barcodeEnd;
     let type;
-    let urls=getBaseUrl();
-    let Outlets = {
-        areaId : 0,
-        address : '',
-        addressEn : ''
-    };
-
-    for(let i=0;i<arrayOrder.length;i++){
+    let orderNo="";
+    orderNo=$("input[name='orderNo']").val();
+    let data={
+                token:$.cookie("4ptoken"),
+                waybillNo:orderNo
+            };
+    $.ajax({
+    url:baseUrl+'order/getWaybillByAdmin',
+    data:JSON.stringify(data),
+    type:'POST',
+    dataType:'json',
+    contentType:"application/json; charset=utf-8",
+    success: function(res){
+      // console.log(res)
+      if(res.data.length<1){
+        layer.msg('查詢不到該訂單,請重新輸入！',{icon:2,time:1000});
+        $(".loading_wrap").hide();
+        return;
+      }
+      if(res.code == 200){
+          let arrayOrder=res.data;
+        console.log(res.data);
+        for(let i=0;i<arrayOrder.length;i++){
         if(arrayOrder[i].type=="SELF_PICKUP_STATION"){
             type="自提點";
         }else if(arrayOrder[i].type=="HOME_DELIVERY"){
@@ -130,8 +277,8 @@ function initialLabel(){
             remarks="";
         }
         // barcode.push(arrayOrder[i].barcode);
-        barcodeEnd=arrayOrder[i].barcode.slice(arrayOrder[i].barcode.length-6,arrayOrder[i].barcode.length);
-        printHtml+='<div class="print"><div class="container print_upper"><div class="row" style="border-bottom: solid 2px #000000"><div class="col-4" style="padding:0;">';
+        barcodeEnd=arrayOrder[i].waybillNo.slice(arrayOrder[i].waybillNo.length-6,arrayOrder[i].waybillNo.length);
+        printHtml+='<div class="container print_upper"><div class="row" style="border-bottom: solid 2px #000000"><div class="col-4" style="padding:0">';
         printHtml+='<img src="img/KINGS_logo_colour.svg" style="height: auto;width:100%; margin-top:20px;margin-left:10px;"></div><div class="col-8">';
         printHtml+='<svg height="60" id="barcode1'+i+'" style="position: absolute;"></svg></div></div><div class="row" style="border-bottom: solid 2px #000000">';
         printHtml+='<div class="col-8" style="border-right: solid 2px #000000;padding-top: 5px;padding-bottom:5px;"><p class="upperP"><span>收件人: <span class="getName">'+arrayOrder[i].getName+'</span></span> <br>';
@@ -146,7 +293,7 @@ function initialLabel(){
         printHtml+='<div class="col-4" style="border-right:solid 2px #000000"><div class="container" style="padding:0px;"><div class="col-12" style="padding-top: 10px"><p>件數: 1</p>';
         printHtml+='</div><div class="col-12" style="padding-top: 10px"><p>重量:<span class="weight">'+arrayOrder[i].weight+'</span> kg</p></div></div></div><div class="col-4" style="padding: 0px 3px 0px 0px;">';
         printHtml+='<div class="container center" style="padding: 0px;"><div class="col-12" style="padding: 5px;border-bottom: solid 2px #000000"><b>四方格</b></div>';
-        printHtml+='<div class="col-12 size" style="padding: 5px"><b>LOCAL_KINGS</b></div></div></div></div>';
+        printHtml+='<div class="col-12 size" style="padding: 5px"><b>LOCAL_ARES</b></div></div></div></div>';
         printHtml+='<div class="row"><div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">';
         printHtml+='<p class="sendTime">'+arrayOrder[i].sendTime+'</p></div><div class="col-4" style="padding-top: 5px;padding-bottom: 5px;border-right:solid 2px #000000">';
         printHtml+='<p>簽名:<br>日期:</p></div><div class="col-4 center" style="font-size:24px;padding-top: 5px;"><b class="barcodeEnd">'+barcodeEnd+'</b></div></div></div>';
@@ -173,33 +320,46 @@ function initialLabel(){
         // 
         printHtml+='<div class="col-6" style="padding: 0px 3px 0px 0px;"><div class="container center" style="padding: 0px;">';
         printHtml+='<div class="col-12" style="padding-top: 6px;padding-bottom: 6px;border-bottom: solid 2px #000000"><b>四方格</b></div><div class="col-12" style="padding-top: 6px">';
-        printHtml+='<b>件數:1</b></div></div></div></div></div></div></div></div>';
+        printHtml+='<b>件數:1</b></div></div></div></div></div></div></div>';
     }
-    $("body").prepend(printHtml);
-    // Outlets.areaId=arrayOrder[i].getAreaId;
-    for(let i=0;i<arrayOrder.length;i++){
-        JsBarcode("#barcode1"+i, arrayOrder[i].barcode,{
-            height: 60,
-            fontSize: 12,
-        });
-        JsBarcode("#barcode2"+i, arrayOrder[i].barcode,{
-            height: 60,
-            width:1.4,
-            fontSize: 12,
-        });
+        $(".print").html(printHtml);
+        // Outlets.areaId=arrayOrder[i].getAreaId;
+        for(let i=0;i<arrayOrder.length;i++){
+            JsBarcode("#barcode1"+i, arrayOrder[i].waybillNo,{
+                height: 60,
+                fontSize: 12,
+            });
+            JsBarcode("#barcode2"+i, arrayOrder[i].waybillNo,{
+                height: 60,
+                width:1.4,
+                fontSize: 12,
+            });
+        }
+        changeInfo(arrayOrder);
+      }else{
+        layer.msg('查詢失敗',{icon:2,time:1000});
+      }
+    },
+    error:function(res){
+        layer.msg('查詢失敗',{icon:2,time:1000});
     }
+  });
+}
 
-    
-    //different company,differnt logo
-    // switch($.cookie("username")){
-        
-    // }
-    $.post(urls+'outlets/getOutletsLikeAll',Outlets,function(res){
+//change some info
+function changeInfo(order){
+    let Outlets = {
+        areaId : 0,
+        address : '',
+        addressEn : ''
+    };
+    $.post(baseUrl+'outlets/getOutletsLikeAll',Outlets,function(res){
+        let arrayOrder=order;
         for(let i=0;i<arrayOrder.length;i++){
             if(arrayOrder[i].type=="HOME_DELIVERY"){
                 for(let j=0;j<res.length;j++){
                     if(res[j].area.id==arrayOrder[i].getAreaId){
-                        $(".print").eq(i).find(".getPickUpPoint").text("KINGS物流");
+                        $(".print").eq(i).find(".getPickUpPoint").text("Ares物流");
                         $(".print").eq(i).find(".getAreaId").text(res[j].area.area);
                         let length=arrayOrder[i].length;
                         let width=arrayOrder[i].width;
@@ -228,6 +388,7 @@ function initialLabel(){
         //make block responsive
         for(let i=0;i<arrayOrder.length;i++){
             let currentSize=$(".upperP").eq(i).innerHeight();
+            console.log(currentSize)
             if(arrayOrder[i].type=="HOME_DELIVERY"){
                 $(".upperP").eq(i).css("font-size",15*size/currentSize+"px");
                 $(".lowerP").eq(i).css("font-size",15*size/currentSize+"px");
@@ -235,16 +396,48 @@ function initialLabel(){
                 $(".lowerP").eq(i).css("line-height",18*size/currentSize+"px");
             }
         }
-
-
+        // $(".print").show();
+        window.print();
     });
 }
+
+//autoSelect()
+function autoSelect(e){
+    if($(e).val()==""){
+        return;
+    }
+    $(e).select();
+
+}
+
 function getBaseUrl(){
-    // return 'http://192.168.100.104:8777/'; 
+    return 'http://192.168.100.104:8888/';
+     
+    // return 'http://223.197.188.172:10066/';
     //return 'http://192.168.100.252:8083/';
-    return 'http://8.210.123.128:8888/';     
+    // return 'http://8.210.123.128:8888/';     
     //production
     // return 'http://122.10.80.32:8888/';
+}
+
+//check string
+function checkStr(e){
+    let reg=/^\w+$/;
+    if($(e).val()==""){
+      layer.msg('該欄位不能為空！',{icon:2,time:1500});
+        return false;
+    }
+    if(!reg.test($(e).val())){
+    layer.msg('包含特殊字符！',{icon:2,time:1500});
+    $(e).val("");
+    return false;
+    }else{
+    return true;
+    }
+}
+
+function checkLogin(){
+
 }
 </script>
 </html>

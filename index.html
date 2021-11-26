@@ -23,7 +23,7 @@
 <body>
   <!-- nav beigin -->
   <nav class="navbar navbar-expand-lg navbar-dark ">
-    <a class="navbar-brand" href="/index.html"><img src="__IMG__/logo.png" alt=""></a>
+    <a class="navbar-brand" href="/index.html"><img src="__IMG__/kings_logo_transprent.svg" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -73,7 +73,7 @@
   <!-- display theme image begin -->
   <div class="theme_image position-relative">
     <span class="theme_text position-absolute bannerText">
-      Ares物流系統
+      King's物流系統
     </span>
     <img src="__IMG__/index.jpg" class="img-fluid" alt="theme image">
   </div>
@@ -110,7 +110,7 @@
     <div class="footer_bottom d-flex justify-content-center flex-column align-items-center">
       <div class="contact">
         客服電話：+852 2353 0188 &nbsp;
-        電子郵件：info@hkares.com
+        電子郵件：info@kings-hk.com
       </div>
       <div class="bottom_text">
         地址: 新蒲崗大有街1號 勤達中心1208室
@@ -201,6 +201,21 @@
       $('#rightNav').html(data);
     });
   });
+
+  function showAlert(){
+    if(localStorage.getItem("showLog")!=1){
+      localStorage.setItem("showLog",1);
+      let strHtml="";
+      strHtml+="<div class='logDiv'><img style='width:100%;height:auto;' src='./__IMG__/log.png'/>";
+      strHtml+="<p style='margin-top:1rem;'>由於雙十一活動期間訂單數量較多，所有訂單或會有所延誤，請耐心等候。";
+      strHtml+="如若帶來不便，深感抱歉，敬請原諒。</p>";
+      strHtml+='<p>We sincerely apologize for the inconvenient caused by delayed deliveries.Our team is working to deliver as quickly and safely as';
+      strHtml+=" possible,and we expect the backlog of 4PX packages from the recent servere Double Eleven event will be cleared by this weekend."
+      strHtml+='</div>'
+      layer.open({title:"公告",content:strHtml,skin:'logWindow'});
+    }
+
+  }
 
 </script>
 </body>
