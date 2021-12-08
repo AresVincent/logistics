@@ -84,6 +84,12 @@
     tr.red{
       background-color: red !important;
     }
+    .mb-2{
+      margin-bottom: 10px;
+    }
+    .standard_md{
+      margin-left: 15px;
+    }
   </style>
 </head>
 
@@ -179,18 +185,24 @@
 
 <section class="content">
   <div class="row">
-    <div class="date_search col-md-3 col-6">
-      <div>
-        <label for="date_range" class="riqidate col-4 mb-0">日期：</label>
-        <input type="text" class="date_picker pl-2 col-8" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+    <div class="date_search col-md-6 col-6 standard_md">
+      <div class="row mb-2">
+        <label for="date_range" class="riqidate col-4 mb-0">收件日期：</label>
+        <input type="text" class="date_picker col-8" name="dates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
       </div>
     </div>
-    <div class="input-group col-md-9 col-6">
-      <input type="text" class="form_input rounded-sm col-md-6 col-8" id="search" placeholder="請輸入包裹號" />
-      <div class="input-group-append col-md-3 col-4 ">
+    <div class="date_search col-md-6 col-6 standard_md">
+      <div class="row mb-2">
+        <label for="date_range" class="riqidate col-4 mb-0">下单日期：</label>
+        <input type="text" class="date_picker col-8" name="pickupDates" value=" " data-locale='{"format":"YYYY/MM/DD"}'>
+      </div>
+    </div>
+    <div class="input-group col-md-9 col-6 standard_md">
+      <input type="text" class="form_input rounded-sm col-md-6 col-8 mb-2" id="search" placeholder="請輸入包裹號" />
+      <div class="input-group-append col-md-3 col-4 mb-2">
         <button onsubmit="return false;" class="input-group-text btn_search"  style="width: 100%;justify-content: center;">賬單查詢</button>
       </div>
-      <div class="input-group-append col-md-3 col-4 ">
+      <div class="input-group-append col-md-3 col-4 mb-2">
         <button onsubmit="return false;" class="input-group-text btn_export" id="generate-excel"  style="width: 100%;justify-content: center;">批量導出</button>
       </div>
     </div>
@@ -381,6 +393,8 @@ hasToken();
   //global variable to save starttime and endtime
   var startTime=YMD(new Date());
   var endTime=YMD(new Date());
+  //控制表格根据那个顺序来排列
+  var sortingType=1;
   $(function(){    
     $('.ReloadButton').click(function(){
       location.href = location.href
@@ -411,9 +425,28 @@ hasToken();
       // localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
       printData.excStartTime=start.format('YYYY-MM-DD');
       printData.excEndTime=end.format('YYYY-MM-DD');
-      checkOrderAll()
+      sortingType=1;
+      checkOrderAll();
     });
     
+    $('input[name="pickupDates"]').daterangepicker({
+      opens: 'center'
+    }, function (start, end, label) {
+      // console.log("选择了一个新的日期: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      Data.excStartTime = start.format('YYYY-MM-DD')
+      Data.excEndTime = end.format('YYYY-MM-DD')
+      // save startTime and endTime
+      startTime=start.format('YYYY-MM-DD');
+      endTime=end.format('YYYY-MM-DD');
+      // $.cookie("startTime",start.format('YYYY-MM-DD'));
+      // $.cookie("endTime",end.format('YYYY-MM-DD'));
+      // localStorage.setItem("startTime",start.format('YYYY-MM-DD'));
+      // localStorage.setItem("endTime",end.format('YYYY-MM-DD'));
+      printData.excStartTime=start.format('YYYY-MM-DD');
+      printData.excEndTime=end.format('YYYY-MM-DD');
+      sortingType=2;
+      checkOrderAll();
+    });
     //first loading
     checkOrderAll();
     //bind the export function
@@ -424,7 +457,9 @@ hasToken();
         printData.excEndTime=YMD(new Date());
       }
     $(".loading_wrap").show();
-    $.post(getBaseUrl() + 'order/likeOrderUserById',printData,function(res){
+    //按照收件日期排序
+    let path=sortingType==1? 'order/likeOrderUserById':'order/likeOrderUserByIdAdmin';
+    $.post(getBaseUrl() + path,printData,function(res){
         let list=res.list;
         
         for(let i=0;i<list.length;i++){
@@ -568,9 +603,10 @@ function newYMD(date){
   //check order record
 function checkOrderAll(){ 
     var url = getBaseUrl();
+    let path=sortingType==1? 'order/likeOrderUserById':'order/likeOrderUserByIdAdmin';
     $(".loading_wrap").show();
     $.ajax({
-      url:url+"order/likeOrderUserById",
+      url:url+path,
       data:Data,
       type:'post',
       dataType:"json",
@@ -613,7 +649,7 @@ function checkOrderAll(){
             pagestr+='<li class="page-item page-block"><a class="page-link" href="javascript:void(0)" onclick="jump('+res.pages+')">...</a></li>';
           }
           pagestr += '<li class="page-item page-block"><a class="page-link next" href="javascript:void(0)">></a></li>';
-          $('.pagination-sm').html(pagestr)
+          $('.pagination-sm').html(pagestr);
         }else{
           $('.pagination-sm').html('');
         }

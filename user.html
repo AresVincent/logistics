@@ -198,7 +198,8 @@
         <thead class="">
           <tr class="thth">
             <th style="width: 1%;min-width: 50px;"><input type="checkbox" class="select_all" onchange="selectAll(this)" style="width:24px;height:24px;vertical-align: text-bottom;" /></th>
-            <th style="width: 5%;min-width:50px;">包裹號</th>
+            <th style="width: 5%;min-width:80px;">包裹號</th>
+            <th style="width: 5%;min-width:80px;">運單號</th>
             <th style="width: 9%;min-width:120px;">下單時間</th>
             <th style="width: 9%;min-width:150px;">上門收件日期</th>
             <th style="width: 7%;min-width:100px;">包裹狀態</th>
@@ -206,7 +207,7 @@
             <th style="width: 2%;min-width:100px;">運費金額</th>
             <th style="width: 3%;min-width:120px;">收貨人姓名</th>
             <th style="width: 3%;min-width:120px;">收貨人電話</th>
-            <th style="width: 32%;min-width:150px;">收貨地址</th>
+            <th style="width: 27%;min-width:150px;">收貨地址</th>
             <th style="width: 1%;min-width:80px;text-align: center">快遞單</th>
           </tr>
         </thead>
@@ -471,7 +472,7 @@ function getOrderList()
             }
             html += '<tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false">'
             html += '<td onclick="event.stopPropagation();"><input name="isPrint" class="isPrint" type="checkbox" style="width:24px;height:24px;"></td>' ;
-            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+'</td><td>'+list[i].sendTime+'</td><td>'+newYMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
+            html += '<td onclick="event.stopPropagation();">'+list[i].orderNo+"</td><td>"+list[i].waybillNo+'</td><td>'+list[i].sendTime+'</td><td>'+newYMD(list[i].pickupDate)+'</td><td>'+status+'</td><td>'+list[i].weight+'kg</td><td>$'+list[i].price+'</td><td>'+list[i].getName+'</td><td>'+list[i].getPhone+'</td><td>'+list[i].getAddress+'</td><td style="text-align: center"><a href="javascript:void(0);"  data-orderNo="'+list[i].orderNo+ '" onclick="printWayBill(this)">列印</a></td>'
             html += '</tr>' ;
             // html+='<tr class="childTr" data-show="false""><td colspan="9" class="childTd"><div class="tableDetail" style="display:none;"><table style="margin:auto auto;" width="100%"><tr><td>種類</td><td>數量</td></tr>';
             // html+='<tbody><tr><td width="50%">type</td><td width="50%">20</td</tr></tbody>';

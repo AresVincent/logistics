@@ -988,7 +988,7 @@
             return false;
           }
         }
-        if($('select[name="get_pickupPoint"]').val()==""){
+        if($('select[name="get_pickupPoint"]').val()==""&& type!="HOME_DELIVERY"){
           layer.msg($('select[name="get_pickupPoint"] option:selected').text(),{icon:2});
           return false;
         }

@@ -297,7 +297,8 @@ function connect() {
                         }
                     }
                     let size="";
-                    if((res[i].orderList[j].length+res[i].orderList[j].width+res[i].orderList[j].height<150)&&res[i].orderList[j].weight<=30){
+                    if((res[i].orderList[j].length+res[i].orderList[j].width+res[i].orderList[j].height<200)&&res[i].orderList[j].weight<=30&&
+                    res[i].orderList[j].length<=140&&res[i].orderList[j].height<=140&&res[i].orderList[j].width<=140){
                         size="小件";
                     }else{
                         size="大件";
