@@ -356,7 +356,7 @@ $(function () {
 function getBaseUrl(){
     // return 'http://192.168.100.104:8777/'; 
     // return 'http://192.168.100.103:8083/';
-    return 'http://8.210.123.128:8888/';
+    return 'https://logistics.kings-hk.com:8888/';
     //   return 'http://122.10.80.32:8888/'; 
 }
 function getLeftMenu(menuName){
