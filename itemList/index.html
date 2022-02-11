@@ -183,7 +183,7 @@
        
     });
     function baseUrl(){ 
-        // return 'http://192.168.100.104:8777/'; 
+        // return 'https://192.168.100.104:8777/'; 
     // return 'http://192.168.100.252:8083/';
     return 'https://logistics.kings-hk.com:8888/'; 
     // return 'http://122.10.80.32:8888/';
@@ -265,14 +265,14 @@ function connect() {
                 itemHtml+='<div class="tableContainer" style="margin: 0px;padding: 20px 20px 0px 20px;">';
                 itemHtml+='<div class="row"><img class="no-padding col-2" src="kings_logo_colour.svg" style="height: 50px; width:auto;">';
                 itemHtml+='<div class="col-8 no-padding" style="padding-top: 6px;text-align: center;margin-bottom: 20px;">';
-                itemHtml+='<h3><b>貨物交接表格</b></h3></div><img class="col-2 no-padding" src="4px.png" style="height: 44.83px; width:auto;"></div>';
+                itemHtml+='<h3><b>貨物交接表格</b></h3></div></div>';
                 //header part
                 itemHtml+='<div class="row"><div class="col-6 no-padding"><div class="row"><b class="col-4">日期：</b>';
                 itemHtml+='<span class="col-8 date" id="date"></span>';
                 itemHtml+='</div><div class="row"><b class="col-4">寄貨公司：</b><span class="col-8">'+res[i].name+'</span></div>';
                 // itemHtml+='<div class="row"><b class="col-4">聯絡人：</b><span class="col-8">Oscar Lau</span></div>';
                 itemHtml+='<div class="row"><b class="col-4">電話號碼：</b><span class="col-8">'+res[i].phone+'</span></div></div><div class="col-6 no-padding">';
-                itemHtml+='<div class="row"><b class="col-4">收貨公司：</b><span class="col-8">4PX 遞四方</span></div>';
+                // itemHtml+='<div class="row"><b class="col-4">收貨公司：</b><span class="col-8">4PX 遞四方</span></div>';
                 if(warehouse==''){
                     itemHtml+='<div class="row"><b class="col-4">上門收貨地址:</b>';
                 }else{
@@ -283,7 +283,12 @@ function connect() {
                 //table part
                 itemHtml+='<div class="heading margin_space" style="text-align: left;margin-top:20px;"><h5><b>貨物資料如下: (共'+res[i].orderList.length+'箱)</b></h5></div>';
                 itemHtml+='<div class="no-padding" style="margin-bottom: 10px;"><table width="2000" class="col-12">';
-                itemHtml+='<tr><th width="6%">項目</th><th width="30%">內容</th><th width="16%">貨物單號</th><th width="10%">每件重量(kg)</th>';
+                if(res[i].name=="King's Washing"){
+                    itemHtml+='<tr><th width="6%">項目</th><th width="15%">內容</th><th width="15%">客人地址</th><th width="16%">貨物單號</th><th width="10%">每件重量(kg)</th>';
+
+                }else{
+                    itemHtml+='<tr><th width="6%">項目</th><th width="30%">內容</th><th width="16%">貨物單號</th><th width="10%">每件重量(kg)</th>';
+                }
                 itemHtml+='<th width="10%">規格(長*寬*高)</th><th width="10%">規格分類</th><th width="10%">如有請<b>✓</b></th></tr>'; 
                 for(let j=0;j<res[i].orderList.length;j++){
                     itemHtml+='<tr><td>'+(j+1)+'</td><td>';
@@ -303,7 +308,12 @@ function connect() {
                     }else{
                         size="大件";
                     }
-                    itemHtml+=itemType+'</td><td>'+res[i].orderList[j].waybillNo+'</td><td>'+res[i].orderList[j].weight+'kg</td>';
+                    itemHtml+=itemType+'</td>';
+                    if(res[i].name=="King's Washing"){
+                        itemHtml+='<td>'+res[i].orderList[j].getAddress+'</td>'+'<td>'+res[i].orderList[j].waybillNo+'</td><td>'+res[i].orderList[j].weight+'kg</td>';
+                    }else{
+                        itemHtml+='<td>'+res[i].orderList[j].waybillNo+'</td><td>'+res[i].orderList[j].weight+'kg</td>';
+                    }
                     itemHtml+='<td>'+res[i].orderList[j].length+'cm*'+res[i].orderList[j].width+'cm*'+res[i].orderList[j].height+'cm</td>'+'<td>'+size+'</td>';
                     itemHtml+='<td></td></tr>';
                 }
@@ -311,7 +321,7 @@ function connect() {
                 //bottom part
                 itemHtml+='<div class="row" style="margin-bottom: 60px;"><h6><b>如上述資料數目無誤，雙方於下方簽署及蓋上公司印作實。</b></h6></div>';
                 itemHtml+='<div class="row"><div class="col-4" style="border-top:solid 1px #000000"><b >'+res[i].name+'</b></div>';
-                itemHtml+='<div class="col-2"></div><div class="col-5" style="border-top:solid 1px #000000"><b style="font-size:8px;">4PX Worldwide Express Co., Ltd.</b>';
+                itemHtml+='<div class="col-2"></div><div class="col-5" style="border-top:solid 1px #000000"><b>簽收人</b>';
                 itemHtml+='</div></div>';
                 itemHtml+='</div>';
             }

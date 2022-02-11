@@ -127,7 +127,7 @@
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="7">
-            <a href="javascript:void(0)" class="signOneHalfOf">已超時</a>
+            <a href="javascript:void(0)" class="signOneHalfOf">已超時/再次派送</a>
             <span class="line"></span>
           </li>
         </ul>
@@ -467,7 +467,13 @@ function getOrderList()
                         status = '已簽收'
                         break;
                     case "7" :
-                        status= '自提件已超時'
+                        status= '自提件已超時';
+                        if(list[i].type=="HOME_DELIVERY"){
+                              status="需要二次派送"
+                        }
+                        break;
+                    default:break;
+
                 }
             }
             html += '<tr class="upperTr" onclick="toggleTable(this)" data-orderNo="'+list[i].orderNo+'" data-show="false">'
@@ -828,7 +834,12 @@ function gotoFragile(){
                             status = '已簽收'
                             break;
                         case "7" :
-                            status= '自提件已超時'
+                            status= '自提件已超時';
+                            if(list[i].type=="HOME_DELIVERY"){
+                              status="需要再次派送"
+                            }
+                            break;
+                        default:break;
                     }
                 }
 

@@ -857,7 +857,12 @@
             $(this).val("")
             return;
           }
-            
+          //新年假期不提供上門服務
+          if(new Date(selectedDate).getTime()>=new Date("2022/1/30").getTime()&&new Date(selectedDate).getTime()<=new Date("2022/2/3").getTime()){
+            layer.msg("因農曆新年假期關係，2022年1月30日至2022年2月3日的收件服務將會暫停，如因此帶來任何不便，深感抱歉！");
+            $(this).val("")
+            return;
+          }
         }
       });
     });
@@ -1116,7 +1121,6 @@
           height:height,
           length:length,
           pickUp:$("input[name='isHomeTake']").prop("checked"),
-          // pickUp:true
         };
         if(weight == ''){
           layer.msg('重量為空',{icon:2,time:1500});
