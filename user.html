@@ -111,15 +111,15 @@
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="3">
-            <a href="javascript:void(0)" class="inTransit">倉庫簽出</a>
+            <a href="javascript:void(0)" class="inTransit">轉運中</a>
             <span class="line"></span>
           </li>
-          <!-- |<li class="nav_top_li" data-status="4">
-            <a href="javascript:void(0)" class="signedIn">再次派送</a>
+          |<li class="nav_top_li" data-status="4">
+            <a href="javascript:void(0)" class="signedIn">派送中</a>
             <span class="line"></span>
-          </li> -->
+          </li>
           |<li class="nav_top_li" data-status="5">
-            <a href="javascript:void(0)" class="toBeSigned">已上架</a>
+            <a href="javascript:void(0)" class="toBeSigned">自提件已上架</a>
             <span class="line"></span>
           </li>
           |<li class="nav_top_li" data-status="6">
@@ -127,7 +127,7 @@
             <span class="line"></span>
           </li>|
           <li class="nav_top_li" data-status="7">
-            <a href="javascript:void(0)" class="signOneHalfOf">已超時/再次派送</a>
+            <a href="javascript:void(0)" class="signOneHalfOf">派送異常</a>
             <span class="line"></span>
           </li>
         </ul>
@@ -455,7 +455,7 @@ function getOrderList()
                         status = '倉庫簽入'
                         break;
                     case "3" :
-                        status = '倉庫簽出'
+                        status = '轉運中'
                         break;
                     case "4" :
                         status = '派送中'
@@ -467,10 +467,7 @@ function getOrderList()
                         status = '已簽收'
                         break;
                     case "7" :
-                        status= '自提件已超時';
-                        if(list[i].type=="HOME_DELIVERY"){
-                              status="需要二次派送"
-                        }
+                        status= '派送異常';
                         break;
                     default:break;
 
@@ -723,61 +720,6 @@ function gotoFragile(){
 
   }
   $(document).ready(function(){
-    //for batch print
-    // $(".batch_print").click(function(){
-    //   let orderList=[];
-    //    for(let i=0;i<$(".isPrint").length;i++){
-    //     if($(".isPrint").eq(i).prop("checked")){
-    //      orderList.push($(".isPrint").eq(i).closest(".upperTr").attr("data-orderno"));
-    //     }
-    //    }
-    //    if(orderList.length<1){
-    //      layer.msg("至少勾選一項才能執行該功能",{icon:2,time:1000});
-    //      return;
-    //    }
-    //    let token=$.cookie("token");
-    //    let baseUrl=getBaseUrl();
-    //    let data={token:token,orderNo:orderList};
-    //    $.ajax({
-    //     url:baseUrl+'order/getOrderByOrderNoAndToken',
-    //     data:JSON.stringify(data),
-    //     type:'POST',
-    //     dataType:'json',
-    //     contentType:"application/json;charset=utf-8",
-    //     success: function(res){
-    //       // console.log(res)
-    //       if(res.code == 200){
-    //         let arrayOrder=[];
-    //         let item;
-    //         for(let i=0;i<res.data.length;i++){
-    //           item={
-    //             "getName":res.data[i].getName,
-    //             "getPhone":res.data[i].getPhone,
-    //             "getAddress":res.data[i].getAddress,
-    //             "getPickUpPoint":res.data[i].getPickUpPoint,
-    //             "type":res.data[i].type,
-    //             "getAreaId":res.data[i].getAreaId,
-    //             "price":res.data[i].price,
-    //             "weight":res.data[i].weight,
-    //             "sendTime":res.data[i].sendTime,
-    //             "barcode":res.data[i].waybillNo,
-    //             "orderNo":res.data[i].orderNo
-    //           };
-    //           arrayOrder.push(item);
-    //         }
-    //         arrayOrder=JSON.stringify(arrayOrder);
-    //         localStorage.setItem("arrayOrder",arrayOrder);
-    //         if($.cookie("username").includes("lalamove")){
-    //           window.open("/waybill/lalamovewaybill_pickup.html",'_blank');
-    //         }else{
-    //           window.open("/waybill/waybill_pickup.html",'_blank');
-    //         }
-    //       }else{
-    //         layer.msg('查詢失敗',{icon:2,time:1000});
-    //       }
-    //     }
-    //   });
-    // });
 
     //export excel 
         $("#generate-excel").off("click").on("click",function(){
@@ -822,7 +764,7 @@ function gotoFragile(){
                             status = '倉庫簽入'
                             break;
                         case "3" :
-                            status = '倉庫簽出'
+                            status = '轉運中'
                             break;
                         case "4" :
                             status = '派送中'
@@ -834,10 +776,7 @@ function gotoFragile(){
                             status = '已簽收'
                             break;
                         case "7" :
-                            status= '自提件已超時';
-                            if(list[i].type=="HOME_DELIVERY"){
-                              status="需要再次派送"
-                            }
+                            status= '派送異常';
                             break;
                         default:break;
                     }

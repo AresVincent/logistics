@@ -471,7 +471,7 @@ hasToken();
                     status = '倉庫簽入'
                     break;
                 case "3" :
-                    status = '倉庫簽出'
+                    status = '轉運中'
                     break;
                 case "4" :
                     status = '派送中'
@@ -483,7 +483,7 @@ hasToken();
                     status = '已簽收'
                     break;
                 case "7" :
-                    status= '自提件已超時'
+                    status= '派送異常'
             }
             let status2,status3,status4,status5,status6;
             if(list[i].status2Time==null){
@@ -678,7 +678,7 @@ function checkOrderAll(){
               }
               break;
           case "3" :
-              status = '倉庫簽出';
+              status = '轉運中';
               if(getTime(new Date())-getTime(list[i].status3Time)>3600*24*1000*2){
                 str+='<tr class="red">';
                 break;
@@ -715,7 +715,7 @@ function checkOrderAll(){
               str+='<tr>'
               break;
           case "7" :
-              status= '自提件已超時';
+              status= '派送異常';
               str+='<tr class="red">';
               break;
           default:break;

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head type="text/css" media="print">
+    <meta charset="UTF-8">
+    <title>Print Order Test</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        @page {
+            size: A6;
+            margin: 0;
+        }
+        html,body{
+            height:150mm;
+            width:100mm;
+            font-family: 微軟正黑體;
+            font-weight: bold;
+        }
+        @media print {
+            @page {
+                size: 100mm 150mm;
+                /* you can also specify margins here: */
+                margin: 0mm;
+                margin-right: 0mm; /* for compatibility with both A4 and Letter */
+            }
+            .print{
+                page-break-after: always;
+            }
+            .noPrint{
+                display: none;
+            }
+        }
+        .center{
+            text-align: center;
+        }
+        .print{
+            height:150mm;
+            width:100mm;
+        }
+        .print_upper{
+            height:90mm;
+            width:100mm;
+            border: 2px solid #000;
+            border-bottom:solid 1px #d5d5d5;
+            border-collapse: collapse;
+        }
+        .print_lower{
+            height:60mm;
+            width:100mm;
+            /*border:dotted 1px #f00;*/
+            border: 2px solid #000;
+            border-top: none;
+            border-collapse: collapse;
+        }
+        .logo{
+            width: 100%;
+            height: auto;
+        }
+        .border-t1{
+            border-top: 2px solid #000;
+        }
+        .border-b1{
+            border-bottom: 2px solid #000;
+        }
+        .border-l1{
+            border-left: 2px solid #000;
+        }
+        .border-r1{
+            border-right: 2px solid #000;
+        }
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .row p{
+            margin-bottom: 0;
+        }
+        .lastSix{
+            font-size: 24px;
+        }
+        .rotate{
+            transform: rotate(90deg);
+        }
+        .textCenter{
+            text-align: center;
+        }
+        .sectionRow{
+            height: 144px;
+        }
+        .btn{
+            border: 1px solid grey;
+        }
+        .noPrint{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="body">
+    <div class="noPrint container" id="noPrint">
+        <div class="row  gx-3" >
+            <div class="col-4"><button type="button" class="exportImg btn">導出圖片</button></div>
+            <div class="col-4"><button type="button" class="exportPDF btn">導出PDF</button></div>
+            <div class="col-4"><button type="button" class="printBtn btn">打印</button></div>
+        </div>
+    </div>
+    <div class="print">
+        <div class="waybillBox">
+            <div class="print_upper container">
+                <div class="row border-b1">
+                    <div class="col-4 center"><img class="logo" src="img/JD.jpg" /></div>
+                    <div class="col-8"><svg id="barcode1"></svg></div>
+                </div>
+                <div class="row border-b1">
+                    <div class="col-8 border-r1 sectionRow">
+                        <section class="infoSection">
+                            <p>收件人：<span>測試</span></p>
+                            <p>電話：<span class="phone">+85212345678</span></p>
+                            <p>地址：<span class="address">黃大仙區新蒲崗大有街1號, Midas Plaza, 1208室</span></p>
+                            <p>備註<span class="remark"></span></p>
+                            <p>注：免收附加費</p>
+                        </section>
+                    </div>
+                    <div class="col-4">
+                        <div class="row textCenter" style="height: 100%;">
+                            <div class="col-12 border-b1 center" style="height:33.3%;"> <p><b>派送</b></p></div>
+                            <div class="col-12 border-b1 center" style="height:33.3%;"><p style="opacity:0;">派送上門</p></div>
+                            <div class="col-12 center" style="height:33.3%;"><p><b>黃大仙區</b></p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-b1">
+                    <div class="col-4 border-r1 center" style="font-size: 14px;">付款方式：寄付</div>
+                    <div class="col-4 border-r1">
+                        <div class="row" >
+                            <div class="col-12">
+                                <p>件數：<span class="amount"></span></p>
+                            </div>
+                            <div class="col-12">
+                                <p>重量:<span class="weight"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row textCenter">
+                            <div class="col-12 border-b1 center">
+                                <p><b>KING'S</b></p>
+                            </div>
+                            <div class="col-12 center">
+                                <p class="type"><b>細件</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="font-size:14px;">
+                    <div class="col-4 border-r1">
+                        <p class="createTime">2022-01-24 11:45:29</p>
+                    </div>
+                    <div class="col-4 border-r1" >
+                        <div class="row">
+                            <div class="col-12">
+                                <p>簽名：</p>
+                            </div>
+                            <div class="col-12">
+                                <p>日期：</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 textCenter center lastSix"><b>456789</b></div>
+                </div>
+            </div>
+            <div class="print_lower container">
+                <div class="row" style="height: 100%;">
+                    <div class="col-4 border-r1">
+                        <img src="img/JD.jpg" class="logo" /> 
+                        <div class="row">
+                            <div class="col-12 rotate">
+                                <svg id="barcode2"></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="row"><p class="col-4 border-r1">派送</p><p class="col-8">黃大仙區</p></div>
+                        <div class="row border-t1 border-b1">
+                            <div class="col-12 sectionRow">
+                                <section class="infoSection">
+                                    <p>收件人：<span>測試</span></p>
+                                    <p>電話：<span class="phone">+85212345678</span></p>
+                                    <p>地址：<span class="address">黃大仙區新蒲崗大有街1號, Midas Plaza, 1208室</span></p>
+                                    <p>備註<span class="remark"></span></p>
+                                    <p>注：免收附加費</p>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p class="col-6 border-r1 center" style="font-size: 14px;">付款方式：寄付</p>
+                            <div class="col-6">
+                                <div class="row">
+                                    <p class="col-12 border-b1">KING'S</p>
+                                    <p class="col-12">件數：<span class="amount">1</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="downloadImg" id="downloadImg" href="" download="waybill.png"  style="display: none;"></a>
+  <script rel="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script rel="text/javascript" src="js/JsBarcode.code128.min.js"></script>
+  <script rel="text/javascript" src="js/bootstrap.js"></script>
+  <script rel="text/javascript" src="js/html2canvas.min.js"></script>
+  <script rel="text/javascript" src="js/jspdf.umd.js"></script>
+</body>
+
+<script>
+$.fn.extend({
+    print: function() {
+        var frameName = 'printIframe';
+        var doc = window.frames[frameName];
+        if (!doc) {
+            $('<iframe>').hide().attr('name', frameName).appendTo(document.body);
+            doc = window.frames[frameName];
+        }
+        doc.document.body.innerHTML = this.html();
+        doc.window.print();
+        return this;
+    }
+});
+JsBarcode("#barcode1","905123456789",{
+            height: 60,
+            fontSize: 12,
+        });
+JsBarcode("#barcode2","905123456789",{
+    height: 60,
+    width:1.4,
+    fontSize: 12,
+});
+
+$(function(){
+
+    resizeInfo();
+
+    $(".exportImg").click(function(){
+        html2canvas($('.print')[0],{scale:1}).then(function(canvas){
+            let img=canvas.toDataURL("image/png ",1);
+            $(".downloadImg").attr("href",img);
+            document.getElementById("downloadImg").click();
+        })
+    });
+    $(".exportPDF").click(function(){
+
+        html2canvas($('.print')[0],{scale:3}).then(function(canvas){
+            let img=canvas.toDataURL("image/png ",1);
+            let doc=new jspdf.jsPDF(
+            '',
+            "px",
+            [canvas.width/3,canvas.height/3]
+            );
+            doc.addImage(img,0,0,canvas.width/3,canvas.height/3);
+            doc.save("waybill.pdf")
+            $(".noPrint").show();
+        })
+    })
+    $(".printBtn").click(function(){
+        window.print();
+    })
+})
+
+function resizeInfo(){
+    const size=144;
+    let scaleInfo=(size/$(".infoSection").innerHeight());
+    let fontSize=$(".infoSection").css("font-size").split("px")[0];
+    $(".infoSection").css("font-size",fontSize*scaleInfo+'px');
+}
+
+</script>
+</html>

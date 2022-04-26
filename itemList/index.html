@@ -67,89 +67,7 @@
     </style>
 </head>
 <body>
-<!-- <div class="tableContainer" style="margin: 0px;padding: 20px 20px 0px 20px;">
-    <div class="row">
-        <img class="no-padding col-2" src="Ares logo.svg" style="height: 44.83px; width:auto;">
-        <div class="col-8 no-padding" style="padding-top: 6px;text-align: center;margin-bottom: 20px;">
-            <h3><b>貨物交接表格</b></h3>
-        </div>
-        <img class="col-2 no-padding" src="4px.png" style="height: 44.83px; width:auto;">
-    </div>
-    <div class="row">
-        <div class="col-6 no-padding">
-            <div class="row">
-                <b class="col-4">日期：</b>
-                <span class="col-8" id="date"></span>
-                <script>
-                    n =  new Date();
-                    y = n.getFullYear();
-                    m = n.getMonth() + 1;
-                    d = n.getDate();
-                    document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
-                </script>
-            </div>
-            <div class="row">
-                <b class="col-4">寄貨公司：</b>
-                <span class="col-8">Ares Solution Limited</span>
-            </div>
-            <div class="row">
-                <b class="col-4">聯絡人：</b>
-                <span class="col-8">Oscar Lau</span>
-            </div>
-            <div class="row">
-                <b class="col-4">電話號碼：</b>
-                <span class="col-8">85260155854</span>
-            </div>
-        </div>
-        <div class="col-6 no-padding">
-            <div class="row">
-                <b class="col-4">收貨公司：</b>
-                <span class="col-8">4PX 遞四方</span>
-            </div>
-            <div class="row">
-                <b class="col-4">收貨倉：</b>
-                <span class="col-8">觀塘倉</span>
-            </div>
-            <div class="row">
-                <b class="col-4">倉地址：</b>
-                <span class="col-8">觀塘海濱道167-169號地下</span>
-            </div>
-        </div>
-    </div>
-    <div class="heading margin_space" style="text-align: left;margin-top:20px;">
-        <h5><b>貨物資料如下: (共21箱)</b></h5>
-    </div>
-    <div class="no-padding" style="margin-bottom: 10px;">
-        <table width="2000" class="col-12">
-            <tr>
-                <th width="6%">項目</th>
-                <th width="50%">內容</th>
-                <th width="16%">貨物單號</th>
-                <th width="10%">每件重量</th>
-                <th width="10%">如有請<b>✓</b></th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>口罩</td>
-                <td>905102000585</td>
-                <td>1 kg</td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
-    <div class="row" style="margin-bottom: 60px;">
-        <h6><b>如上述資料數目無誤，雙方於下方簽署及蓋上公司印作實。</b></h6>
-    </div>
-    <div class="row">
-        <div class="col-4" style="border-top:solid 1px #000000">
-            <b >Ares Solution Limited</b>
-        </div>
-        <div class="col-2"></div>
-        <div class="col-5" style="border-top:solid 1px #000000">
-            <b style="font-size:8px;">4PX Worldwide Express Co., Ltd.</b>
-        </div>
-    </div>
-</div> -->
+
 
 
 <div class="loading_wrap position-fixed">
@@ -255,7 +173,7 @@ function connect() {
                     case "觀塘海濱道167-169號地下":
                         warehouse="觀塘倉";
                         break;
-                    case "屏廈路169號流浮山廈村海暉重櫃場對面":
+                    case "元朗田廈路205號":
                         warehouse="元朗倉";
                         break;
                     default:
@@ -276,7 +194,7 @@ function connect() {
                 if(warehouse==''){
                     itemHtml+='<div class="row"><b class="col-4">上門收貨地址:</b>';
                 }else{
-                    itemHtml+='<div class="row"><b class="col-4 stock">收貨倉：</b><span class="col-8">'+warehouse+'</span></div><div class="row"><b class="col-4">倉地址：</b>';
+                    itemHtml+='<div class="row"><b class="col-4">倉地址：</b>';
 
                 }
                 itemHtml+='<span class="col-8">'+res[i].sendAddress+'</span></div></div></div>';
@@ -287,9 +205,9 @@ function connect() {
                     itemHtml+='<tr><th width="6%">項目</th><th width="15%">內容</th><th width="15%">客人地址</th><th width="16%">貨物單號</th><th width="10%">每件重量(kg)</th>';
 
                 }else{
-                    itemHtml+='<tr><th width="6%">項目</th><th width="30%">內容</th><th width="16%">貨物單號</th><th width="10%">每件重量(kg)</th>';
+                    itemHtml+='<tr><th width="6%">項目</th><th width="15%">內容</th><th width="16%">貨物單號</th><th width="10%">每件重量(kg)</th>';
                 }
-                itemHtml+='<th width="10%">規格(長*寬*高)</th><th width="10%">規格分類</th><th width="10%">如有請<b>✓</b></th></tr>'; 
+                itemHtml+='<th width="10%">規格(長*寬*高)</th><th width="10%">規格分類</th><th width="15%">入倉時間</th><th width="10%">如有請<b>✓</b></th></tr>'; 
                 for(let j=0;j<res[i].orderList.length;j++){
                     itemHtml+='<tr><td>'+(j+1)+'</td><td>';
                     let itemType="";
@@ -302,7 +220,7 @@ function connect() {
                         }
                     }
                     let size="";
-                    if((res[i].orderList[j].length+res[i].orderList[j].width+res[i].orderList[j].height<200)&&res[i].orderList[j].weight<=30&&
+                    if((res[i].orderList[j].length+res[i].orderList[j].width+res[i].orderList[j].height<=200)&&res[i].orderList[j].weight<=30&&
                     res[i].orderList[j].length<=140&&res[i].orderList[j].height<=140&&res[i].orderList[j].width<=140){
                         size="小件";
                     }else{
@@ -315,6 +233,9 @@ function connect() {
                         itemHtml+='<td>'+res[i].orderList[j].waybillNo+'</td><td>'+res[i].orderList[j].weight+'kg</td>';
                     }
                     itemHtml+='<td>'+res[i].orderList[j].length+'cm*'+res[i].orderList[j].width+'cm*'+res[i].orderList[j].height+'cm</td>'+'<td>'+size+'</td>';
+                    let scanTime;
+                    res[i].orderList[j].status2Time==null ? (res[i].orderList[j].status3Time==null ? scanTime="尚未入倉":scanTime=res[i].orderList[j].status3Time) : scanTime=res[i].orderList[j].status2Time;
+                    itemHtml+='<td>'+scanTime+'</td>';
                     itemHtml+='<td></td></tr>';
                 }
                 itemHtml+='</table></div>';

@@ -164,32 +164,31 @@
             // console.warn(result.data);
             // console.log(result.data.length);
             document.getElementById("search_content").innerHTML = '';
-            var length = result.data.length-1
-            document.getElementById("search_content").innerHTML +=
-                    '<div class="time_line">\n' +
-                    '        <span class="line"></span>\n' +
-                    '        <div class="iconfont icon-yuancircle46"></div>\n' +
-                    '        <div class="state_text current_active">\n' +
-                    '          <span class="date">'+result.data[0].createTime+'&nbsp;&nbsp;&nbsp;</span>\n' +
-                    '          <span class="order_state">\n' +
-                    '            '+result.data[0].eventName +
-                    '          </span>\n' +
-                    '        </div>\n' +
-                    '      </div>';
-            for(var i=1; i<=length; i++){
-              document.getElementById("search_content").innerHTML +=
-                      '<div class="time_line">\n' +
+            let length = result.data.length;
+            let search_content='';
+            for(var i=0; i<length; i++){
+              search_content+='<div class="time_line">\n' +
                       '        <span class="line"></span>\n' +
-                      '        <div class="iconfont icon-yuancircle46"></div>\n' +
-                      '        <div class="state_text">\n' +
-                      '          <span class="date">'+result.data[i].createTime+'&nbsp;&nbsp;&nbsp;</span>\n' +
-                      '          <span class="order_state">\n' +
-                      '            '+result.data[i].eventName +
-                      '          </span>\n' +
-                      '        </div>\n' + 
-                      '      </div>';
+                      '        <div class="iconfont icon-yuancircle46"></div>\n';
+              if(i==0){
+                search_content+='        <div class="state_text current_active">\n';
+              }else{
+                search_content+='        <div class="state_text">\n';
+              }
+              search_content+='          <span class="date">'+result.data[i].createTime+'&nbsp;&nbsp;&nbsp;</span>\n' +
+              '          <span class="order_state">\n' +
+              '            '+result.data[i].eventName;
+              console.log(result.data[i].location)
+              if(result.data[i].location!=null){
+                search_content+='/'+result.data[i].location;
+              }
+              search_content+='          </span>\n' +
+              '        </div>\n' + 
+              '      </div>';
             }
+            document.getElementById("search_content").innerHTML = search_content;
           }
+         
         }
       })
     }

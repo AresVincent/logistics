@@ -899,7 +899,21 @@
           getAddress=$(".addressBox select[name='get_area_id'] option:selected").text()+getStreet+getBuilding;
           // getAreaId=$(".addressBox select[name='get_area_id']").val();
         }else{
-          sendAreaId=null;
+          let stockValue=$('.stockAddress .regionSelect').val();
+          switch(stockValue){
+            case '柴灣嘉業街56號安全貨倉工業4樓B室':
+              sendAreaId='27';
+            break;
+            case '元朗田廈路205號':
+              sendAreaId='40';
+            break;
+            case '觀塘海濱道167-169號地下':
+              sendAreaId='4';
+            break;
+            default:sendAreaId=0;break;
+          }
+          console.log(sendAreaId);
+          // sendAreaId=null;
           sendStreet=null;
           sendBuilding=null
           sendAddress=$('select[name="send_address"]').val();
