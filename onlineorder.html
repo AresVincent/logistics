@@ -430,7 +430,7 @@
       電子郵件：info@kings-hk.com
     </div>
     <div class="bottom_text">
-      地址: 新蒲崗大有街1號 勤達中心1208室
+      地址: 新界荃灣海盛路11號One Midtown 11樓12室
       <!--      京公网安备 11011502003298号-->
     </div>
   </div>
@@ -898,21 +898,8 @@
           getStreet=$('input[name="get_street_id"]').val();
           getAddress=$(".addressBox select[name='get_area_id'] option:selected").text()+getStreet+getBuilding;
           // getAreaId=$(".addressBox select[name='get_area_id']").val();
-        }else{
-          let stockValue=$('.stockAddress .regionSelect').val();
-          switch(stockValue){
-            case '柴灣嘉業街56號安全貨倉工業4樓B室':
-              sendAreaId='27';
-            break;
-            case '元朗田廈路205號':
-              sendAreaId='40';
-            break;
-            case '觀塘海濱道167-169號地下':
-              sendAreaId='4';
-            break;
-            default:sendAreaId=0;break;
-          }
-          console.log(sendAreaId);
+        }
+        else{
           // sendAreaId=null;
           sendStreet=null;
           sendBuilding=null
@@ -931,6 +918,22 @@
             layer.msg("請選擇寄件地區",{icon:2});
           return false;
           }
+        }
+        if(!$("input[name='isHomeTake']").prop("checked")){
+          let stockValue=$('.stockAddress .regionSelect').val();
+          switch(stockValue){
+            case '柴灣嘉業街56號安全貨倉工業4樓B室':
+              sendAreaId='27';
+            break;
+            case '元朗田廈路205號':
+              sendAreaId='40';
+            break;
+            case '觀塘海濱道167-169號地下':
+              sendAreaId='4';
+            break;
+            default:sendAreaId=0;break;
+          }
+          console.log(sendAreaId);
         }
         if(sendAddress==""){
           layer.msg("寄件地址不能為空！",{icon:2});
